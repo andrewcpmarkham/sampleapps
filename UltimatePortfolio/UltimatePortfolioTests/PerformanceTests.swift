@@ -26,7 +26,3 @@ class PerformanceTests: BaseTestCase {
     }
 
 }
-// Notes for Paul
-// No mention of Name of File in notes
-// Second last code snipet doesn't compare to 1 as described
-// Mentions 4000 in the notes when it should be 500
