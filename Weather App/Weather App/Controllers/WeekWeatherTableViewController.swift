@@ -2,16 +2,14 @@
 //  WeekWeatherTableViewController.swift
 //  Weather App
 //
-//  Created by Andrew CP Markham on 21/9/20.
+//  Created by Andrew CP Markham on 11/6/21.
 //
 
 import UIKit
 
 class WeekWeatherTableViewController: UITableViewController {
     
-    var location: Location!
-    var getWeatherFromAPIDelegate: GetWeatherFromAPIDelegate!
-    var weatherResponse: WeatherResponse?
+    weak var location: Location!
     var favouriteButton: UIButton!
     
     override func viewDidLoad() {
@@ -20,36 +18,21 @@ class WeekWeatherTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+
         super.viewWillAppear(false)
-        //Update  UI with weather request data but only if required
-        getWeatherFromAPIDelegate.weatherRequest(cityLon: location.lon!, cityLat: location.lat!, optionalRequest: true, completion: {
-            [weak self] (weather, error) in
-            guard let weather = weather else {
-                //Error
-                DispatchQueue.main.async {
-                    if let errorCell = self?.tableView.cellForRow(at: IndexPath.init(row: 0, section: 0)) as? WeeklyWeatherTableViewCell{
-                        errorCell.updateErrorCell(with: error)
-                    }
-                    self?.tableView.reloadData()
-                }
-                return
-            }
-            DispatchQueue.main.async {
-                self?.weatherResponse = weather
-                self?.tableView.reloadData()
-            }
-        })
+
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return weatherResponse != nil ? 7 : 1
+        return location.weather != nil ? 7 : 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PropertyKeys.weeklyweatherCellIdentifier, for: indexPath) as? WeeklyWeatherTableViewCell else{fatalError("Could not dequeue week weather cell")}
-        
-        guard let weather = weatherResponse else {
+
+        guard let weather = location.weather else {
             //Error cell returned
+            cell.updateErrorCell()
             return cell
         }
         

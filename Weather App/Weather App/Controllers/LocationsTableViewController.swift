@@ -2,7 +2,7 @@
 //  LocationsTableViewController.swift
 //  Weather App
 //
-//  Created by Andrew CP Markham on 20/9/20.
+//  Created by Andrew CP Markham on 11/6/21.
 //
 
 import UIKit
@@ -34,12 +34,21 @@ class LocationsTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PropertyKeys.locationCellIdentifier, for: indexPath) as? LocationsTableViewCell else{fatalError("Could not dequeue location cell")}
 
         // Configure the cell...
-        let location = LocationCollection.shared.getLocationAtIndex(index: indexPath.row)
-        cell.updateLocationCell(with: location)
+        guard let location = LocationCollection.shared.getLocationAtIndex(index: indexPath.row) else {
+            return  cell
+        }
+        
+        cell.updateLocationCell(with: location, at: indexPath.row)
         
         return cell
     }
-    
+
+    // MARK: - Actions
+    @IBAction func clearButtonSelected(_ sender: UIBarButtonItem) {
+        LocationCollection.shared.deleteAllLocations()
+        tableView.reloadData()
+    }
+
     @IBAction func unwindToLocationsTableview(for unwindSegue: UIStoryboardSegue) {
         if unwindSegue.identifier == PropertyKeys.saveLocationUnwindSegueIdentifier{
             //alphabetical so inserting a single row was more complex and I was lazy

@@ -2,7 +2,7 @@
 //  PropertyKeys.swift
 //  Weather App
 //
-//  Created by Andrew CP Markham on 20/9/20.
+//  Created by Andrew CP Markham on 11/6/21.
 //
 
 import Foundation
@@ -19,4 +19,8 @@ struct PropertyKeys {
     static let dayForecastSegueIdentifier = "dayForecastSegueIdentifier"
     static let hourForecastSegueIdentifier = "hourForecastSegueIdentifier"
     static let currentForecastSegueIdentifier = "currentForecastSegueIdentifier"
+    static let backgroundRefreshID = "com.xercisepro-weather.refresh"
+
+    //Core Data
+    static let cityEntityID = "cityEntityID"
 }

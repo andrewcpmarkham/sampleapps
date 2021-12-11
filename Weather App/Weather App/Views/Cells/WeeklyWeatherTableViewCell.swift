@@ -2,7 +2,7 @@
 //  WeeklyWeatherTableViewCell.swift
 //  Weather App
 //
-//  Created by Andrew CP Markham on 21/9/20.
+//  Created by Andrew CP Markham on 11/6/21.
 //
 
 import UIKit
@@ -49,7 +49,7 @@ class WeeklyWeatherTableViewCell: UITableViewCell {
         windSpeedLabel.text = "Wind Speed: " + String(format: "%.1f", weather.dailyWeather[index].windSpeed) + "km/h"
     }
     
-    func updateErrorCell(with error: Error?) {
+    func updateErrorCell() {
         weatherImage.image = UIImage(systemName: "exclamationmark.triangle.fill")
         weatherImage.tintColor = .red
         dateLabel.tintColor = .red
@@ -59,9 +59,5 @@ class WeeklyWeatherTableViewCell: UITableViewCell {
         minTemperatureLabel.isHidden = true
         windDirectionLabel.text = "Current Weather can't be optained, please check network connection and try again."
         windDirectionLabel.numberOfLines = 2
-        if let error = error{
-            windSpeedLabel.text = "Error: \(error.localizedDescription)"
-            windSpeedLabel.numberOfLines = 2
-        }
     }
 }

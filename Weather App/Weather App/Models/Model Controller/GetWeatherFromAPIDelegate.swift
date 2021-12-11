@@ -2,17 +2,15 @@
 //  OpenWeatherAPI.swift
 //  Weather App
 //
-//  Created by Andrew CP Markham on 22/9/20.
-//
-//NOTE: Created as a class to ensure instance isn't copied but that the refference is passed arround
-//NOTE: Would of liked to make it a singleton but decided against this to support multiple scenes.
+//  Created by Andrew CP Markham on 11/6/21.
 
 import Foundation
 
 class GetWeatherFromAPIDelegate {
     
     //Defaults for API request
-    private let baseURL = URL(string: "https://api.openweathermap.org/data/2.5/onecall")!
+    let baseURL = URL(string: "https://api.openweathermap.org/data/2.5/onecall")!
+    let urlSession = URLSession(configuration: .default)
     private let APIKey = "b138128f7ce2de0582a03cf2c0b69a0b"
     
     private var weatherResponse: WeatherResponse?
@@ -38,7 +36,7 @@ class GetWeatherFromAPIDelegate {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: url) { (data,
+        let task = urlSession.dataTask(with: url) { (data,
         response, error) in
             let jsonDecoder = JSONDecoder()
             if let data = data, let weatherData = try? jsonDecoder.decode(WeatherResponse.self, from: data){

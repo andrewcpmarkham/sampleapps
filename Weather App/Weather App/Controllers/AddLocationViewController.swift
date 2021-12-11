@@ -2,7 +2,7 @@
 //  AddLocationViewController.swift
 //  Weather App
 //
-//  Created by Andrew CP Markham on 30/9/20.
+//  Created by Andrew CP Markham on 11/6/21.
 //
 
 import UIKit
@@ -15,19 +15,22 @@ class AddLocationViewController: UIViewController {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     var location: Location?
+    var locations: [Location] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         saveButton.isEnabled = false
+
+        loadJSONCities()
     }
     
     func updateUI(location: Location?, error: Error?) {
         //Function to update UI appropriate to Location or Error supplied
-        if let location = location{
-            self.location = location
-            self.titleTextLabel.text = "\(location.city!), \(location.country!)"
-            self.descriptionTextLabel.text = "Longitude: \(location.lon!), Latitude: \(location.lat!)"
+        if let locationUnwrapped = location{
+            self.location = locationUnwrapped
+            self.titleTextLabel.text = "\(locationUnwrapped.city!), \(locationUnwrapped.country!)"
+            self.descriptionTextLabel.text = "Longitude: \(locationUnwrapped.lon!), Latitude: \(locationUnwrapped.lat!)"
             self.titleTextLabel.isHidden = false
             self.descriptionTextLabel.isHidden = false
             saveButton.isEnabled = true
@@ -44,25 +47,27 @@ class AddLocationViewController: UIViewController {
             self.descriptionTextLabel.isHidden = false
             saveButton.isEnabled = false
         }
-        
-        
     }
     
     func fetchMatchingItems() {
-        //Function to action search request to API based on search string supplied
-        guard let searchTerm = searchBar.text else{return}
-        let getLocationFromAPIDelegate = GetLocationFromAPIDelegate()
-        
-        getLocationFromAPIDelegate.fetchMatchingLocationsByName(with: searchTerm) { (location, error) in
-            DispatchQueue.main.async {
-                self.updateUI(location: location, error: error)
-            }
+        //IMPLEMENT SEARCH ON CITY NAME HERE
+    }
+
+    func loadJSONCities(){
+        guard let  path = Bundle.main.path(forResource: "city.list", ofType: "json"), let json = try? Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe) else {
+            return
         }
+
+        guard  let cities = try? JSONDecoder().decode([Location].self, from: json) else {
+            return
+        }
+
+        locations = cities
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-        if let location = self.location {
-            LocationCollection.shared.AddLocation(location: location)
+        if let locationUnwrapped = self.location {
+            LocationCollection.shared.addLocation(location: locationUnwrapped)
         }
         performSegue(withIdentifier: PropertyKeys.saveLocationUnwindSegueIdentifier, sender: self)
     }
