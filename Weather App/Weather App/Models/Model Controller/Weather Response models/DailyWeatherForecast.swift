@@ -7,10 +7,9 @@
 
 import Foundation
 
-struct DailyWeatherForcast: Decodable{
-
-    //Sub data object structure returned by API
-    
+struct DailyWeatherForcast: Decodable {
+    // Sub data object structure returned by API
+    // swiftlint:disable:next identifier_name
     let dt: Int
     let sunrise: Int
     let sunset: Int
@@ -23,8 +22,8 @@ struct DailyWeatherForcast: Decodable{
     let weather: [WeatherObservation]
     let windSpeed: Double
     let windDirection: Int
-    
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
+        // swiftlint:disable:next identifier_name
         case dt
         case sunrise
         case sunset
@@ -39,7 +38,6 @@ struct DailyWeatherForcast: Decodable{
         case windSpeed = "wind_speed"
         case windDirection = "wind_deg"
     }
-    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 

@@ -8,9 +8,7 @@
 import Foundation
 
 struct WeatherResponse: Decodable {
-    
-    //Main data object structure returned by API
-    
+    // Main data object structure returned by API
     let temp: Double
     let windSpeed: Double
     let windDirection: Int
@@ -20,7 +18,7 @@ struct WeatherResponse: Decodable {
     let lat: Double
     let timezoneOffset: Int
 
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case current
         case temp
         case windSpeed = "wind_speed"

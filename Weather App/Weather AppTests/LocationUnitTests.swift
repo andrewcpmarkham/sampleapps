@@ -19,8 +19,7 @@ class LocationUnitTests: XCTestCase {
     }
 
     func testLocationsClass() throws {
-        let location = Location(id: 2147714, city: "Sydney", country: "Australia", lat: -33.87, lon: 151.21)
-        
+        let location = Location(id: 2147714, city: "Sydney", state: "NSW", country: "AU", lat: -33.87, lon: 151.21)
         XCTAssertTrue("\(type(of: location))" == "Location")
     }
 }

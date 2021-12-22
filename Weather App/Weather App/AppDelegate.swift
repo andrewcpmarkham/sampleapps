@@ -12,28 +12,35 @@ import BackgroundTasks
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        //cache implementation for speedy loading of images
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+
+        // cache implementation for speedy loading of images
         let tempDirectory = NSTemporaryDirectory()
         let urlCache = URLCache(memoryCapacity: 25000000, diskCapacity: 50000000, diskPath: tempDirectory)
         URLCache.shared = urlCache
 
         // Fetch weather once an hour in background.
         if #available(iOS 13, *) {
-            BGTaskScheduler.shared.register(forTaskWithIdentifier: PropertyKeys.backgroundRefreshID, using: nil) { task in
-
-                self.handleWeatherRefreshTask(task: task as! BGAppRefreshTask)
+            BGTaskScheduler.shared.register(
+                forTaskWithIdentifier: PropertyKeys.backgroundRefreshID,
+                using: nil) { task in
+                    if let taskCast = task as? BGAppRefreshTask {
+                        self.handleWeatherRefreshTask(task: taskCast)
+                    }
             }
         }
-
         return true
     }
 
-
     // MARK: UISceneSession Lifecycle
 
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
@@ -41,7 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
+        // If any sessions were discarded while the application was not running, this will be called shortly
+        // after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
@@ -53,16 +61,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    }
 
     // MARK: - Core Data stack
-    lazy var dataController = DataController()
+    // swiftlint:disable:next weak_delegate
+    lazy var dataControllerDelegate = DataController()
 
     // FUNCTIONS
     func handleWeatherRefreshTask(task: BGAppRefreshTask) {
-        //Cancel operation on timeout
+        // Cancel operation on timeout
         task.expirationHandler = {
             LocationCollection.shared.willCancelUpdateWeatherForLocations()
         }
 
-        //Operation to update weather
+        // Operation to update weather
         LocationCollection.shared.willUpdateWeatherForLocations()
 
         scheduleBackgroundWeatherFetch()
@@ -77,7 +86,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           print("Unable to submit task: \(error.localizedDescription)")
         }
     }
-
-
 }
-

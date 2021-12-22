@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import CoreData
 
 class AddLocationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var locationLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,8 +21,17 @@ class AddLocationTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func updateLocationCell(with location: Location, at index: Int){
-        //Update  UI with weather request data and always perform as it is current weather
-        self.locationLabel.text = "\(location.city!), \(location.country!)"
+    func updateLocationCell(with location: NSManagedObject, at index: Int) {
+        guard
+            let city = location.value(forKey: "city") as? String,
+                var state = location.value(forKey: "state" ) as? String,
+                let country = location.value(forKey: "country")
+        else {
+            return
+        }
+
+        state = state != "" ? state + ", " : state
+
+        self.locationLabel.text = "\(city), \(state)\(country)"
     }
 }

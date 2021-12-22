@@ -7,20 +7,16 @@
 
 import Foundation
 
-struct WeatherObservation: Codable{
-    
-    //Sub data object structure returned by API
-    
+struct WeatherObservation: Codable {
+    // Sub data object structure returned by API
     let detail: String
     let description: String
     let icon: String
-    
     enum CodingKeys: String, CodingKey {
         case detail = "main"
         case description
         case icon
     }
-    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.detail = try container.decode(String.self, forKey: CodingKeys.detail)

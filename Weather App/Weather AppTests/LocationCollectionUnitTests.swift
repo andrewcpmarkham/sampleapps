@@ -19,29 +19,54 @@ class LocationCollectionUnitTests: XCTestCase {
     }
 
     func testConnections() throws {
-        XCTAssertTrue(LocationCollection.shared.getLocationsCount() >= 20, "There aren't 20 locations proivded in the locations collection - Only \(LocationCollection.shared.getLocationsCount()) provided.")
+        XCTAssertTrue(LocationCollection.shared.getLocationsCount() == 3,
+            // swiftlint:disable:next line_length
+            "There aren't 20 locations proivded in the locations collection - Only \(LocationCollection.shared.getLocationsCount()) provided.")
     }
-    
+
     func testCollectionIsCorrectToAPI() throws {
-        
-    //Not an ideal test as it only tests one object randomely but hey its a start
+
+    // Not an ideal test as it only tests one object randomely but hey its a start
         let getWeatherFromAPIDelegate = GetWeatherFromAPIDelegate()
-        
-        let location = LocationCollection.shared.getLocationAtIndex(index: Int.random(in: 0..<LocationCollection.shared.getLocationsCount()))
-        
-        getWeatherFromAPIDelegate.weatherRequest(cityLon: location.lon!, cityLat: location.lat!, optionalRequest: false, completion: {
-            (weather, error) in
-            if let error = error{
+
+        let location = LocationCollection.shared.getLocationAtIndex(
+            index: Int.random(in: 0..<LocationCollection.shared.getLocationsCount())
+        )
+
+        guard
+            let idUnwrapped = location?.id,
+            let cityUnwrapped = location?.city,
+            let lonUnwrapped = location?.lon,
+            let latUnwrapped = location?.lat
+
+        else {
+            XCTFail("Values for lat, lon are required values for testCollectionIsCorrectToAPI test")
+            return
+        }
+
+        getWeatherFromAPIDelegate.weatherRequest(
+            cityLon: lonUnwrapped,
+            cityLat: latUnwrapped,
+            optionalRequest: false, completion: { (weather, error) in
+            if let error = error {
                 XCTFail("The following error occured from the request to the API: \(error)")
             }
-                
+
             guard let weather = weather else {
-                XCTFail("A weather respose was not attained for \(location.id!) : \(location.city!)")
+                XCTFail("A weather respose was not attained for \(idUnwrapped) : \(cityUnwrapped)")
                 return
             }
-                
-            XCTAssertTrue(location.lon == weather.lon, "The \(location.city!) longitude of \(location.lon!) wasn't  the same as returned from the API \(weather.lon)")
-            XCTAssertTrue(location.lat == weather.lat, "The \(location.city!) latitude of \(location.lat!) wasn't  the same as returned from the API \(weather.lat)")
+
+            XCTAssertTrue(
+                lonUnwrapped == weather.lon,
+                // swiftlint:disable:next line_length
+                "The \(cityUnwrapped) longitude of \(lonUnwrapped) wasn't  the same as returned from the API \(weather.lon)"
+            )
+            XCTAssertTrue(
+                latUnwrapped == weather.lat,
+                // swiftlint:disable:next line_length
+                "The \(cityUnwrapped) latitude of \(latUnwrapped) wasn't  the same as returned from the API \(weather.lat)"
+            )
         })
     }
 }

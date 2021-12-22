@@ -8,11 +8,12 @@
 import Foundation
 
 struct PropertyKeys {
-    //central storage of magic keys (strings) refferenced in APP
-    
+    // central storage of magic keys (strings) refferenced in APP
+
     static let locationCellIdentifier = "locationCellIdentifier"
     static let weeklyweatherCellIdentifier = "weeklyweatherCellIdentifier"
     static let addLocationCellIdentifier = "addLocationCellIdentifier"
+    static let addLocationSearchCellIdentifier = "addLocationSearchCellIdentifier"
     static let addLocationSegueIdentifier = "addLocationSegueIdentifier"
     static let saveLocationUnwindSegueIdentifier = "saveLocationUnwindSegueIdentifier"
     static let chooseForecastSegueIdentifier = "chooseForecastSegueIdentifier"
@@ -21,6 +22,7 @@ struct PropertyKeys {
     static let currentForecastSegueIdentifier = "currentForecastSegueIdentifier"
     static let backgroundRefreshID = "com.xercisepro-weather.refresh"
 
-    //Core Data
-    static let cityEntityID = "cityEntityID"
+    // Core Data
+    static let locationEntityName = "Locations_CoreData"
+    static let previouslyLaunchedKey = "previouslyLaunched"
 }

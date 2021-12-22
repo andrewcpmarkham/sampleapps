@@ -18,17 +18,18 @@ class LocationsTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
-    func updateLocationCell(with location: Location, at index: Int){
-        //Update  UI with weather request data and always perform as it is current weather
+
+    func updateLocationCell(with location: Location, at index: Int) {
+        // Update  UI with weather request data and always perform as it is current weather
 
         self.locationLabel.text = "\(location.city!), \(location.country!)"
 
-        location.getWeatherFromAPIDelegate.weatherRequest(cityLon: location.lon!, cityLat: location.lat!, optionalRequest: false, completion: {
-            [weak self] (weather, error) in
+        location.getWeatherFromAPIDelegate.weatherRequest(
+            cityLon: location.lon!, cityLat: location.lat!, optionalRequest: false,
+            completion: {[weak self] (weather, error) in
             guard let weather = weather else {
                 DispatchQueue.main.async {
-                    //Error
+                    // Error
                     self?.networkErrorNotification(error: error)
                 }
                 return
@@ -41,8 +42,8 @@ class LocationsTableViewCell: UITableViewCell {
         })
     }
 
-    func networkErrorNotification(error: Error?){
-        //Function to update UI based on netork error
+    func networkErrorNotification(error: Error?) {
+        // Function to update UI based on netork error
         self.temperatureLabel.text = "?"
 
     }
