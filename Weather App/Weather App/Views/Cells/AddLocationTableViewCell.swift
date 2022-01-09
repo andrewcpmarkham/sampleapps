@@ -12,13 +12,13 @@ class AddLocationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var locationLabel: UILabel!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    // stored as selection can be interupted by mulitple quick searchs
+    var locationSelected = false
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        locationSelected = selected
         super.setSelected(selected, animated: animated)
+        self.accessoryType = selected ? .checkmark : .none
     }
 
     func updateLocationCell(with location: NSManagedObject, at index: Int) {

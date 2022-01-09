@@ -34,6 +34,38 @@ class ForecastTableViewController: UITableViewController {
         }
     }
 
+    // MARK: - Table view data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let identifier: String
+        switch indexPath.row {
+        case 0:
+            identifier = PropertyKeys.currentForecastCellIdentifier
+        case 1:
+            identifier = PropertyKeys.hourForecastCellIdentifier
+        default:
+            identifier = PropertyKeys.dayForecastCellIdentifier
+        }
+
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: identifier,
+            for: indexPath) as? ForecastTableViewCell
+        else {fatalError("Could not dequeue day forecast cell")}
+
+        cell.updateLocationCell(for: indexPath.row)
+
+        return cell
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
 
