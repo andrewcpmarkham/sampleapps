@@ -21,7 +21,6 @@ class LocationsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
@@ -40,11 +39,25 @@ class LocationsTableViewController: UITableViewController {
             return  cell
         }
 
-        cell.updateLocationCell(with: location, at: indexPath.row)
+        cell.willSetLocationCell(with: location, at: indexPath.row)
 
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt
+                            indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let item = UIContextualAction(style: .destructive, title: "Delete") {  (_, _, _) in
+            if let location = LocationCollection.shared.getLocationAtIndex(index: indexPath.row) {
+                LocationCollection.shared.deleteLocation(location: location)
+            }
+            tableView.reloadData()
+        }
+        item.image = UIImage(named: "deleteIcon")
+
+        let swipeActions = UISwipeActionsConfiguration(actions: [item])
+
+        return swipeActions
+    }
     // MARK: - Actions
     @IBAction func clearButtonSelected(_ sender: UIBarButtonItem) {
         LocationCollection.shared.deleteAllLocations()

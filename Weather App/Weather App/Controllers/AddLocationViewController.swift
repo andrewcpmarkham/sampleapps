@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import OrderedCollections
 
 class AddLocationViewController: UIViewController {
 
@@ -16,7 +17,7 @@ class AddLocationViewController: UIViewController {
     @IBOutlet weak var selectedLocationsCollectionView: UICollectionView!
     @IBOutlet weak var locationsTableView: UITableView!
 
-    var locationsSelected: [Int: NSManagedObject] = [:] {
+    var locationsSelected: OrderedDictionary<Int, NSManagedObject> = [:] {
         didSet {
             saveButton.isEnabled = locationsSelected.isEmpty ? false : true
             selectedLocationsLabel.isEnabled = locationsSelected.isEmpty ? false : true
@@ -53,6 +54,7 @@ class AddLocationViewController: UIViewController {
 
     /// Functions to load locations to from CoreData
     func loadLocations() {
+
         // Plan is to have the core data preloaded so this is never called
         if let citiesUnwrapped = fetchMatchingCities(with: nil) {
             self.locations = citiesUnwrapped
@@ -63,7 +65,7 @@ class AddLocationViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         // Update Locations if selected
-        for (_, location) in locationsSelected {
+        for ( _, location) in locationsSelected {
             // Convert from coredata object to location object
             if
                 // swiftlint:disable:next identifier_name
@@ -101,20 +103,16 @@ extension AddLocationViewController: UICollectionViewDataSource,
         }
 
         // Configure the cell...
-        let locationSelectedKeys = Array(locationsSelected.keys)
-        let keyforCell = locationSelectedKeys[indexPath.row]
-        if let locationForRow = locationsSelected[keyforCell] {
+        let locationForRowId = locationsSelected.keys[indexPath.row]
+        if let locationForRow = locationsSelected[locationForRowId] {
             cell.updateLocationCell(with: locationForRow, at: indexPath.row)
         }
-
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath ) as? AddLocationCollectionViewCell {
-            locationsSelected.removeValue(forKey: cell.locationID)
+            locationsSelected.remove(at: indexPath.row)
             locationsTableView.reloadData()
-        }
     }
 }
 
@@ -141,25 +139,30 @@ extension AddLocationViewController: UITableViewDataSource, UITableViewDelegate 
         let locationForRow = locations[indexPath.row]
         // Configure the cell...
         cell.updateLocationCell(with: locationForRow, at: indexPath.row)
-        if let locationID = locationForRow.value(forKey: "id") as? Int, locationsSelected.keys.contains(locationID) {
-            cell.setSelected(true, animated: true)
-        }
+
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let locationForRow = locations[indexPath.row]
+        // Check if selected
+        if
+            let locationForRowId = locationForRow.value(forKey: "id") as? Int,
+            locationsSelected[locationForRowId] != nil {
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableView.ScrollPosition.none)
+        }
+    }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow( at: indexPath) as? AddLocationTableViewCell else {
             fatalError( "AddLocationTableViewCell cell could not be obtained from the didSelectRowAt method" )
         }
         // Set the selection to storage and show status of selection in row
-        let location = locations[indexPath.row]
-        // swiftlint:disable:next identifier_name
-        guard let id = location.value(forKey: "id") as? Int else {
-            return
+        let locationSelected = locations[indexPath.row]
+        if let locationId = locationSelected.value(forKey: "id") as? Int {
+            locationsSelected[locationId] = locationSelected
         }
 
-        locationsSelected[id] = location
         cell.setSelected(true, animated: true)
     }
 
@@ -168,13 +171,10 @@ extension AddLocationViewController: UITableViewDataSource, UITableViewDelegate 
             fatalError( "AddLocationTableViewCell cell could not be obtained from the didSelectRowAt method" )
         }
         // Set the selection to storage and show status of selection in row
-        let location = locations[indexPath.row]
-        // swiftlint:disable:next identifier_name
-        guard let id = location.value(forKey: "id") as? Int else {
-            return
+        let locationDeselected = locations[indexPath.row]
+        if let locationId = locationDeselected.value(forKey: "id") as? Int {
+            locationsSelected.removeValue(forKey: locationId)
         }
-
-        locationsSelected.removeValue(forKey: id)
         cell.setSelected(false, animated: true)
     }
 }

@@ -18,11 +18,16 @@ class DayWeatherViewController: UIViewController {
     @IBOutlet weak var windDirectionLabel: UILabel!
     @IBOutlet weak var windSpeedLabel: UILabel!
     @IBOutlet weak var favouriteButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     weak var location: Location!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Setup animation to indicate network activity
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
 
         // Update UI with known data
         updateUI()
@@ -60,6 +65,7 @@ class DayWeatherViewController: UIViewController {
                 guard let data = data, let image = UIImage(data: data) else {return}
                 DispatchQueue.main.async {
                     self?.weatherImage.image = image
+                    self?.activityIndicator.stopAnimating()
                 }
             })
             task.resume()

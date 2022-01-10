@@ -24,7 +24,7 @@ class AddLocationCollectionViewCell: UICollectionViewCell {
         }
         state = state != "" ? state + ", " : state
 
-        self.collectionLabel.text = "\(city)(\(state)\(country))"
+        self.collectionLabel.text = "\(city) (\(state)\(country))"
         self.locationID = locationID
     }
 }

@@ -16,12 +16,18 @@ class WeeklyWeatherTableViewCell: UITableViewCell {
     @IBOutlet weak var minTemperatureLabel: UILabel!
     @IBOutlet weak var windSpeedLabel: UILabel!
     @IBOutlet weak var windDirectionLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
 
     func updateWeekWeatherCell(with weather: WeatherResponse, index: Int) {
+
+        // Setup animation to indicate network activity
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+
         // Get Icon
         // Potentially requires a thread pool here
         if
@@ -35,6 +41,7 @@ class WeeklyWeatherTableViewCell: UITableViewCell {
                 DispatchQueue.main.async {
 
                     self?.weatherImage.image = image
+                    self?.activityIndicator.stopAnimating()
                 }
             })
             task.resume()
@@ -61,5 +68,6 @@ class WeeklyWeatherTableViewCell: UITableViewCell {
         minTemperatureLabel.isHidden = true
         windDirectionLabel.text = "Current Weather can't be optained, please check network connection and try again."
         windDirectionLabel.numberOfLines = 2
+        self.activityIndicator.stopAnimating()
     }
 }
