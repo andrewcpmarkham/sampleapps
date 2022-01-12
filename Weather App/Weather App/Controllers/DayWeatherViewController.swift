@@ -21,6 +21,7 @@ class DayWeatherViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     weak var location: Location!
+    var performedAutomaticFavouriteSegue = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,9 @@ class DayWeatherViewController: UIViewController {
         updateUI()
 
         // Update UI with data if available
-        if location.weather != nil {
+        if performedAutomaticFavouriteSegue {
+            Favourite.shared.willSetWeatherForFavorite(favoriteWeattherable: self)
+        } else if location.weather != nil {
             updateUIWithWeatherFromAPI()
         } else {
             networkErrorNotification()
@@ -97,5 +100,28 @@ class DayWeatherViewController: UIViewController {
         favouriteButton = Favourite.shared.toggleSetFavouriteButton(
             location: location, forecast: .hourly, favouriteButton: favouriteButton
         )
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+
+        // Transition to favourite on load means Forecast locaation may not be set
+        if let destination = segue.destination as? ForecastTableViewController, destination.location == nil {
+            destination.location = location
+        }
+    }
+}
+
+extension DayWeatherViewController: FavoriteWeattherable {
+    func willRefreshUIWithFavoriteLocationData(location: Location) {
+        // Single function to perform both tasks for async favorite network call
+        self.location = location
+        if location.weather != nil {
+            updateUIWithWeatherFromAPI()
+        } else {
+            networkErrorNotification()
+        }
+        activityIndicator.stopAnimating()
+        performedAutomaticFavouriteSegue = false
     }
 }

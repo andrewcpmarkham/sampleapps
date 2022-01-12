@@ -8,6 +8,7 @@
 import UIKit
 
 class CurrentWeatherViewController: UIViewController {
+
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -17,7 +18,8 @@ class CurrentWeatherViewController: UIViewController {
     @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    weak var location: Location!
+    var location: Location!
+    var performedAutomaticFavouriteSegue = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +36,9 @@ class CurrentWeatherViewController: UIViewController {
         updateUI()
 
         // Update UI with data if available
-        if location.weather != nil {
+        if performedAutomaticFavouriteSegue {
+            Favourite.shared.willSetWeatherForFavorite(favoriteWeattherable: self)
+        } else if location.weather != nil {
             updateUIWithWeatherFromAPI()
         } else {
             networkErrorNotification()
@@ -95,5 +99,28 @@ class CurrentWeatherViewController: UIViewController {
             forecast: .current,
             favouriteButton: favouriteButton
         )
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+
+        // Transition to favourite on load means Forecast locaation may not be set
+        if let destination = segue.destination as? ForecastTableViewController, destination.location == nil {
+            destination.location = location
+        }
+    }
+}
+
+extension CurrentWeatherViewController: FavoriteWeattherable {
+    func willRefreshUIWithFavoriteLocationData(location: Location) {
+        // Single function to perform both tasks for async favorite network call
+        self.location = location
+        if location.weather != nil {
+            updateUIWithWeatherFromAPI()
+        } else {
+            networkErrorNotification()
+        }
+        activityIndicator.stopAnimating()
+        performedAutomaticFavouriteSegue = false
     }
 }

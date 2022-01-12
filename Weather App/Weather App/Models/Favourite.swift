@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FavoriteWeattherable {
+    func willRefreshUIWithFavoriteLocationData (location: Location)
+}
+
 class Favourite: Codable {
     // Singleton: Idea being that if the app was multi scene this ensures only one favourite
     static var shared =  Favourite()
@@ -54,9 +58,35 @@ class Favourite: Codable {
     }
 
     // Used on open to perform segue
+    func willSetWeatherForFavorite(favoriteWeattherable: FavoriteWeattherable) {
+        if let locationUnwrapped = location {
+            locationUnwrapped.getWeatherFromAPIDelegate.weatherRequest(
+                cityLon: locationUnwrapped.lon!, cityLat: locationUnwrapped.lat!, optionalRequest: false,
+                completion: {(weather, error) in
+                guard let weather = weather else {
+                    DispatchQueue.main.async {
+                        print("Error: \(error.debugDescription)")
+                    }
+                    favoriteWeattherable.willRefreshUIWithFavoriteLocationData(location: locationUnwrapped)
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    locationUnwrapped.weather = weather
+                    Favourite.shared.settFavouriteLocation( location: locationUnwrapped )
+                    favoriteWeattherable.willRefreshUIWithFavoriteLocationData(location: locationUnwrapped)
+                }
+            })
+        }
+    }
+
     func hasFavourite() -> Bool {
         // Function to return true/false of favourite set
         return self.location != nil && self.forecast != nil
+    }
+
+    func settFavouriteLocation(location: Location) {
+        self.location = location
     }
 
     func getFavouriteLocation() -> Location? {

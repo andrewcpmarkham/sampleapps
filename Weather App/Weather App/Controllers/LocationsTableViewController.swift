@@ -14,12 +14,12 @@ class LocationsTableViewController: UITableViewController {
 
         // Check if favourite is set
         if Favourite.shared.hasFavourite() {
+            // Get weather for favorite prior to seque
             performSegue(withIdentifier: PropertyKeys.chooseForecastSegueIdentifier, sender: self)
         }
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

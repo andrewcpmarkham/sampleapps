@@ -17,9 +17,6 @@ class ForecastTableViewController: UITableViewController {
 
         // Process for automated load of favourite
         if performedAutomaticFavouriteSegue {
-
-            performedAutomaticFavouriteSegue = false
-
             switch Favourite.shared.getFavouriteForecast() {
             case .current:
                 performSegue(withIdentifier: PropertyKeys.currentForecastSegueIdentifier, sender: self)
@@ -71,12 +68,17 @@ class ForecastTableViewController: UITableViewController {
 
         if let destination = segue.destination as? CurrentWeatherViewController {
             destination.location = location
+            destination.performedAutomaticFavouriteSegue = performedAutomaticFavouriteSegue
         } else if let destination = segue.destination as? DayWeatherViewController {
             destination.location = location
+            destination.performedAutomaticFavouriteSegue = performedAutomaticFavouriteSegue
         } else if let destination = segue.destination as? WeekWeatherTableViewController {
             destination.location = location
+            destination.performedAutomaticFavouriteSegue = performedAutomaticFavouriteSegue
         } else {
             fatalError("Forecast View Controller is unreachable from the Locations View Controller")
         }
+
+        performedAutomaticFavouriteSegue = false
     }
 }

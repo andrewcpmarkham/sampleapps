@@ -24,6 +24,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // swiftlint:disable:next unused_optional_binding
         guard let _ = (scene as? UIWindowScene) else { return }
+
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        if let vc = storyboard.instantiateViewController(withIdentifier: "customVCStoryboardId") as? CurrentWeatherViewController {
+//            let nav = UINavigationController(rootViewController: vc)
+//            let window = UIWindow(windowScene: windowScene)
+//            window.rootViewController = vc
+//            self.window = window
+//            window.makeKeyAndVisible()
+//        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

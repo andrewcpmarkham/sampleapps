@@ -21,8 +21,9 @@ class LocationCollection: Codable {
     private static let archiveURL =
         documentsDirectory.appendingPathComponent("locations").appendingPathExtension("plist")
     private init() {
-        locations += LocationCollection.loadFromFile().isEmpty ?
-            loadDefaultLocations() : LocationCollection.loadFromFile()
+        let locationsSaved = LocationCollection.loadFromFile()
+        locations += locationsSaved.isEmpty ?
+            loadDefaultLocations() : locationsSaved
     }
     private func loadDefaultLocations() -> [Location] {
         return [

@@ -10,6 +10,7 @@ import UIKit
 class WeekWeatherTableViewController: UITableViewController {
 
     weak var location: Location!
+    var performedAutomaticFavouriteSegue = false
     var favouriteButton: UIButton!
 
     override func viewDidLoad() {
@@ -21,6 +22,10 @@ class WeekWeatherTableViewController: UITableViewController {
 
         super.viewWillAppear(false)
 
+        if performedAutomaticFavouriteSegue {
+            performedAutomaticFavouriteSegue = false
+            Favourite.shared.willSetWeatherForFavorite(favoriteWeattherable: self)
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -33,14 +38,14 @@ class WeekWeatherTableViewController: UITableViewController {
             for: indexPath) as? WeeklyWeatherTableViewCell
         else {fatalError("Could not dequeue week weather cell")}
 
-        guard let weather = location.weather else {
-            // Error cell returned
+        // Favorite will reload on wether data request
+        if let weather = location.weather {
+            // Configure the cell with weather data
+            cell.updateWeekWeatherCell(with: weather, index: indexPath.row)
+        } else if !performedAutomaticFavouriteSegue {
+            // Error with weather data
             cell.updateErrorCell()
-            return cell
         }
-
-        // Configure the cell...
-        cell.updateWeekWeatherCell(with: weather, index: indexPath.row)
 
         return cell
     }
@@ -56,6 +61,7 @@ class WeekWeatherTableViewController: UITableViewController {
             return
         }
         headerView.textLabel?.font = UILabel().font.withSize(24)
+        headerView.textLabel?.textColor = .label
         headerView.textLabel?.textAlignment = .center
         headerView.textLabel?.numberOfLines = 0
         headerView.backgroundView?.backgroundColor = .systemGray2
@@ -86,4 +92,22 @@ class WeekWeatherTableViewController: UITableViewController {
             location: location, forecast: .daily, favouriteButton: favouriteButton
         )
      }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+
+        // Transition to favourite on load means Forecast locaation may not be set
+        if let destination = segue.destination as? ForecastTableViewController, destination.location == nil {
+            destination.location = location
+        }
+    }
+}
+
+extension WeekWeatherTableViewController: FavoriteWeattherable {
+    func willRefreshUIWithFavoriteLocationData(location: Location) {
+        // Single function to perform both tasks for async favorite network call
+        self.location = location
+        performedAutomaticFavouriteSegue = false
+        tableView.reloadData()
+    }
 }
