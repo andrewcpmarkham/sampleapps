@@ -41,7 +41,7 @@ struct DailyWeatherForcast: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        // Now pick the pieces you want
+        // Picking the data wanted
         dt = try container.decode(Int.self, forKey: .dt)
         sunrise = try container.decode(Int.self, forKey: .sunrise)
         sunset = try container.decode(Int.self, forKey: .sunset)

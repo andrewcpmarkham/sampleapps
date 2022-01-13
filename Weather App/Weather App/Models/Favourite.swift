@@ -7,8 +7,9 @@
 
 import UIKit
 
-protocol FavoriteWeattherable {
+protocol FavoriteWeattherViewContoller: UIViewController {
     func willRefreshUIWithFavoriteLocationData (location: Location)
+    func willSetDataForFavourite (with location: Location, favouriteSeque: Bool)
 }
 
 class Favourite: Codable {
@@ -58,7 +59,7 @@ class Favourite: Codable {
     }
 
     // Used on open to perform segue
-    func willSetWeatherForFavorite(favoriteWeattherable: FavoriteWeattherable) {
+    func willSetWeatherForFavorite(favoriteWeattherable: FavoriteWeattherViewContoller) {
         if let locationUnwrapped = location {
             locationUnwrapped.getWeatherFromAPIDelegate.weatherRequest(
                 cityLon: locationUnwrapped.lon!, cityLat: locationUnwrapped.lat!, optionalRequest: false,

@@ -10,6 +10,18 @@ import CoreData
 import OrderedCollections
 
 class AddLocationViewController: UIViewController {
+    /**
+     Provides functionality to the app to add locations (cities)
+     for wheather to be obtained for.
+     This is populaated from the vast arrays of cities previously supplied by the API as a JSON file
+     that is then stored and provided to the app through coredata.
+     Due to the very large sizze of this CoreData is preloaded by design
+     */
+
+    /* Developers note:
+     Collection and tableview logic could be seperated out into seperate files
+     should massive view controller syndrom occur in the future
+     */
 
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var searchBar: UISearchBar!

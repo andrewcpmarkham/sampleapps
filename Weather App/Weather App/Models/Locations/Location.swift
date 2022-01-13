@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ Main dataobject used within apps concerning city data from API and cities data in coredata
+*/
 class Location: Equatable, Comparable, Codable {
 
     // swiftlint:disable:next weak_delegate
@@ -109,7 +112,6 @@ class Location: Equatable, Comparable, Codable {
         try container.encode(lat, forKey: .lat)
         try container.encode(lon, forKey: .lon)
     }
-
 }
 
 // equitable protocol conformance function

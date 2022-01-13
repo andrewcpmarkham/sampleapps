@@ -7,12 +7,16 @@
 import Foundation
 
 class GetWeatherFromAPIDelegate {
-    // Defaults for API request
+
+    /**
+     Defaults and functionality for Open Weather API Requests
+     */
+
     let baseURL = URL(string: "https://api.openweathermap.org/data/2.5/onecall")!
     let urlSession = URLSession(configuration: .default)
     private let APIKey = "b138128f7ce2de0582a03cf2c0b69a0b"
     private var weatherResponse: WeatherResponse?
-    // Function to request weather data in single call from API
+    // Function to request weather data in single call from Oepn Weather API
     func weatherRequest(
             cityLon: Double, cityLat: Double, optionalRequest: Bool,
             completion: @escaping (WeatherResponse?, Error?) -> Void

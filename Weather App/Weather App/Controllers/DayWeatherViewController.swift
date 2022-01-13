@@ -8,6 +8,10 @@
 import UIKit
 
 class DayWeatherViewController: UIViewController {
+    /**
+     24hr weather forecast suppled by Ooen weather API
+     Setting a favorite sets direct transfer to this screen
+     */
 
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -44,7 +48,7 @@ class DayWeatherViewController: UIViewController {
     }
 
     func updateUIWithWeatherFromAPI() {
-        // Function to update View based on data retruned back from API
+        // Function to update View based on data returned back from API
         // Get Icon, then load interface
 
         if
@@ -112,7 +116,12 @@ class DayWeatherViewController: UIViewController {
     }
 }
 
-extension DayWeatherViewController: FavoriteWeattherable {
+extension DayWeatherViewController: FavoriteWeattherViewContoller {
+    func willSetDataForFavourite(with location: Location, favouriteSeque: Bool) {
+        self.location = location
+        self.performedAutomaticFavouriteSegue = favouriteSeque
+    }
+
     func willRefreshUIWithFavoriteLocationData(location: Location) {
         // Single function to perform both tasks for async favorite network call
         self.location = location

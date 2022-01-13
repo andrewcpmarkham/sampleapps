@@ -8,7 +8,12 @@
 import Foundation
 
 class LocationCollection: Codable {
-    // Singleton: idea being that regardless of mutli screen, there should be only one instance of collections
+
+    /**
+     Main collection of Location data for use throughout app
+     Singleton: regardless of mutli screen, there should be only one instance of collection
+     */
+
     static let shared =  LocationCollection()
     private var locations: [Location] = [] {
         didSet {
@@ -40,14 +45,12 @@ class LocationCollection: Codable {
         }
     }
     func deleteLocation(location: Location) {
-        // Only add unique locations
         if let index = locations.firstIndex(of: location) {
             locations.remove(at: index)
         }
     }
 
     func deleteAllLocations() {
-        // Only add unique locations
         locations.removeAll()
     }
     func getLocationsCount() -> Int {
@@ -76,13 +79,13 @@ class LocationCollection: Codable {
         }
     }
     static func saveToFile(locations: [Location]) {
-        // Function to save data to file
+        // Function to save data to file (plist)
         let propertyListEncoder = PropertyListEncoder()
         let encodedEmoji = try? propertyListEncoder.encode(locations)
         try? encodedEmoji?.write(to: archiveURL, options: .noFileProtection)
     }
     static func loadFromFile() -> [Location] {
-        // Function to load data to file
+        // Function to load data to file (plist)
         let propertyListDecoder = PropertyListDecoder()
         if
             let retrievedLocationData = try? Data(contentsOf: archiveURL),

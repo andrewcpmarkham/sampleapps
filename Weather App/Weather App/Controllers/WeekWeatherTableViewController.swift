@@ -8,6 +8,10 @@
 import UIKit
 
 class WeekWeatherTableViewController: UITableViewController {
+    /**
+     Weeks weather forecast suppled by Ooen weather API
+     Setting a favorite sets direct transfer to this screen
+     */
 
     weak var location: Location!
     var performedAutomaticFavouriteSegue = false
@@ -23,7 +27,6 @@ class WeekWeatherTableViewController: UITableViewController {
         super.viewWillAppear(false)
 
         if performedAutomaticFavouriteSegue {
-            performedAutomaticFavouriteSegue = false
             Favourite.shared.willSetWeatherForFavorite(favoriteWeattherable: self)
         }
     }
@@ -103,7 +106,12 @@ class WeekWeatherTableViewController: UITableViewController {
     }
 }
 
-extension WeekWeatherTableViewController: FavoriteWeattherable {
+extension WeekWeatherTableViewController: FavoriteWeattherViewContoller {
+    func willSetDataForFavourite(with location: Location, favouriteSeque: Bool) {
+        self.location = location
+        self.performedAutomaticFavouriteSegue = favouriteSeque
+    }
+
     func willRefreshUIWithFavoriteLocationData(location: Location) {
         // Single function to perform both tasks for async favorite network call
         self.location = location

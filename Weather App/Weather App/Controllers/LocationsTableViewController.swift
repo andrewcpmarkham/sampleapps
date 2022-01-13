@@ -9,14 +9,14 @@ import UIKit
 
 class LocationsTableViewController: UITableViewController {
 
+    /**
+     First and central screen for the app that shows all the locations that have beeen set for the app
+     Weather data is called for each location as a single request for each location and supplied for
+     each of the different forecassts within the data structure
+     */
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Check if favourite is set
-        if Favourite.shared.hasFavourite() {
-            // Get weather for favorite prior to seque
-            performSegue(withIdentifier: PropertyKeys.chooseForecastSegueIdentifier, sender: self)
-        }
     }
 
     // MARK: - Table view data source
@@ -58,6 +58,7 @@ class LocationsTableViewController: UITableViewController {
 
         return swipeActions
     }
+
     // MARK: - Actions
     @IBAction func clearButtonSelected(_ sender: UIBarButtonItem) {
         LocationCollection.shared.deleteAllLocations()
@@ -78,10 +79,6 @@ class LocationsTableViewController: UITableViewController {
             if let locationIndex =  tableView.indexPathForSelectedRow?.row {
                 destination.location = LocationCollection.shared.getLocationAtIndex(index: locationIndex)
                 destination.navigationItem.title = "\(destination.location.city!), \(destination.location.country!)"
-            } else if let favouriteLocation = Favourite.shared.getFavouriteLocation() {
-                destination.location = favouriteLocation
-                destination.navigationItem.title = "\(favouriteLocation.city!), \(favouriteLocation.country!)"
-                destination.performedAutomaticFavouriteSegue = true
             }
         }
     }

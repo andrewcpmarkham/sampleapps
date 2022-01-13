@@ -8,7 +8,7 @@
 import Foundation
 
 struct WeatherObservation: Codable {
-    // Sub data object structure returned by API
+    // Sub data object structure returned by Open Weather API
     let detail: String
     let description: String
     let icon: String

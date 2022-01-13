@@ -10,8 +10,10 @@ import Foundation
 
 class DataController: ObservableObject {
     /**
-    Class used to manage storing and retrieving Location data from  JSON file
-    supplied by weather API and CoreData
+     Class used to manage storing and retrieving Location data from  JSON file
+     supplied by weather API stored in  CoreData
+     System is supplied with CoreData preloaded with JSON data due to JSON Load size
+     JSON FIle is provided just in case and for developers to reload should there be a need to.
      */
     var persistentContainer = NSPersistentContainer(name: PropertyKeys.locationEntityName)
 
@@ -19,7 +21,8 @@ class DataController: ObservableObject {
         willSetCoreData()
     }
 
-    /// Function to database for cities
+    /// Function to read data from JSON File and Load CoreData
+    /// Three sqllite files should be replaces subsequnetly for  production
     func willSetCoreData () {
 
         // Considerations of preloaded data

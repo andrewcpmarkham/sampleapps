@@ -8,7 +8,7 @@
 import Foundation
 
 struct WeatherResponse: Decodable {
-    // Main data object structure returned by API
+    // Main data object structure returned by Open Weather API
     let temp: Double
     let windSpeed: Double
     let windDirection: Int

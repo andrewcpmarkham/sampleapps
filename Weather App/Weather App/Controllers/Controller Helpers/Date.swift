@@ -8,7 +8,10 @@
 import Foundation
 
 extension Date {
-    // Date Formatter object
+    /**
+     Date Formatter object
+    */
+
     static let dateFormatter: DateFormatter = {
         /// Function for default date and tiem format in program
         let formatter = DateFormatter()

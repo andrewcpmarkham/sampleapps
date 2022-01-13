@@ -9,26 +9,18 @@ import UIKit
 
 class ForecastTableViewController: UITableViewController {
 
+    /**
+     Provides choise of forecasts that are supplied by the API
+     Weather data is called as a single request and  is aleady expected to be supplied
+     prevously.
+     Setting of a favourtie removed this screen from the normal sequence of seques
+     and transers the user directly to the forecast
+     */
+
     weak var location: Location!
-    var performedAutomaticFavouriteSegue = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Process for automated load of favourite
-        if performedAutomaticFavouriteSegue {
-            switch Favourite.shared.getFavouriteForecast() {
-            case .current:
-                performSegue(withIdentifier: PropertyKeys.currentForecastSegueIdentifier, sender: self)
-            case .hourly:
-                performSegue(withIdentifier: PropertyKeys.hourForecastSegueIdentifier, sender: self)
-            case .daily:
-                performSegue(withIdentifier: PropertyKeys.dayForecastSegueIdentifier, sender: self)
-            case .none:
-                // swiftlint:disable:next line_length
-                fatalError("An unexpected error occured: a favourite should always have a forecast set. This one didn't")
-            }
-        }
     }
 
     // MARK: - Table view data source
@@ -66,19 +58,10 @@ class ForecastTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
 
-        if let destination = segue.destination as? CurrentWeatherViewController {
-            destination.location = location
-            destination.performedAutomaticFavouriteSegue = performedAutomaticFavouriteSegue
-        } else if let destination = segue.destination as? DayWeatherViewController {
-            destination.location = location
-            destination.performedAutomaticFavouriteSegue = performedAutomaticFavouriteSegue
-        } else if let destination = segue.destination as? WeekWeatherTableViewController {
-            destination.location = location
-            destination.performedAutomaticFavouriteSegue = performedAutomaticFavouriteSegue
-        } else {
-            fatalError("Forecast View Controller is unreachable from the Locations View Controller")
-        }
-
-        performedAutomaticFavouriteSegue = false
+       if let destination = segue.destination as? FavoriteWeattherViewContoller {
+           destination.willSetDataForFavourite(with: location, favouriteSeque: false)
+       } else {
+           fatalError("Forecast View Controller is unreachable from the Locations View Controller")
+       }
     }
 }

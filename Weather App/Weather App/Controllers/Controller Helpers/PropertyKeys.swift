@@ -7,8 +7,17 @@
 
 import Foundation
 
+/**
+ Central storage of magic keys ( iteral strings) refferenced throughout the app
+*/
 struct PropertyKeys {
-    // central storage of magic keys (strings) refferenced in APP
+
+    // StoryBoard Identifiers
+    static let defaultStoryBoardIdentifier = "defaultStoryBoardIdentifier"
+    static let currentWeatherStoryboardId = "currentWeatherStoryboardId"
+    static let dayWeatherStoryboardId = "dayWeatherStoryboardId"
+    static let weekWeatherStoryboardId = "weekWeatherStoryboardId"
+
     // Cell Identifiers
     static let locationCellIdentifier = "locationCellIdentifier"
 
@@ -35,4 +44,5 @@ struct PropertyKeys {
     // Core Data
     static let locationEntityName = "Locations_CoreData"
     static let previouslyLaunchedKey = "previouslyLaunched"
+
 }

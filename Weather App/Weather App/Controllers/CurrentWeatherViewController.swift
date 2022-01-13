@@ -9,6 +9,11 @@ import UIKit
 
 class CurrentWeatherViewController: UIViewController {
 
+    /**
+     Current weather forecast suppled by Ooen weather API
+     Setting a favorite sets direct transfer to this screen
+     */
+
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -23,10 +28,6 @@ class CurrentWeatherViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super .viewWillAppear(false)
 
         // Setup animation to indicate network activity
         activityIndicator.hidesWhenStopped = true
@@ -34,7 +35,6 @@ class CurrentWeatherViewController: UIViewController {
 
         // Update UI with known data
         updateUI()
-
         // Update UI with data if available
         if performedAutomaticFavouriteSegue {
             Favourite.shared.willSetWeatherForFavorite(favoriteWeattherable: self)
@@ -111,7 +111,12 @@ class CurrentWeatherViewController: UIViewController {
     }
 }
 
-extension CurrentWeatherViewController: FavoriteWeattherable {
+extension CurrentWeatherViewController: FavoriteWeattherViewContoller {
+    func willSetDataForFavourite(with location: Location, favouriteSeque: Bool) {
+        self.location = location
+        self.performedAutomaticFavouriteSegue = favouriteSeque
+    }
+
     func willRefreshUIWithFavoriteLocationData(location: Location) {
         // Single function to perform both tasks for async favorite network call
         self.location = location

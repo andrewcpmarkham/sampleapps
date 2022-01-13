@@ -9,6 +9,10 @@ import Foundation
 
 extension URL {
 
+    /**
+        URL Helper Object
+     */
+
     func withQueries(_ queries: [String: String]) -> URL? {
         // Function to support query parameter inclusion to URL structure
         var components = URLComponents(url: self, resolvingAgainstBaseURL: true)

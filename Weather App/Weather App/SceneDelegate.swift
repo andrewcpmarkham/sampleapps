@@ -15,24 +15,57 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
-        // Use this method to optionally configure and attach the UIWindow `window`
-        // to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically
-        // be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new
-        // (see `application:configurationForConnectingSceneSession` instead).
 
-        // swiftlint:disable:next unused_optional_binding
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
 
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        if let vc = storyboard.instantiateViewController(withIdentifier: "customVCStoryboardId") as? CurrentWeatherViewController {
-//            let nav = UINavigationController(rootViewController: vc)
-//            let window = UIWindow(windowScene: windowScene)
-//            window.rootViewController = vc
-//            self.window = window
-//            window.makeKeyAndVisible()
-//        }
+        // Hijack the inital ViewController if a Favorite is set
+        // This logic then traspors the user to the favoourite forecast
+        // for the chosen location.
+        // The back button is set for direct return to the lcocations screen
+
+        if let favouriteLocation = Favourite.shared.getFavouriteLocation() {
+
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let window = UIWindow(windowScene: windowScene)
+            var favouriteViewController: FavoriteWeattherViewContoller?
+
+            // Set the encompassing navigation controller and hence removing
+            // forecasts out of the sequesnce
+            guard let navViewController = storyboard.instantiateViewController(
+                withIdentifier: PropertyKeys.defaultStoryBoardIdentifier) as? UINavigationController else {
+                    fatalError("Navigation View Controller for favourite couldn't be set!")
+                }
+
+            switch Favourite.shared.getFavouriteForecast() {
+            case .current:
+                let currentWeatherViewController = storyboard.instantiateViewController(
+                    withIdentifier: PropertyKeys.currentWeatherStoryboardId) as? CurrentWeatherViewController
+                favouriteViewController = currentWeatherViewController
+
+            case .hourly:
+                let dayWeatherViewController = storyboard.instantiateViewController(
+                    withIdentifier: PropertyKeys.dayWeatherStoryboardId) as? DayWeatherViewController
+                favouriteViewController = dayWeatherViewController
+
+            case .daily:
+                let weekWeatherTableViewController = storyboard.instantiateViewController(
+                    withIdentifier: PropertyKeys.weekWeatherStoryboardId) as? WeekWeatherTableViewController
+                favouriteViewController = weekWeatherTableViewController
+
+            case .none:
+                // swiftlint:disable:next line_length
+                fatalError("An unexpected error occured: a favourite should always have a forecast set. This one didn't")
+            }
+
+            guard let favouriteViewControllerUnwrapped = favouriteViewController else {
+                fatalError("A favouite View Controller couldn't be established when a favourite exists")
+            }
+            favouriteViewControllerUnwrapped.willSetDataForFavourite(with: favouriteLocation, favouriteSeque: true)
+            navViewController.pushViewController(favouriteViewControllerUnwrapped, animated: true)
+            window.rootViewController = navViewController
+            window.makeKeyAndVisible()
+            self.window = window
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
