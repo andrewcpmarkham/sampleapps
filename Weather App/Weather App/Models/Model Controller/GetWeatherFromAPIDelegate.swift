@@ -14,13 +14,23 @@ class GetWeatherFromAPIDelegate {
 
     let baseURL = URL(string: "https://api.openweathermap.org/data/2.5/onecall")!
     let urlSession = URLSession(configuration: .default)
-    private let APIKey = "b138128f7ce2de0582a03cf2c0b69a0b"
+    private var APIKey: String? {
+        // This needs to be a computed property as it doesn't update correctly
+        // then the locations view controller automotically requests setting it
+        // on first load of the app
+        UserDefaults.standard.string(forKey: PropertyKeys.openWeatherAPIKey)
+    }
     private var weatherResponse: WeatherResponse?
     // Function to request weather data in single call from Oepn Weather API
     func weatherRequest(
             cityLon: Double, cityLat: Double, optionalRequest: Bool,
             completion: @escaping (WeatherResponse?, Error?) -> Void
         ) {
+        // don't proceed if there is no API Key
+        guard let APIKey = self.APIKey else {
+            completion(nil, OpenWeatherAPIError(errorString: "API Key wasnt present for request"))
+            return
+        }
         // Only call API if there isnt a previos reponse for today
         if
             let previousRequest = weatherResponse,

@@ -14,9 +14,25 @@ class LocationsTableViewController: UITableViewController {
      Weather data is called for each location as a single request for each location and supplied for
      each of the different forecassts within the data structure
      */
+    @IBOutlet weak var apiKeyButton: UIBarButtonItem!
+    @IBOutlet weak var trashButton: UIBarButtonItem!
+    @IBOutlet weak var addLocationButton: UIBarButtonItem!
+
+    var alert: UIAlertController?
+    var apiKey = UserDefaults.standard.string(forKey: PropertyKeys.openWeatherAPIKey) {
+        didSet {
+            willSetBarButtons()
+            tableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        willSetBarButtons()
+        if apiKey == nil {
+            willCheckForAPIKey()
+        }
     }
 
     // MARK: - Table view data source
@@ -25,7 +41,7 @@ class LocationsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return LocationCollection.shared.getLocationsCount()
+        return apiKey != nil ? LocationCollection.shared.getLocationsCount() : 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,16 +75,32 @@ class LocationsTableViewController: UITableViewController {
         return swipeActions
     }
 
+    // MARK: - Functions
+    func willSetBarButtons() {
+        /**
+         Function to update bar buttons based on state of ViewController
+         */
+        trashButton.isEnabled = LocationCollection.shared.getLocationsCount() != 0 && apiKey != nil
+        apiKeyButton.tintColor = apiKey == nil ? .red : trashButton.tintColor
+        addLocationButton.isEnabled = apiKey != nil
+    }
+
     // MARK: - Actions
     @IBAction func clearButtonSelected(_ sender: UIBarButtonItem) {
         LocationCollection.shared.deleteAllLocations()
+        trashButton.isEnabled = false
         tableView.reloadData()
+    }
+
+    @IBAction func apiKeyButtonSelected(_ sender: UIBarButtonItem) {
+        willCheckForAPIKey()
     }
 
     @IBAction func unwindToLocationsTableview(for unwindSegue: UIStoryboardSegue) {
         if unwindSegue.identifier == PropertyKeys.saveLocationUnwindSegueIdentifier {
             // alphabetical so inserting a single row was more complex and I was lazy
             tableView.reloadData()
+            willSetBarButtons()
         }
     }
 

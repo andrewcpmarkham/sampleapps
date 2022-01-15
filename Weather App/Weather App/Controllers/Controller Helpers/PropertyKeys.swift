@@ -45,4 +45,7 @@ struct PropertyKeys {
     static let locationEntityName = "Locations_CoreData"
     static let previouslyLaunchedKey = "previouslyLaunched"
 
+    // User Defaults
+    static let openWeatherAPIKey = "openWeatherAPIKey"
+
 }

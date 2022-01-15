@@ -26,6 +26,7 @@
 		3E626F422772F91600B6E9E0 /* Locations_CoreData.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 3E626F3F2772F91600B6E9E0 /* Locations_CoreData.sqlite-wal */; };
 		3E671CC225170D57000D795A /* LocationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E671CC125170D57000D795A /* LocationsTableViewCell.swift */; };
 		3E671CC725170E91000D795A /* PropertyKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E671CC625170E91000D795A /* PropertyKeys.swift */; };
+		3E7186F9279234BB0038A268 /* LocationTableViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7186F8279234BB0038A268 /* LocationTableViewController+Helpers.swift */; };
 		3E92E449277526040013F243 /* ForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E92E448277526040013F243 /* ForecastTableViewCell.swift */; };
 		3E9F02A625141CB6004BBD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9F02A525141CB6004BBD43 /* AppDelegate.swift */; };
 		3E9F02A825141CB6004BBD43 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9F02A725141CB6004BBD43 /* SceneDelegate.swift */; };
@@ -82,6 +83,7 @@
 		3E626F3F2772F91600B6E9E0 /* Locations_CoreData.sqlite-wal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Locations_CoreData.sqlite-wal"; sourceTree = "<group>"; };
 		3E671CC125170D57000D795A /* LocationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsTableViewCell.swift; sourceTree = "<group>"; };
 		3E671CC625170E91000D795A /* PropertyKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyKeys.swift; sourceTree = "<group>"; };
+		3E7186F8279234BB0038A268 /* LocationTableViewController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationTableViewController+Helpers.swift"; sourceTree = "<group>"; };
 		3E92E448277526040013F243 /* ForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastTableViewCell.swift; sourceTree = "<group>"; };
 		3E9F02A225141CB6004BBD43 /* Weather App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E9F02A525141CB6004BBD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -233,13 +235,13 @@
 		3E9F02D825141CC6004BBD43 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3EFF028F251DCCE00093FE0E /* Controller Helpers */,
 				3EAE92B32517026E00EB3BC2 /* LocationsTableViewController.swift */,
 				3EDB653725180E7700A3234E /* ForecastTableViewController.swift */,
 				3E1D73E9251725520065C74E /* CurrentWeatherViewController.swift */,
 				3E1D73EE251725740065C74E /* DayWeatherViewController.swift */,
 				3E5891632518B9010086194C /* WeekWeatherTableViewController.swift */,
 				3EB1C65D27740B5D004269E4 /* AddLocationViewController.swift */,
+				3EFF028F251DCCE00093FE0E /* Controller Helpers */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -282,6 +284,7 @@
 				3E671CC625170E91000D795A /* PropertyKeys.swift */,
 				3EFF0290251DCD120093FE0E /* Date.swift */,
 				3E3DF636251982F6007AEAEC /* URL+Helpers.swift */,
+				3E7186F8279234BB0038A268 /* LocationTableViewController+Helpers.swift */,
 			);
 			path = "Controller Helpers";
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 			files = (
 				3E92E449277526040013F243 /* ForecastTableViewCell.swift in Sources */,
 				3EDB653825180E7700A3234E /* ForecastTableViewController.swift in Sources */,
+				3E7186F9279234BB0038A268 /* LocationTableViewController+Helpers.swift in Sources */,
 				3E671CC225170D57000D795A /* LocationsTableViewCell.swift in Sources */,
 				3EB1C65E27740B5D004269E4 /* AddLocationViewController.swift in Sources */,
 				3EAE92B42517026E00EB3BC2 /* LocationsTableViewController.swift in Sources */,

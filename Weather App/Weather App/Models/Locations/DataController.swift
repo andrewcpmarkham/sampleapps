@@ -205,8 +205,8 @@ private extension DataController {
         } catch let nserror as NSError {
             fatalError("Error: \(nserror.localizedDescription)")
         }
+        // Seeded core data
         let defaults = UserDefaults.standard
         defaults.set(true, forKey: PropertyKeys.previouslyLaunchedKey)
-        print("Seeded Core Data")
     }
 }
