@@ -15,7 +15,7 @@ class Location: Equatable, Comparable, Codable {
     // swiftlint:disable:next weak_delegate
     var getWeatherFromAPIDelegate = GetWeatherFromAPIDelegate()
     var weather: WeatherResponse?
-    // swiftlint:disable:next identifier_name
+
     var id: Int?
     var city: String?
     var state: String?
@@ -24,7 +24,7 @@ class Location: Equatable, Comparable, Codable {
     var lon: Double?
 
     private enum WeatherAPIDecodingKeys: String, CodingKey {
-        // swiftlint:disable:next identifier_name
+
         case id
         case city = "name"
         case sys
@@ -36,7 +36,7 @@ class Location: Equatable, Comparable, Codable {
     }
 
     private enum LocationsJSONdecodingkeys: String, CodingKey {
-        // swiftlint:disable:next identifier_name
+
         case id
         case city = "name"
         case state
@@ -50,7 +50,7 @@ class Location: Equatable, Comparable, Codable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        // swiftlint:disable:next identifier_name
+
         case id
         case city
         case state
@@ -60,7 +60,6 @@ class Location: Equatable, Comparable, Codable {
         case lon
     }
 
-    // swiftlint:disable:next identifier_name
     init(id: Int, city: String, state: String, country: String, lat: Double, lon: Double) {
         self.id = id
         self.city = city

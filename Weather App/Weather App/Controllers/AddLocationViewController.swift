@@ -80,7 +80,7 @@ class AddLocationViewController: UIViewController {
         for ( _, location) in locationsSelected {
             // Convert from coredata object to location object
             if
-                // swiftlint:disable:next identifier_name
+
                 let id = location.value(forKey: "id") as? Int,
                 let city = location.value(forKey: "city") as? String,
                 let state = location.value(forKey: "state") as? String,
