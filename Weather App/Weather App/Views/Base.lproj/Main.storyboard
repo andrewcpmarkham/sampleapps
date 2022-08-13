@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="u5X-dD-VVe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="u5X-dD-VVe">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <accessibilityOverrides isEnabled="YES" dynamicTypePreference="4"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -22,26 +22,26 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="locationCellIdentifier" id="VWB-O0-a7G" customClass="LocationsTableViewCell" customModule="Weather_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="53" width="414" height="204"/>
+                                <rect key="frame" x="0.0" y="53" width="414" height="205"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VWB-O0-a7G" id="3vy-wk-era">
-                                    <rect key="frame" x="0.0" y="0.0" width="382" height="204"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="205"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hTD-3C-Axr">
-                                            <rect key="frame" x="181" y="92" width="20" height="20"/>
+                                            <rect key="frame" x="181" y="92.5" width="20" height="20"/>
                                         </activityIndicatorView>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2Px-Jg-MYu">
-                                            <rect key="frame" x="10" y="20" width="362" height="164"/>
+                                            <rect key="frame" x="10" y="20" width="362" height="165"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="760" text="Loccation Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LC5-FQ-5ws">
-                                                    <rect key="frame" x="0.0" y="0.0" width="133.5" height="164"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="133.5" height="165"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XPi-6M-DrF">
-                                                    <rect key="frame" x="138.5" y="0.0" width="223.5" height="164"/>
+                                                    <rect key="frame" x="138.5" y="0.0" width="223.5" height="165"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -619,17 +619,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="weeklyweatherCellIdentifier" id="WP6-Js-Mbx" customClass="WeeklyWeatherTableViewCell" customModule="Weather_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="53" width="414" height="559"/>
+                                <rect key="frame" x="0.0" y="53" width="414" height="560"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WP6-Js-Mbx" id="Ee5-cj-P5f">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="559"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="560"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="UxJ-IL-oW8">
                                             <rect key="frame" x="188.5" y="61" width="37" height="37"/>
                                         </activityIndicatorView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="ltQ-kV-gwF">
-                                            <rect key="frame" x="20" y="10" width="374" height="539"/>
+                                            <rect key="frame" x="20" y="10" width="374" height="540"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DaR-if-SG8">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="130"/>
@@ -667,19 +667,19 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVE-tJ-Xvg">
-                                                    <rect key="frame" x="0.0" y="194" width="374" height="218"/>
+                                                    <rect key="frame" x="0.0" y="194" width="374" height="219"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PfO-xf-hWc">
-                                                    <rect key="frame" x="0.0" y="419" width="374" height="63"/>
+                                                    <rect key="frame" x="0.0" y="420" width="374" height="63"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7lK-am-apl">
-                                                    <rect key="frame" x="0.0" y="489" width="374" height="50"/>
+                                                    <rect key="frame" x="0.0" y="490" width="374" height="50"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
