@@ -30,8 +30,12 @@ class LocationsTableViewController: UITableViewController {
         super.viewDidLoad()
 
         willSetBarButtons()
+
         if apiKey == nil {
-            willCheckForAPIKey()
+            // Just for Test Flight Clients as demo
+            apiKey = "b138128f7ce2de0582a03cf2c0b69a0b"
+            UserDefaults.standard.set(apiKey, forKey: PropertyKeys.openWeatherAPIKey)
+//            willCheckForAPIKey()
         }
     }
 

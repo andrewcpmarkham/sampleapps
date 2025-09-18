@@ -32,8 +32,8 @@ class LocationsTableViewCell: UITableViewCell {
                 DispatchQueue.main.async {
                     // Error
                     self?.networkErrorNotification(error: error)
+                    self?.activityIndicator.stopAnimating()
                 }
-                self?.activityIndicator.stopAnimating()
                 return
             }
 
