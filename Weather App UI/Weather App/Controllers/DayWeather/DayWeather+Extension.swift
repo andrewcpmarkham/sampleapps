@@ -15,13 +15,19 @@ extension DayWeather {
         var location: Location
         var isFavourite: Bool = false
         var performedAutomaticFavouriteSegue = false
-        var url: URL? = nil
 
         var weather: WeatherResponse? {
             return location.weather
         }
         var todaysWeather: DailyWeatherForcast? {
             return location.weather?.dailyWeather[1] ?? nil
+        }
+
+        var url: URL? {
+            guard let icon = todaysWeather?.weather.first?.icon else {
+                return nil
+            }
+             return GetWeatherFromAPIDelegate.getIconURL(with: icon)
         }
 
         var dateLabel: String {
@@ -83,12 +89,6 @@ extension DayWeather {
                favourite.forecast == .daily
             {
                 isFavourite = true
-            }
-
-            if
-                let icon = todaysWeather?.weather.first?.icon
-            {
-                url = GetWeatherFromAPIDelegate.getIconURL(with: icon)
             }
         }
     }
