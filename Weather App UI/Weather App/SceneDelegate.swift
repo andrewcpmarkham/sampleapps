@@ -43,9 +43,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 favouriteViewController = currentWeatherViewController
 
             case .hourly:
-                let dayWeatherViewController = storyboard.instantiateViewController(
-                    withIdentifier: PropertyKeys.dayWeatherStoryboardId) as? DayWeatherViewController
-                favouriteViewController = dayWeatherViewController
+                let currentWeatherViewController = storyboard.instantiateViewController(
+                    withIdentifier: PropertyKeys.currentWeatherStoryboardId) as? CurrentWeatherViewController
+                favouriteViewController = currentWeatherViewController
+//                let dayWeatherViewController = storyboard.instantiateViewController(
+//                    withIdentifier: PropertyKeys.dayWeatherStoryboardId) as? DayWeatherViewController
+//                favouriteViewController = dayWeatherViewController
 
             case .daily:
                 let weekWeatherTableViewController = storyboard.instantiateViewController(

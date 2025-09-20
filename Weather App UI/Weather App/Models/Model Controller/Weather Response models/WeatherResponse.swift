@@ -44,4 +44,36 @@ struct WeatherResponse: Decodable {
         lat = try container.decode(Double.self, forKey: .lat)
         timezoneOffset = try container.decode(Int.self, forKey: .timezoneOffset)
     }
+
+    init(temp: Double,
+         windSpeed: Double,
+         windDirection: Int,
+         weather: [WeatherObservation],
+         dailyWeather: [DailyWeatherForcast],
+         lon: Double,
+         lat: Double,
+         timezoneOffset: Int) {
+        self.temp = temp
+        self.windSpeed = windSpeed
+        self.windDirection = windDirection
+        self.weather = weather
+        self.dailyWeather = dailyWeather
+        self.lon = lon
+        self.lat = lat
+        self.timezoneOffset = timezoneOffset
+    }
+
+    // MARK: - Example
+    static var example: WeatherResponse {
+        return WeatherResponse(
+            temp: 12.99,
+            windSpeed: 5.5099999999999998,
+            windDirection: 325,
+            weather: [WeatherObservation.example],
+            dailyWeather: [DailyWeatherForcast.example],
+            lon: 144.96000000000001,
+            lat: -37.810000000000002,
+            timezoneOffset: 36000
+        )
+    }
 }

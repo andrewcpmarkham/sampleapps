@@ -54,6 +54,11 @@ class GetWeatherFromAPIDelegate {
 
         let task = urlSession.dataTask(with: url) {(data, _, error) in
 
+            // print data out as json for use
+//            if let prettyJSonData = data?.asPrettyJSON() {
+//                print(prettyJSonData)
+//            }
+
             let jsonDecoder = JSONDecoder()
             if
                 let dataUnwrapped = data,

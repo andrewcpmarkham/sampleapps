@@ -13,7 +13,7 @@ struct DayWeather: View {
 
     var body: some View {
         VStack {
-            TitleRow(city: viewModel.location.city, isFavourite: true)
+            TitleRow(city: viewModel.location.city, isFavourite: viewModel.isFavourite)
             HStack {
                 Text (viewModel.dateLabel)
                     .font(.title)

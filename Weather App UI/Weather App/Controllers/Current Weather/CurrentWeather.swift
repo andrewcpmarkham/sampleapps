@@ -13,7 +13,7 @@ struct CurrentWeather: View {
 
     var body: some View {
         VStack {
-            TitleRow(city: viewModel.location.city, isFavourite: true)
+            TitleRow(city: viewModel.location.city, isFavourite: viewModel.isFavourite)
 
             HStack {
 
