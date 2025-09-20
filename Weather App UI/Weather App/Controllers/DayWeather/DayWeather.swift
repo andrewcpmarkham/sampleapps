@@ -1,22 +1,29 @@
 //
-//  CurrentWeather.swift
+//  DayWeather.swift
 //  Weather App
 //
-//  Created by Andrew CP Markham on 1/9/2025.
+//  Created by Andrew CP Markham on 20/9/2025.
 //
 
 import SwiftUI
 
-struct CurrentWeather: View {
+struct DayWeather: View {
 
     @State private var viewModel: ViewModel
 
     var body: some View {
         VStack {
             TitleRow(city: viewModel.location.city, isFavourite: true)
-
             HStack {
-
+                Text (viewModel.dateLabel)
+                    .font(.title)
+                    .padding()
+                Spacer()
+            }
+            HStack {
+                Text(viewModel.detailLabel)
+                    .padding()
+                Spacer()
                 Spacer()
                 if let url = viewModel.url {
                     WeatherImageView(url: url)
@@ -27,30 +34,39 @@ struct CurrentWeather: View {
                         .padding()
                 }
                 Spacer()
-                VStack {
-                    Text(viewModel.location.temperatureLabel)
-                    Text("Clouds")
-
-                }
-                .font(.title)
-                .padding()
+            }
+            .padding([.top, .bottom])
+            HStack() {
+                Text("High:")
+                Text(viewModel.highTempLabel)
                 Spacer()
             }
+            .padding([.leading, .top])
+            .padding(.bottom, 5)
+            HStack() {
+                Text("Low:")
+                Text(viewModel.lowTempLabel)
+                Spacer()
+            }
+            .padding(.leading)
+            .padding(.bottom, 5)
             HStack() {
                 Text("Wind Direction:")
-                Text(viewModel.location.windDirectionLabel)
+                Text(viewModel.windDirectionLabel)
                 Spacer()
             }
-            .padding()
+            .padding(.leading)
+            .padding(.bottom, 5)
             HStack {
                 Text("Wind Speed:")
-                Text(viewModel.location.windSpeedLabel)
+                Text(viewModel.windSpeedLabel)
                 Spacer()
             }
-            .padding()
+            .padding(.leading)
+            .padding(.bottom, 5)
             Spacer()
         }
-        .navigationTitle("Current Weather")
+        .navigationTitle("24-Hour Forecast")
         .navigationBarTitleDisplayMode(.large)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarBackground(Color(.systemBackground), for: .navigationBar)
@@ -65,6 +81,6 @@ struct CurrentWeather: View {
 
 #Preview {
     NavigationStack {
-        CurrentWeather(location: Location.example)
+        DayWeather(location: Location.example)
     }
 }

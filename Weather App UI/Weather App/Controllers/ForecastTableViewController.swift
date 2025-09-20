@@ -62,10 +62,14 @@ class ForecastTableViewController: UITableViewController {
             let view = CurrentWeather(location: location)
             let host = UIHostingController(rootView: view)
             navigationController?.pushViewController(host, animated: true)
+        case 1:
+            let view = DayWeather(location: location)
+            let host = UIHostingController(rootView: view)
+            navigationController?.pushViewController(host, animated: true)
         default:
             // TODO: - Implemetn the other views in swiftUI
             print("TO Be Implemented")
-//            performSegue(withIdentifier: PropertyKeys.dayForecastSegueIdentifier, sender: self)
+            //            performSegue(withIdentifier: PropertyKeys.dayForecastSegueIdentifier, sender: self)
         }
     }
 
