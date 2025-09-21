@@ -16,68 +16,49 @@ extension DayWeather {
         var isFavourite: Bool = false
         var performedAutomaticFavouriteSegue = false
 
-        var weather: WeatherResponse? {
-            return location.weather
-        }
-        var todaysWeather: DailyWeatherForcast? {
-            return location.weather?.dailyWeather[1] ?? nil
-        }
-
+        var weather: WeatherResponse
+        var todaysWeather: DailyWeatherForcast
         var url: URL? {
-            guard let icon = todaysWeather?.weather.first?.icon else {
+            guard let icon = todaysWeather.weather.first?.icon else {
                 return nil
             }
              return GetWeatherFromAPIDelegate.getIconURL(with: icon)
         }
 
         var dateLabel: String {
-            guard let weather = weather, let todaysWeather = todaysWeather else {
-                return ""
-            }
-
-            return Date.dateOnlyFormatter.string(
+            Date.dateOnlyFormatter.string(
                 from: Date.dateFromUTCInt(UTCTimeStamp: todaysWeather.dt + weather.timezoneOffset)
             )
         }
 
         var highTempLabel: String {
-            guard let todaysWeather else {
-                return ""
-            }
-            return String(format: "%.0f", todaysWeather.tempMax) + "C"
+            String(format: "%.0f", todaysWeather.tempMax) + "C"
         }
 
         var lowTempLabel: String {
-            guard let todaysWeather else {
-                return ""
-            }
-            return String(format: "%.0f", todaysWeather.tempMin) + "C"
+            String(format: "%.0f", todaysWeather.tempMin) + "C"
         }
 
         var detailLabel: String {
-            guard let detail = todaysWeather?.weather.first?.detail else {
+            guard let detail = todaysWeather.weather.first?.detail else {
                 return ""
             }
             return detail
         }
 
         var windDirectionLabel: String {
-            guard let weather else {
-                return ""
-            }
-            return "\(weather.windDirection)º"
+            "\(weather.windDirection)º"
         }
 
         var windSpeedLabel: String {
-            guard let weather else {
-                return ""
-            }
-            return String(format: "%.1f", weather.windSpeed) + "km/h"
+            String(format: "%.1f", weather.windSpeed) + "km/h"
         }
 
         // MARK: - Inits
-        init(location: Location) {
+        init(location: Location, weather: WeatherResponse, todaysWeather: DailyWeatherForcast) {
             self.location = location
+            self.weather = weather
+            self.todaysWeather = todaysWeather
 
             updateUI()
         }

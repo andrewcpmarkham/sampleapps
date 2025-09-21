@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct DailyWeatherForcast: Decodable {
+struct DailyWeatherForcast: Decodable, Identifiable {
+    let id = UUID()
+
     // Sub data object structure returned by API
     // swiftlint:disable:next identifier_name
     let dt: Int

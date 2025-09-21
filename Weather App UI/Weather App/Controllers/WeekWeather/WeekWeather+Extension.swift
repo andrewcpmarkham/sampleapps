@@ -12,18 +12,14 @@ extension WeekWeather {
     @Observable
     final class ViewModel {
 
-        var location: Location
+        let location: Location
         var isFavourite: Bool = false
         var performedAutomaticFavouriteSegue = false
-        var weather: WeatherResponse? {
-            return location.weather
-        }
-        var todaysWeather: DailyWeatherForcast? {
-            return location.weather?.dailyWeather[1] ?? nil
-        }
+        let weather: WeatherResponse
+        let weeksWeather: [DailyWeatherForcast]
 
         var dateLabel: String {
-            guard let weather = weather, let todaysWeather = todaysWeather else {
+            guard let todaysWeather = weeksWeather.first else {
                 return ""
             }
 
@@ -33,8 +29,10 @@ extension WeekWeather {
         }
 
         // MARK: - Inits
-        init(location: Location) {
+        init(location: Location, weather: WeatherResponse, weeksWeather: [DailyWeatherForcast]) {
             self.location = location
+            self.weather = weather
+            self.weeksWeather = weeksWeather
 
             updateUI()
         }

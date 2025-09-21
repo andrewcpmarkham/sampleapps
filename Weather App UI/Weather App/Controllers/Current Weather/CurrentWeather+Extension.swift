@@ -12,14 +12,17 @@ extension CurrentWeather {
     @Observable
     final class ViewModel {
 
-        var location: Location
+        let location: Location
+        let currentWeather: WeatherObservation
+
         var isFavourite: Bool = false
         var performedAutomaticFavouriteSegue = false
         var url: URL? = nil
 
         // MARK: - Inits
-        init(location: Location) {
+        init(location: Location, currenWeather: WeatherObservation) {
             self.location = location
+            self.currentWeather = currenWeather
 
             updateUI()
         }
@@ -32,13 +35,7 @@ extension CurrentWeather {
             {
                 isFavourite = true
             }
-
-            if
-                let weather = location.weather,
-                let currentWeather = weather.weather.first
-            {
-                url = GetWeatherFromAPIDelegate.getIconURL(with: currentWeather.icon)
-            }
+            url = GetWeatherFromAPIDelegate.getIconURL(with: currentWeather.icon)
         }
     }
 }

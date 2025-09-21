@@ -56,14 +56,28 @@ class ForecastTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        // Will not do anything if there is no data - maybe add alert here
         switch indexPath.row {
         case 0:
-            let view = CurrentWeather(location: location)
+            guard
+                let weather = location.weather,
+                let currentWeather = weather.weather.first
+            else {
+                // TODO: - Add Alert Here
+                return
+            }
+            let view = CurrentWeather(location: location, currenWeather: currentWeather)
             let host = UIHostingController(rootView: view)
             navigationController?.pushViewController(host, animated: true)
         case 1:
-            let view = DayWeather(location: location)
+            guard
+                let weather = location.weather,
+                let todaysWeather = weather.dailyWeather.first
+            else {
+                // TODO: - Add Alert Here
+                return
+            }
+            let view = DayWeather(location: location, weather: weather, todaysWeather: todaysWeather )
             let host = UIHostingController(rootView: view)
             navigationController?.pushViewController(host, animated: true)
         default:

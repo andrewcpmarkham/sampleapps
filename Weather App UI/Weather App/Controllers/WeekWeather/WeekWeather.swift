@@ -21,21 +21,24 @@ struct WeekWeather: View {
                 Spacer()
             }
         }
+        List(viewModel.weeksWeather) { dayWeather in
+            WeatherRowView(weather: viewModel.weather, dailyWeatherForcast: dayWeather)
+        }
         .navigationTitle("7-Day Forecast")
         .navigationBarTitleDisplayMode(.large)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarBackground(Color(.systemBackground), for: .navigationBar)
     }
     // MARK: - Init
-    init(location: Location) {
-        let viewModel = ViewModel(location: location)
+    init(location: Location, weather: WeatherResponse, weeksWeather: [DailyWeatherForcast] ) {
+        let viewModel = ViewModel(location: location, weather: weather, weeksWeather: weeksWeather)
         _viewModel = State(initialValue: viewModel)
     }
 }
 
 #Preview {
     NavigationStack {
-        WeekWeather(location: Location.example)
+        WeekWeather(location: Location.example, weather: WeatherResponse.example, weeksWeather: [DailyWeatherForcast.example, DailyWeatherForcast.example, DailyWeatherForcast.example])
     }
 }
 

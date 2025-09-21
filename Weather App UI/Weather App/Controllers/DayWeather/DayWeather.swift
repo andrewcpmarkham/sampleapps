@@ -73,14 +73,14 @@ struct DayWeather: View {
     }
 
     // MARK: - Init
-    init(location: Location) {
-        let viewModel = ViewModel(location: location)
+    init(location: Location, weather: WeatherResponse, todaysWeather: DailyWeatherForcast) {
+        let viewModel = ViewModel(location: location, weather: weather, todaysWeather: todaysWeather)
         _viewModel = State(initialValue: viewModel)
     }
 }
 
 #Preview {
     NavigationStack {
-        DayWeather(location: Location.example)
+        DayWeather(location: Location.example, weather: WeatherResponse.example, todaysWeather: DailyWeatherForcast.example )
     }
 }
