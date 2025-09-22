@@ -57,10 +57,10 @@ class ForecastTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Will not do anything if there is no data - maybe add alert here
+        guard let weather = location.weather else {return}
         switch indexPath.row {
         case 0:
             guard
-                let weather = location.weather,
                 let currentWeather = weather.weather.first
             else {
                 // TODO: - Add Alert Here
@@ -71,7 +71,6 @@ class ForecastTableViewController: UITableViewController {
             navigationController?.pushViewController(host, animated: true)
         case 1:
             guard
-                let weather = location.weather,
                 let todaysWeather = weather.dailyWeather.first
             else {
                 // TODO: - Add Alert Here
@@ -81,9 +80,9 @@ class ForecastTableViewController: UITableViewController {
             let host = UIHostingController(rootView: view)
             navigationController?.pushViewController(host, animated: true)
         default:
-            // TODO: - Implemetn the other views in swiftUI
-            print("TO Be Implemented")
-            //            performSegue(withIdentifier: PropertyKeys.dayForecastSegueIdentifier, sender: self)
+            let view = WeekWeather(location: location, weather: weather, weeksWeather: weather.dailyWeather )
+            let host = UIHostingController(rootView: view)
+            navigationController?.pushViewController(host, animated: true)
         }
     }
 

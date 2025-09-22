@@ -16,51 +16,45 @@ struct WeatherRowView: View {
             VStack(alignment: .leading) {
                 Text (viewModel.dateLabel)
                     .font(.title2)
-                    .padding(.leading)
                 Text(viewModel.detailLabel)
                     .font(.title2)
-                    .padding(.leading)
-
             }
             Spacer()
             if let url = viewModel.url {
                 WeatherImageView(url: url, contentMode: .fill)
                     .frame(width: 80, height: 80)
-                    .padding(.trailing)
             } else {
                 Image(systemName: "globe")
                     .foregroundStyle(.gray)
                     .imageScale(.large)
-                    .padding(.trailing)
             }
         }
+        .padding([.leading, .trailing])
+
         VStack(alignment: .leading) {
             HStack() {
                 Text("High:")
                     .bold()
                 Text(viewModel.highTempLabel)
             }
-            .padding([.leading])
             HStack() {
                 Text("Low:")
                     .bold()
                 Text(viewModel.lowTempLabel)
             }
-            .padding(.leading)
             HStack() {
                 Text("Wind Direction:")
                     .bold()
                 Text(viewModel.windDirectionLabel)
             }
-            .padding(.leading)
             HStack {
                 Text("Wind Speed:")
                     .bold()
                 Text(viewModel.windSpeedLabel)
                 Spacer()
             }
-            .padding(.leading)
         }
+        .padding(.leading)
     }
 
     // MARK: - Init

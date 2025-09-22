@@ -38,6 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
             switch FavouriteController.shared.getFavouriteForecast() {
             case .current:
+                // TODO: - fix this favourite implementation with swiftUI
                 let currentWeatherViewController = storyboard.instantiateViewController(
                     withIdentifier: PropertyKeys.currentWeatherStoryboardId) as? CurrentWeatherViewController
                 favouriteViewController = currentWeatherViewController
@@ -46,14 +47,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 let currentWeatherViewController = storyboard.instantiateViewController(
                     withIdentifier: PropertyKeys.currentWeatherStoryboardId) as? CurrentWeatherViewController
                 favouriteViewController = currentWeatherViewController
+                // TODO: - fix this favourite implementation with swiftUI
 //                let dayWeatherViewController = storyboard.instantiateViewController(
 //                    withIdentifier: PropertyKeys.dayWeatherStoryboardId) as? DayWeatherViewController
 //                favouriteViewController = dayWeatherViewController
 
             case .daily:
-                let weekWeatherTableViewController = storyboard.instantiateViewController(
-                    withIdentifier: PropertyKeys.weekWeatherStoryboardId) as? WeekWeatherTableViewController
-                favouriteViewController = weekWeatherTableViewController
+                let currentWeatherViewController = storyboard.instantiateViewController(
+                    withIdentifier: PropertyKeys.currentWeatherStoryboardId) as? CurrentWeatherViewController
+                favouriteViewController = currentWeatherViewController
+                // TODO: - fix this favourite implementation with swiftUI
+//                let weekWeatherTableViewController = storyboard.instantiateViewController(
+//                    withIdentifier: PropertyKeys.weekWeatherStoryboardId) as? WeekWeatherTableViewController
+//                favouriteViewController = weekWeatherTableViewController
 
             case .none:
                 // swiftlint:disable:next line_length

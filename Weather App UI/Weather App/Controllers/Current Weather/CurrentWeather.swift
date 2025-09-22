@@ -20,6 +20,7 @@ struct CurrentWeather: View {
                 Spacer()
                 if let url = viewModel.url {
                     WeatherImageView(url: url)
+                        .frame(width: 120, height: 120)
                 } else {
                     Image(systemName: "globe")
                         .foregroundStyle(.gray)
@@ -29,7 +30,8 @@ struct CurrentWeather: View {
                 Spacer()
                 VStack {
                     Text(viewModel.location.temperatureLabel)
-                    Text("Clouds")
+                    .bold()
+                    Text(viewModel.location.weatherDetailLabel)
 
                 }
                 .font(.title)
@@ -38,12 +40,14 @@ struct CurrentWeather: View {
             }
             HStack() {
                 Text("Wind Direction:")
+                    .bold()
                 Text(viewModel.location.windDirectionLabel)
                 Spacer()
             }
             .padding()
             HStack {
                 Text("Wind Speed:")
+                    .bold()
                 Text(viewModel.location.windSpeedLabel)
                 Spacer()
             }

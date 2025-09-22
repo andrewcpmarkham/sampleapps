@@ -14,15 +14,18 @@ struct WeekWeather: View {
     var body: some View {
         VStack {
             TitleRow(city: viewModel.location.city, isFavourite: viewModel.isFavourite)
-            HStack {
-                Text (viewModel.dateLabel)
-                    .font(.title)
-                    .padding()
-                Spacer()
+            ScrollView(.vertical) {
+                VStack {
+                    ForEach(viewModel.weeksWeather) { day in
+                        WeatherRowView(
+                            weather: viewModel.weather,
+                            dailyWeatherForcast: day
+                        )
+                        Divider()
+                            .background(Color.secondary)
+                    }
+                }
             }
-        }
-        List(viewModel.weeksWeather) { dayWeather in
-            WeatherRowView(weather: viewModel.weather, dailyWeatherForcast: dayWeather)
         }
         .navigationTitle("7-Day Forecast")
         .navigationBarTitleDisplayMode(.large)

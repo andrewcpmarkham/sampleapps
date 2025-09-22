@@ -78,7 +78,7 @@ class Location: Equatable, Comparable {
 
     // MARK: - Example
     static var example: Location {
-        return Location (
+        let location = Location (
             id: 1,
             city: "Sydney",
             state: "NSW",
@@ -86,6 +86,8 @@ class Location: Equatable, Comparable {
             lat: 37.785834,
             lon: -122.406417
         )
+        location.weather = WeatherResponse.example
+        return location
     }
 }
 
