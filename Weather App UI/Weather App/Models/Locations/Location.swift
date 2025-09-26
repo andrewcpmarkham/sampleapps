@@ -10,7 +10,7 @@ import Foundation
 /**
  Main dataobject used within apps concerning city data from API and cities data in coredata
 */
-class Location: Equatable, Comparable {
+class Location {
 
     // swiftlint:disable:next weak_delegate
     var getWeatherFromAPIDelegate = GetWeatherFromAPIDelegate()
@@ -92,7 +92,7 @@ class Location: Equatable, Comparable {
 }
 
 // equitable protocol conformance function
-extension Location {
+extension Location: Equatable {
     static func == (lhs: Location, rhs: Location) -> Bool {
 
         return lhs.id == rhs.id
@@ -100,9 +100,16 @@ extension Location {
 }
 
 // comparable protocol conformance function
-extension Location {
+extension Location: Comparable {
     static func < (lhs: Location, rhs: Location) -> Bool {
         return lhs.city < rhs.city
+    }
+}
+
+// MARK: - Hashable
+extension Location: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

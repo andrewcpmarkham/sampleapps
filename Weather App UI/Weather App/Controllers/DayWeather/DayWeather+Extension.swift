@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension DayWeather {
+extension DayWeatherView {
 
     @Observable
     final class ViewModel {

@@ -66,7 +66,7 @@ class ForecastTableViewController: UITableViewController {
                 // TODO: - Add Alert Here
                 return
             }
-            let view = CurrentWeather(location: location, currenWeather: currentWeather)
+            let view = CurrentWeatherView(location: location, currenWeather: currentWeather)
             let host = UIHostingController(rootView: view)
             navigationController?.pushViewController(host, animated: true)
         case 1:
@@ -76,11 +76,11 @@ class ForecastTableViewController: UITableViewController {
                 // TODO: - Add Alert Here
                 return
             }
-            let view = DayWeather(location: location, weather: weather, todaysWeather: todaysWeather )
+            let view = DayWeatherView(location: location, weather: weather, todaysWeather: todaysWeather )
             let host = UIHostingController(rootView: view)
             navigationController?.pushViewController(host, animated: true)
         default:
-            let view = WeekWeather(location: location, weather: weather, weeksWeather: weather.dailyWeather )
+            let view = WeekWeatherView(location: location, weather: weather, weeksWeather: weather.dailyWeather )
             let host = UIHostingController(rootView: view)
             navigationController?.pushViewController(host, animated: true)
         }

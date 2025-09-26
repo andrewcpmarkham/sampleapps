@@ -1,5 +1,5 @@
 //
-//  CurrentWeather.swift
+//  CurrentWeatherView.swift
 //  Weather App
 //
 //  Created by Andrew CP Markham on 1/9/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CurrentWeather: View {
+struct CurrentWeatherView: View {
 
     @State private var viewModel: ViewModel
 
@@ -69,6 +69,6 @@ struct CurrentWeather: View {
 
 #Preview {
     NavigationStack {
-        CurrentWeather(location: Location.example, currenWeather: WeatherObservation.example)
+        CurrentWeatherView(location: Location.example, currenWeather: WeatherObservation.example)
     }
 }

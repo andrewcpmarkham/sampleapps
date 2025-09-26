@@ -1,5 +1,5 @@
 //
-//  WeekWeather.swift
+//  WeekWeatherView.swift
 //  Weather App
 //
 //  Created by Andrew CP Markham on 20/9/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WeekWeather: View {
+struct WeekWeatherView: View {
 
     @State private var viewModel: ViewModel
     
@@ -41,7 +41,7 @@ struct WeekWeather: View {
 
 #Preview {
     NavigationStack {
-        WeekWeather(location: Location.example, weather: WeatherResponse.example, weeksWeather: [DailyWeatherForcast.example, DailyWeatherForcast.example, DailyWeatherForcast.example])
+        WeekWeatherView(location: Location.example, weather: WeatherResponse.example, weeksWeather: [DailyWeatherForcast.example, DailyWeatherForcast.example, DailyWeatherForcast.example])
     }
 }
 

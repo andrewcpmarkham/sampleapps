@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class LocationsTableViewController: UITableViewController {
 
@@ -64,6 +65,20 @@ class LocationsTableViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        guard
+            let location = LocationCollection.shared.getLocationAtIndex(index: indexPath.row),
+            let weather = location.weather
+        else {
+            // TODO: - Add Alert Here
+            return
+        }
+        let view = ForecastView(location: location, weather: weather)
+        let host = UIHostingController(rootView: view)
+        navigationController?.pushViewController(host, animated: true)
+    }
+
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt
                             indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let item = UIContextualAction(style: .destructive, title: "Delete") {  (_, _, _) in
@@ -107,16 +122,4 @@ class LocationsTableViewController: UITableViewController {
             willSetBarButtons()
         }
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-
-        if let destination = segue.destination as? ForecastTableViewController {
-            if let locationIndex =  tableView.indexPathForSelectedRow?.row {
-                destination.location = LocationCollection.shared.getLocationAtIndex(index: locationIndex)
-                destination.navigationItem.title = "\(destination.location.city), \(destination.location.country)"
-            }
-        }
-    }
-
 }

@@ -1,5 +1,5 @@
 //
-//  DayWeather.swift
+//  DayWeatherView.swift
 //  Weather App
 //
 //  Created by Andrew CP Markham on 20/9/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DayWeather: View {
+struct DayWeatherView: View {
 
     @State private var viewModel: ViewModel
 
@@ -81,6 +81,6 @@ struct DayWeather: View {
 
 #Preview {
     NavigationStack {
-        DayWeather(location: Location.example, weather: WeatherResponse.example, todaysWeather: DailyWeatherForcast.example )
+        DayWeatherView(location: Location.example, weather: WeatherResponse.example, todaysWeather: DailyWeatherForcast.example )
     }
 }
