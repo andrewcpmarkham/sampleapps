@@ -17,8 +17,8 @@ struct ForecastView: View {
             if viewModel.currentWeather == nil,
                viewModel.dayWeather == nil,
                viewModel.weekWeather == nil {
-                Text("No Weather Available…")
-                    .font(.title)
+                Text("Weather service is unavailable…")
+                    .font(.headline)
                     .foregroundStyle(.secondary)
                     .padding()
             } else {

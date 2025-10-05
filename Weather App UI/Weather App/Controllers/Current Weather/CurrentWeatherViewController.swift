@@ -105,9 +105,9 @@ class CurrentWeatherViewController: UIViewController {
         super.prepare(for: segue, sender: sender)
 
         // Transition to favourite on load means Forecast locaation may not be set
-        if let destination = segue.destination as? ForecastTableViewController, destination.location == nil {
-            destination.location = location
-        }
+//        if let destination = segue.destination as? ForecastTableViewController, destination.location == nil {
+//            destination.location = location
+//        }
     }
 }
 
