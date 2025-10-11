@@ -41,19 +41,15 @@ extension LocationsView {
 
         var title: String { "Weather Locations"}
         var trashButtonEnabled: Bool
-        var apiKeyButtonEnabled: Bool
+        var apiKeyButtonEnabled: Bool = false
         var addLocationButtonEnabled: Bool
-        var filteredLocations: [Location] {
-            // TODO: - Complete list here please
-            []
-        }
+        var filteredLocations: [Location] = []
 
         var modalState: ModalState = .none
 
         private var lastSearchText: String = ""
         var searchText: String = "" {
             didSet {
-                // Avoid fetching if search text is unchanged
                 if searchText != lastSearchText {
                     lastSearchText = searchText
                     loadData()
@@ -63,29 +59,28 @@ extension LocationsView {
 
         init() {
             trashButtonEnabled = LocationCollection.shared.getLocationsCount() > 0
-            apiKeyButtonEnabled = true // Need to get this from keychain
-            addLocationButtonEnabled = true // = apiKey != nil
+            addLocationButtonEnabled = true
+            apiKeyButtonEnabled = false
+
+            loadData()
+            updateToolBarButtonStates()
         }
 
         func loadData() {
-//            do {
-//                let sortDescriptor = [
-//                    SortDescriptor(\Contact.favorite_,  order: .reverse), SortDescriptor(\Contact.nameFirst_)
-//                ]
-//                if searchText.isEmpty {
-//                    let descriptor = FetchDescriptor<Contact>(sortBy: sortDescriptor)
-//                    contacts = try modelContext.fetch(descriptor)
-//                } else {
-//                    let contactPredicate = #Predicate<Contact> { contact in
-//                        contact.nameFirst_.localizedStandardContains(searchText) || contact.nameLast_.localizedStandardContains(searchText)
-//                    }
-//
-//                    let descriptor = FetchDescriptor<Contact>(predicate: contactPredicate, sortBy: sortDescriptor)
-//                    contacts = try modelContext.fetch(descriptor)
-//                }
-//            } catch {
-//                print("Fetch failed")
-//            }
+            let locationsStored = LocationCollection.shared.getAllLocations()
+
+            if searchText.isEmpty || locationsStored.isEmpty {
+                filteredLocations = LocationCollection.shared.getAllLocations().sorted()
+                return
+            }
+            filteredLocations = locationsStored.filter {
+                $0.city.lowercased().contains(searchText.lowercased())
+            }.sorted()
+        }
+
+        func delete(_ location: Location) {
+            LocationCollection.shared.deleteLocation(location: location)
+            loadData()
         }
 
         func clearButtonSelected() {
@@ -95,6 +90,14 @@ extension LocationsView {
 
         func apiKeyButtonSelected() {
             modalState = .showAPIKeyAlert
+        }
+
+        func updateToolBarButtonStates() {
+            Task {
+                let hasKey = (try? await KeychainManager.shared.getAPIKey()) != nil
+                self.apiKeyButtonEnabled = hasKey
+                self.addLocationButtonEnabled = hasKey
+            }
         }
     }
 }

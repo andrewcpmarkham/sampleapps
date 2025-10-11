@@ -13,6 +13,8 @@ struct APIKeyPromptSheet: View {
     @State private var apiKey: String = ""
     @State private var disableSheet: Bool = true
 
+    let onDismiss: (() -> Void)?
+
     var body: some View {
         VStack {
             Spacer()
@@ -39,10 +41,10 @@ struct APIKeyPromptSheet: View {
             }
             Spacer()
             HStack(spacing: 20) {
-                AlertButton(title: "Ok", action: {handleOnSave()}, isDisabled: $disableSheet)
                 AlertButton(title: "Cancel", action: {
                     modalState = .none
                 }, isDisabled: .constant(false))
+                AlertButton(title: "Ok", action: {handleOnSave()}, isDisabled: $disableSheet)
             }
             Spacer()
         }
@@ -75,5 +77,5 @@ struct APIKeyPromptSheet: View {
 }
 
 #Preview {
-    APIKeyPromptSheet(modalState: .constant(.showAPIKeyAlert))
+    APIKeyPromptSheet(modalState: .constant(.showAPIKeyAlert), onDismiss: {print("Dismiss button pushed!")})
 }

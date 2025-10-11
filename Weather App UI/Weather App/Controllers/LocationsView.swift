@@ -15,11 +15,20 @@ struct LocationsView: View {
 
     var body: some View {
         List {
-            NavigationLink(destination: Text("Hello")) {
-                Text("Hello")
+            ForEach(viewModel.filteredLocations, id: \.self) { location in
+                NavigationLink(value: location) {
+                    LocationRowView(location: location)
+                }
+                .swipeActions {
+                    Button(role: .destructive) {
+                        viewModel.delete(location)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
             }
-            //LocationCollection.shared.locations
         }
+
         // MARK: - Toolbar
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.large)
@@ -40,6 +49,7 @@ struct LocationsView: View {
                 ToolBarButton(systemImageName: "plus") {
                     // TODO: - Add ability to do label here
                 }
+                .disabled(!viewModel.addLocationButtonEnabled)
             }
         }
         .searchable(
@@ -56,7 +66,7 @@ struct LocationsView: View {
             Text(viewModel.modalState.errorMessage ?? "Sorry, an unknown error has occured")
         }
         .sheet(isPresented: .constant(viewModel.modalState == .showAPIKeyAlert)) {
-            APIKeyPromptSheet(modalState: $viewModel.modalState)
+            APIKeyPromptSheet(modalState: $viewModel.modalState, onDismiss: viewModel.updateToolBarButtonStates)
         }
     }
 

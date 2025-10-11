@@ -57,6 +57,10 @@ class LocationCollection {
         return locations.count
     }
 
+    func getAllLocations() -> [Location] {
+        return locations
+    }
+
     func getLocationAtIndex(index: Int) -> Location? {
         return locations[index]
     }

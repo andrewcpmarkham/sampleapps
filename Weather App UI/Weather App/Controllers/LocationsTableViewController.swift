@@ -95,10 +95,9 @@ class LocationsTableViewController: UITableViewController {
     }
 
     // MARK: - Functions
+
+    /// Function to update bar buttons based on state of ViewController
     func willSetBarButtons() {
-        /**
-         Function to update bar buttons based on state of ViewController
-         */
         trashButton.isEnabled = LocationCollection.shared.getLocationsCount() != 0 && apiKey != nil
         apiKeyButton.tintColor = apiKey == nil ? .red : trashButton.tintColor
         addLocationButton.isEnabled = apiKey != nil
