@@ -12,6 +12,7 @@ extension LocationsView {
     // Combined with Global Login state
     enum ModalState: Equatable {
         case none
+        case showAddLocationSheet
         case showAPIKeyAlert
         case showErrorAlert(String)
 
@@ -25,6 +26,8 @@ extension LocationsView {
         static func == (lhs: ModalState, rhs: ModalState) -> Bool {
                 switch (lhs, rhs) {
                 case (.none, .none):
+                    return true
+                case (.showAddLocationSheet, .showAddLocationSheet):
                     return true
                 case (.showAPIKeyAlert, .showAPIKeyAlert):
                     return true

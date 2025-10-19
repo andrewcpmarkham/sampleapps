@@ -61,12 +61,10 @@ class AddLocationViewController: UIViewController {
         }
         let dataController = appDelegate.dataControllerDelegate
         return dataController.fetchData(with: searchTerm)
-
     }
 
     /// Functions to load locations to from CoreData
     func loadLocations() {
-
         // Plan is to have the core data preloaded so this is never called
         if let citiesUnwrapped = fetchMatchingCities(with: nil) {
             self.locations = citiesUnwrapped

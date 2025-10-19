@@ -5,6 +5,7 @@
 //  Created by Andrew CP Markham on 10/10/2025.
 //
 
+import CoreData
 import SwiftUI
 
 struct LocationRowView: View {
@@ -31,7 +32,7 @@ struct LocationRowView: View {
             case .success(let temp):
                 Text(temp)
                     .monospacedDigit()
-            case .error(let placeholder):
+            case .error(_):
                 Image(systemName: "exclamationmark.circle")
                     .foregroundStyle(.secondary)
             }

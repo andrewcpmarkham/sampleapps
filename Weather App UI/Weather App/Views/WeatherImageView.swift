@@ -29,15 +29,23 @@ struct WeatherImageView: View {
 
                 case .failure:
                     Color.secondary.opacity(0.1)
-                        .overlay(Image(systemName: "xmark.octagon").font(.largeTitle))
+                        .overlay(
+                            Image(systemName: "xmark.octagon")
+                                .font(.largeTitle)
+                                .foregroundStyle(.secondary)
+                        )
                         .accessibilityHidden(true)
 
                 default: // .empty
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .fill(.gray.opacity(0.25))
-                        .redacted(reason: .placeholder)
-                        .shimmer()
-                        .accessibilityHidden(true)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .fill(.gray.opacity(0.25))
+                            .redacted(reason: .placeholder)
+                            .shimmer()
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                    }
+                    .accessibilityHidden(true)
                 }
             }
         }

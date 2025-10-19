@@ -5,6 +5,7 @@
 //  Created by Andrew CP Markham on 11/6/21.
 //
 
+import CoreData
 import Foundation
 
 /**
@@ -68,6 +69,16 @@ class Location {
         self.country = country
         self.lat = lat
         self.lon = lon
+    }
+
+    // TODO: - Remove when migrated to SwiftData
+    init(from managedObject: NSManagedObject) {
+        self.city = managedObject.value(forKey: "city") as? String ?? ""
+        self.state = managedObject.value(forKey: "state") as? String ?? ""
+        self.country = managedObject.value(forKey: "country") as? String ?? ""
+        self.id = managedObject.value(forKey: "id") as? Int ?? 0
+        self.lat = managedObject.value(forKey: "lat") as? Double ?? 0.0
+        self.lon = managedObject.value(forKey: "lon") as? Double ?? 0.0
     }
 
     func encode(to encoder: Encoder) throws {
