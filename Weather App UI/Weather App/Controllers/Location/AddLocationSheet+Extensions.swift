@@ -16,7 +16,7 @@ extension AddLocationSheet {
 
         var locations: [NSManagedObject] = []
 
-        var title: String { "Weather Locations" }
+        var title: String { "Add Location" }
         private var lastSearchText = ""
         var searchText: String = "" {
             didSet {

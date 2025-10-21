@@ -34,19 +34,17 @@ struct LocationsView: View {
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
-                ToolBarButton(systemImageName: "trash") {
+                ToolBarButton(buttonType: .imageButton(systemImageName: "trash")) {
                     viewModel.clearButtonSelected()
                 }
 
-                ToolBarButton(systemImageName: "key", tint: viewModel.apiKeyButtonEnabled ?  Color(.label) : .red) {
-                    Task {
-                        viewModel.apiKeyButtonSelected()
-                    }
+                ToolBarButton(buttonType: .imageButton(systemImageName: "key"), tint: viewModel.apiKeyButtonEnabled ?  Color(.label) : .red) {
+                    viewModel.apiKeyButtonSelected()
                 }
             }
 
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                ToolBarButton(systemImageName: "plus") {
+                ToolBarButton(buttonType: .imageButton(systemImageName: "plus")) {
                     // TODO: - Add ability to do label here
                 }
                 .disabled(!viewModel.addLocationButtonEnabled)

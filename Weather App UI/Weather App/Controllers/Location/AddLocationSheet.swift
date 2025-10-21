@@ -33,14 +33,14 @@ struct AddLocationSheet: View {
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
-                ToolBarButton(systemImageName: "xmark") {
+                ToolBarButton(buttonType: .imageButton(systemImageName: "xmark")) {
                     modalState = .none
                 }
             }
 
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 // TODO: - Make this a save button
-                ToolBarButton(systemImageName: "xmark") {
+                ToolBarButton(buttonType: .textButton(label: "Save")) {
                     modalState = .none
                 }
             }

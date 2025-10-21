@@ -8,24 +8,50 @@
 import SwiftUI
 
 struct ToolBarButton: View {
-    let systemImageName: String
     let action: () -> Void
+    let buttonType: ButtonType
+    var isHidden: Bool = false
+    var isEnabled: Bool = true
     let tint: Color
 
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: systemImageName)
-        }
-        .tint(tint)
+    enum ButtonType {
+        case imageButton(systemImageName: String)
+        case textButton(label: String)
     }
 
-    init(systemImageName: String, tint: Color = Color(.label), action: @escaping () -> Void) {
-        self.systemImageName = systemImageName
+    var body: some View {
+        if !isHidden {
+            buttonView()
+                .disabled(!isEnabled)
+                .opacity(isEnabled ? 1 : 0.4)
+        }
+    }
+
+    init(buttonType: ButtonType, tint: Color = Color(.label), action: @escaping () -> Void) {
+        self.buttonType = buttonType
         self.action = action
         self.tint = tint
+    }
+
+    @ViewBuilder
+    private func buttonView() -> some View {
+        switch buttonType {
+        case .textButton(let label):
+            Button(action: action) {
+                Text(label)
+                .tint(tint)
+            }
+
+
+        case .imageButton(let systemImageName):
+            Button(action: action) {
+                Image(systemName: systemImageName)
+            }
+            .tint(tint)
+        }
     }
 }
 
 #Preview {
-    ToolBarButton(systemImageName: "mail.fill", action: {print("Clicked")})
+    ToolBarButton(buttonType: ToolBarButton.ButtonType.imageButton(systemImageName: "mail.fill"), action: {print("Clicked")})
 }
