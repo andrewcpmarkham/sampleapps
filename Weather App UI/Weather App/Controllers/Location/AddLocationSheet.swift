@@ -15,16 +15,18 @@ struct AddLocationSheet: View {
     var body: some View {
         // selected Locations go here
         Text("Locations Selected")
-        HStack {
-            // Horizontal Scroll of locations selected
-            Button("Location Name") {
-
+        ScrollView(.horizontal, showsIndicators: true) {
+            HStack(spacing: 16) {
+                ForEach(viewModel.locationsSelected) { locationSelected in
+                    TagButton(action: viewModel.delete, location: locationSelected)
+                }
             }
+            .padding()
         }
 
         List {
             ForEach(viewModel.locations, id: \.self) { location in
-                LocationRowView(location: Location(from: location))
+                AddLocationRowView(location: Location(from: location), selectedLocations: $viewModel.locationsSelected)
             }
         }
 
@@ -62,7 +64,9 @@ struct AddLocationSheet: View {
 }
 
 #Preview {
+    @Previewable @State var modalState: LocationsView.ModalState = .showAddLocationSheet
+
     NavigationStack {
-        AddLocationSheet(modalState: .constant(LocationsView.ModalState.showAddLocationSheet))
+        AddLocationSheet(modalState: $modalState)
     }
 }

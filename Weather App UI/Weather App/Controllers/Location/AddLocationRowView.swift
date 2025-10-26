@@ -11,12 +11,15 @@ import SwiftUI
 struct AddLocationRowView: View {
 
     let location: Location
+    @Binding var selectedLocations: [Location]
 
     var body: some View {
-        Text("\( location.city) (\(location.state), \(location.country))")
+        Button("\( location.city) (\(location.country))") {
+            self.selectedLocations.append(location)
+        }
     }
 }
 
 #Preview {
-    AddLocationRowView(location: Location.example)
+    AddLocationRowView(location: Location.example, selectedLocations: .constant([]))
 }

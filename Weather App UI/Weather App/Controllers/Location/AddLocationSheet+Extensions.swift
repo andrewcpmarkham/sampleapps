@@ -15,6 +15,7 @@ extension AddLocationSheet {
     final class ViewModel {
 
         var locations: [NSManagedObject] = []
+        var locationsSelected: [Location] = []
 
         var title: String { "Add Location" }
         private var lastSearchText = ""
@@ -42,9 +43,14 @@ extension AddLocationSheet {
         /// Functions to load locations to from CoreData
         func loadLocations() {
             // Plan is to have the core data preloaded so this is never called
-            if let citiesUnwrapped = fetchMatchingCities(with: nil) {
+            let searchText: String? = self.searchText.isEmpty ? nil : self.searchText
+            if let citiesUnwrapped = fetchMatchingCities(with: searchText) {
                 self.locations = citiesUnwrapped
             }
+        }
+
+        func delete(_ location: Location) {
+            locationsSelected.removeAll(where: { $0.id == location.id })
         }
     }
 }

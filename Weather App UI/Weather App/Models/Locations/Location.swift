@@ -117,6 +117,10 @@ extension Location: Comparable {
     }
 }
 
+extension Location: Identifiable {
+// conformance in ID property above
+}
+
 // MARK: - Hashable
 extension Location: Hashable {
     func hash(into hasher: inout Hasher) {
