@@ -41,10 +41,11 @@ struct AddLocationSheet: View {
             }
 
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                // TODO: - Make this a save button
                 ToolBarButton(buttonType: .textButton(label: "Save")) {
+                    viewModel.saveSelectedLocations()
                     modalState = .none
                 }
+                .disabled(viewModel.locationsSelected.isEmpty)
             }
         }
         .searchable(

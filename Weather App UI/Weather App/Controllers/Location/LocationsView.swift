@@ -45,7 +45,7 @@ struct LocationsView: View {
 
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 ToolBarButton(buttonType: .imageButton(systemImageName: "plus")) {
-                    // TODO: - Add ability to do label here
+                    viewModel.modalState = .showAddLocationSheet
                 }
                 .disabled(!viewModel.addLocationButtonEnabled)
             }
@@ -65,6 +65,9 @@ struct LocationsView: View {
         }
         .sheet(isPresented: .constant(viewModel.modalState == .showAPIKeyAlert)) {
             APIKeyPromptSheet(modalState: $viewModel.modalState, onDismiss: viewModel.updateToolBarButtonStates)
+        }
+        .sheet(isPresented: .constant(viewModel.modalState == .showAddLocationSheet)) {
+            AddLocationSheet(modalState: $viewModel.modalState)
         }
     }
 

@@ -382,10 +382,10 @@
 				3EBFC1942E9C39C4003C4BA0 /* AddLocationSheet.swift */,
 				3EBFC1982E9C3CE8003C4BA0 /* AddLocationSheet+Extensions.swift */,
 				3EDF50272E9EDC5A005C5207 /* AddLocationRowView.swift */,
-				3EF283202E984C0E004AED35 /* LocationRowView.swift */,
-				3EAE92B32517026E00EB3BC2 /* LocationsTableViewController.swift */,
 				3E6E443F2E887B2200A497D3 /* LocationsView.swift */,
 				3E6E44412E887B5D00A497D3 /* LocationsView+Extension.swift */,
+				3EF283202E984C0E004AED35 /* LocationRowView.swift */,
+				3EAE92B32517026E00EB3BC2 /* LocationsTableViewController.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -605,6 +605,7 @@
 				"else",
 				"  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"",
 				"fi",
+				"",
 				"",
 				"",
 				"",

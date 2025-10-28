@@ -52,5 +52,11 @@ extension AddLocationSheet {
         func delete(_ location: Location) {
             locationsSelected.removeAll(where: { $0.id == location.id })
         }
+
+        func saveSelectedLocations() {
+            for location in locationsSelected {
+                LocationCollection.shared.addLocation(location: location)
+            }
+        }
     }
 }
