@@ -46,9 +46,7 @@
 		3E92E449277526040013F243 /* ForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E92E448277526040013F243 /* ForecastTableViewCell.swift */; };
 		3E9F02A625141CB6004BBD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9F02A525141CB6004BBD43 /* AppDelegate.swift */; };
 		3E9F02A825141CB6004BBD43 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9F02A725141CB6004BBD43 /* SceneDelegate.swift */; };
-		3E9F02AD25141CB6004BBD43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E9F02AB25141CB6004BBD43 /* Main.storyboard */; };
 		3E9F02AF25141CB7004BBD43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E9F02AE25141CB7004BBD43 /* Assets.xcassets */; };
-		3E9F02B225141CB7004BBD43 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E9F02B025141CB7004BBD43 /* LaunchScreen.storyboard */; };
 		3E9F02C825141CB7004BBD43 /* WeatherAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9F02C725141CB7004BBD43 /* WeatherAppUITests.swift */; };
 		3E9F02E025141D4D004BBD43 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9F02DF25141D4D004BBD43 /* Location.swift */; };
 		3E9F02EB25141DB4004BBD43 /* LocationCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9F02EA25141DB4004BBD43 /* LocationCollections.swift */; };
@@ -67,6 +65,8 @@
 		3EC95B652E7C906E00347E00 /* Shimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC95B642E7C906E00347E00 /* Shimmer.swift */; };
 		3ECA55EE2E93127B0085F429 /* AlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECA55ED2E93127B0085F429 /* AlertButton.swift */; };
 		3ECA55F02E9314E10085F429 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECA55EF2E9314E10085F429 /* Color+Extensions.swift */; };
+		3ED581FA2EB1564C001EC209 /* WeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED581F92EB1564C001EC209 /* WeatherApp.swift */; };
+		3ED581FC2EB157F7001EC209 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED581FB2EB157F7001EC209 /* ContentView.swift */; };
 		3EDF50282E9EDC5A005C5207 /* AddLocationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDF50272E9EDC5A005C5207 /* AddLocationRowView.swift */; };
 		3EE37E262E776455009CB65F /* WeatherImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE37E252E776455009CB65F /* WeatherImageView.swift */; };
 		3EF283212E984C0E004AED35 /* LocationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF283202E984C0E004AED35 /* LocationRowView.swift */; };
@@ -132,9 +132,7 @@
 		3E9F02A225141CB6004BBD43 /* Weather App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E9F02A525141CB6004BBD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E9F02A725141CB6004BBD43 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3E9F02AC25141CB6004BBD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3E9F02AE25141CB7004BBD43 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3E9F02B125141CB7004BBD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E9F02B325141CB7004BBD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E9F02B825141CB7004BBD43 /* Weather AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Weather AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E9F02BE25141CB7004BBD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -158,6 +156,8 @@
 		3EC95B642E7C906E00347E00 /* Shimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shimmer.swift; sourceTree = "<group>"; };
 		3ECA55ED2E93127B0085F429 /* AlertButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertButton.swift; sourceTree = "<group>"; };
 		3ECA55EF2E9314E10085F429 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		3ED581F92EB1564C001EC209 /* WeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApp.swift; sourceTree = "<group>"; };
+		3ED581FB2EB157F7001EC209 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3EDF50272E9EDC5A005C5207 /* AddLocationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationRowView.swift; sourceTree = "<group>"; };
 		3EE37E252E776455009CB65F /* WeatherImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherImageView.swift; sourceTree = "<group>"; };
 		3EF283202E984C0E004AED35 /* LocationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRowView.swift; sourceTree = "<group>"; };
@@ -299,6 +299,8 @@
 		3E9F02A425141CB6004BBD43 /* Weather App */ = {
 			isa = PBXGroup;
 			children = (
+				3ED581F92EB1564C001EC209 /* WeatherApp.swift */,
+				3ED581FB2EB157F7001EC209 /* ContentView.swift */,
 				3E51974A27730891000B9297 /* ReadMe.rtf */,
 				3E9F02A525141CB6004BBD43 /* AppDelegate.swift */,
 				3E9F02A725141CB6004BBD43 /* SceneDelegate.swift */,
@@ -309,7 +311,6 @@
 				3EC95B662E7C908600347E00 /* ViewModifiers */,
 				3E9F02DC25141CDC004BBD43 /* Views */,
 				3E9F02AE25141CB7004BBD43 /* Assets.xcassets */,
-				3E9F02B025141CB7004BBD43 /* LaunchScreen.storyboard */,
 				3E9F02B325141CB7004BBD43 /* Info.plist */,
 			);
 			path = "Weather App";
@@ -355,7 +356,6 @@
 				3E475A4E2E91B7C700100859 /* APIKeyPromptSheet.swift */,
 				3ECA55ED2E93127B0085F429 /* AlertButton.swift */,
 				3ECEF90B251F081700DD092D /* Cells */,
-				3E9F02AB25141CB6004BBD43 /* Main.storyboard */,
 				3E7967ED2EAEADA30041AD65 /* TagButton.swift */,
 				3E42EA262E66470400129DE7 /* TitleRow.swift */,
 				3E4409682E8C7AEB006C5BA8 /* ToolBarButton.swift */,
@@ -572,11 +572,9 @@
 			isa = PBXResourcesBuildPhase;
 			files = (
 				3E51974B27730891000B9297 /* ReadMe.rtf in Resources */,
-				3E9F02B225141CB7004BBD43 /* LaunchScreen.storyboard in Resources */,
 				3E0BFD6D275579A000228915 /* city.list.json in Resources */,
 				3E626F402772F91600B6E9E0 /* Locations_CoreData.sqlite-shm in Resources */,
 				3E9F02AF25141CB7004BBD43 /* Assets.xcassets in Resources */,
-				3E9F02AD25141CB6004BBD43 /* Main.storyboard in Resources */,
 				3E626F412772F91600B6E9E0 /* Locations_CoreData.sqlite in Resources */,
 				3E626F422772F91600B6E9E0 /* Locations_CoreData.sqlite-wal in Resources */,
 			);
@@ -627,6 +625,12 @@
 				"",
 				"",
 				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
 			);
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -649,6 +653,7 @@
 				3E3264042756D82900D5D361 /* AddLocationTableViewCell.swift in Sources */,
 				3EF283212E984C0E004AED35 /* LocationRowView.swift in Sources */,
 				3EAAA9D02E7F486F00B77B00 /* WeatherRowView+Extension.swift in Sources */,
+				3ED581FC2EB157F7001EC209 /* ContentView.swift in Sources */,
 				3E7967EE2EAEADA30041AD65 /* TagButton.swift in Sources */,
 				3E3DF632251982A1007AEAEC /* WeatherResponse.swift in Sources */,
 				3ECA55EE2E93127B0085F429 /* AlertButton.swift in Sources */,
@@ -687,6 +692,7 @@
 				3EE37E262E776455009CB65F /* WeatherImageView.swift in Sources */,
 				3E6E44422E887B5D00A497D3 /* LocationsView+Extension.swift in Sources */,
 				3EDF50282E9EDC5A005C5207 /* AddLocationRowView.swift in Sources */,
+				3ED581FA2EB1564C001EC209 /* WeatherApp.swift in Sources */,
 			);
 		};
 		3E9F02B425141CB7004BBD43 /* Sources */ = {
@@ -717,25 +723,6 @@
 			targetProxy = 3E9F02C425141CB7004BBD43 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		3E9F02AB25141CB6004BBD43 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3E9F02AC25141CB6004BBD43 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		3E9F02B025141CB7004BBD43 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3E9F02B125141CB7004BBD43 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		3E9F02CA25141CB7004BBD43 /* Debug configuration for PBXProject "Weather App" */ = {
@@ -859,14 +846,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = EDSAY3S5YY;
 				INFOPLIST_FILE = "Weather App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xercisepro.Weather-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -883,14 +873,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = EDSAY3S5YY;
 				INFOPLIST_FILE = "Weather App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xercisepro.Weather-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

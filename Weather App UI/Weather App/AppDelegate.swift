@@ -9,7 +9,6 @@ import UIKit
 import CoreData
 import BackgroundTasks
 
-@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(
