@@ -10,27 +10,27 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var locations: [Location]
+    @Query private var cities: [City]
 
     var body: some View {
         NavigationSplitView {
             List {
-                ForEach(locations) { location in
+                ForEach(cities) { city in
                     NavigationLink {
-                        Text("Location at \(location.city)")
+                        Text("Location at \(city.name)")
                     } label: {
-                        Text(location.city)
+                        Text(city.name)
                     }
                 }
                 .onDelete(perform: deleteLocation)
             }
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarLeading) {
-                    ToolBarButton(buttonType: .imageButton(systemImageName: "plus")) {
-                        loadCities() 
-                    }
-                }
-            }
+//            .toolbar {
+//                ToolbarItemGroup(placement: .navigationBarLeading) {
+//                    ToolBarButton(buttonType: .imageButton(systemImageName: "plus")) {
+//                        loadCities() 
+//                    }
+//                }
+//            }
         } detail: {
             Text("Select an Location")
         }
@@ -40,14 +40,9 @@ struct ContentView: View {
     private func deleteLocation(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                modelContext.delete(locations[index])
+                modelContext.delete(cities[index])
             }
         }
-    }
-
-    private func loadCities() {
-        let cityDataController = CityDataController()
-        cityDataController.seedData(context: modelContext)
     }
 }
 

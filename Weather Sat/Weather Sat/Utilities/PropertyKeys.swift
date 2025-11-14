@@ -12,7 +12,15 @@ import Foundation
 */
 struct PropertyKeys {
 
-    // Core Data
-    static let cityEntityName = "Cities_SwiffData"
-    static let previouslyLaunchedKey = "previouslyLaunched"
+}
+
+extension UserDefaults {
+    private enum Keys {
+        static let previouslyLaunchedKey = "previouslyLaunchedKey"
+    }
+
+    var hasLaunchedBefore: Bool {
+        get { bool(forKey: Keys.previouslyLaunchedKey) }
+        set { set(newValue, forKey: Keys.previouslyLaunchedKey) }
+    }
 }
