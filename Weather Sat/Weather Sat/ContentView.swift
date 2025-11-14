@@ -24,13 +24,13 @@ struct ContentView: View {
                 }
                 .onDelete(perform: deleteLocation)
             }
-//            .toolbar {
-//                ToolbarItemGroup(placement: .navigationBarLeading) {
-//                    ToolBarButton(buttonType: .imageButton(systemImageName: "plus")) {
-//                        loadCities() 
-//                    }
-//                }
-//            }
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    ToolBarButton(buttonType: .imageButton(systemImageName: "plus")) {
+                        print("Cities: \(cities.count)")
+                    }
+                }
+            }
         } detail: {
             Text("Select an Location")
         }

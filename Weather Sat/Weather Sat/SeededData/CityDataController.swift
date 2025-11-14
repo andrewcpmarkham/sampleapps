@@ -22,6 +22,7 @@ actor CityDataController {
         case jsonDataNotDecoded
         case jsonDataNotReset
         case jsonDataNotLoaded
+        case seededDBFileNotFound
 
         var errorDescription: String? {
             switch self {
@@ -35,31 +36,17 @@ actor CityDataController {
                 return "Could not reset cities in SwiftData, hence load failed"
             case .jsonDataNotLoaded:
                 return "Could not load cities from JSON, hence load failed"
+            case .seededDBFileNotFound:
+                return "Could not find seeded sqlite file in project, hence load failed"
             }
         }
     }
 
     // MARK: - Main seeding Process Function
-    /// Function to read data from JSON File and Seed Data if needed
-    /// Three sqllite files should be replaces subsequnetly for  production
-    @MainActor
-    func seedData() throws {
-        // Considerations of preloaded data
-        let previouslyLaunched = UserDefaults.standard.hasLaunchedBefore
 
-        if
-            !previouslyLaunched
-        {
-            // Try to set seaded DB
-            try self.replaceDBFilesWithSeeded()
-            UserDefaults.standard.hasLaunchedBefore = true
-        }
-    }
-
-    // MARK: - Private Functions
     /// Function to set stored SQLFile preset  in the prjoect as default for SwiftData
     @MainActor
-    private func replaceDBFilesWithSeeded() throws {
+    func replaceDBFilesWithSeeded() throws {
 
         let fm = FileManager.default
         let defaults = UserDefaults.standard
@@ -95,6 +82,8 @@ actor CityDataController {
                 } catch let nserror as NSError {
                     fatalError("Error: \(nserror.localizedDescription)")
                 }
+            } else {
+                throw TypeError.seededDBFileNotFound
             }
         }
 

@@ -11,9 +11,6 @@
 		3E3740362EB7EC7F001EA64F /* PropertyKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3740352EB7EC7F001EA64F /* PropertyKeys.swift */; };
 		3E516B962EC0299C00B08571 /* ModelContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E516B952EC0299C00B08571 /* ModelContext+Extensions.swift */; };
 		3E516B982EC043C100B08571 /* ToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E516B972EC043C100B08571 /* ToolBarButton.swift */; };
-		3E516B9D2EC045BB00B08571 /* Cities_SwiffData.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 3E516B9B2EC045BB00B08571 /* Cities_SwiffData.sqlite-shm */; };
-		3E516B9E2EC045BB00B08571 /* Cities_SwiffData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 3E516B9A2EC045BB00B08571 /* Cities_SwiffData.sqlite */; };
-		3E516B9F2EC045BB00B08571 /* Cities_SwiffData.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 3E516B9C2EC045BB00B08571 /* Cities_SwiffData.sqlite-wal */; };
 		3EAF3F742EB5A89400E559DE /* WeatherObservationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAF3F6B2EB5A89400E559DE /* WeatherObservationDTO.swift */; };
 		3EAF3F752EB5A89400E559DE /* WeatherResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAF3F6C2EB5A89400E559DE /* WeatherResponseDTO.swift */; };
 		3EAF3F762EB5A89400E559DE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAF3F6F2EB5A89400E559DE /* ContentView.swift */; };
@@ -29,6 +26,9 @@
 		3EAF3F892EB5C0A800E559DE /* city.list.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EAF3F882EB5C0A800E559DE /* city.list.json */; };
 		3EAF3F8B2EB5CB3E00E559DE /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAF3F8A2EB5CB3E00E559DE /* City.swift */; };
 		3EAF3F8D2EB5CB6A00E559DE /* CityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAF3F8C2EB5CB6A00E559DE /* CityDTO.swift */; };
+		3EDD61FA2EC7DA6200B51A58 /* Cities_SwiffData.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 3EDD61F92EC7DA6200B51A58 /* Cities_SwiffData.sqlite-wal */; };
+		3EDD61FB2EC7DA6200B51A58 /* Cities_SwiffData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 3EDD61F72EC7DA6200B51A58 /* Cities_SwiffData.sqlite */; };
+		3EDD61FC2EC7DA6200B51A58 /* Cities_SwiffData.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 3EDD61F82EC7DA6200B51A58 /* Cities_SwiffData.sqlite-shm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,9 +53,6 @@
 		3E3740352EB7EC7F001EA64F /* PropertyKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyKeys.swift; sourceTree = "<group>"; };
 		3E516B952EC0299C00B08571 /* ModelContext+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelContext+Extensions.swift"; sourceTree = "<group>"; };
 		3E516B972EC043C100B08571 /* ToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarButton.swift; sourceTree = "<group>"; };
-		3E516B9A2EC045BB00B08571 /* Cities_SwiffData.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cities_SwiffData.sqlite; sourceTree = "<group>"; };
-		3E516B9B2EC045BB00B08571 /* Cities_SwiffData.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cities_SwiffData.sqlite-shm"; sourceTree = "<group>"; };
-		3E516B9C2EC045BB00B08571 /* Cities_SwiffData.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Cities_SwiffData.sqlite-wal"; sourceTree = "<group>"; };
 		3EAF3F362EB5773500E559DE /* Weather Sat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather Sat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EAF3F452EB5773600E559DE /* Weather SatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Weather SatTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EAF3F4F2EB5773600E559DE /* Weather SatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Weather SatUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +71,9 @@
 		3EAF3F882EB5C0A800E559DE /* city.list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = city.list.json; sourceTree = "<group>"; };
 		3EAF3F8A2EB5CB3E00E559DE /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		3EAF3F8C2EB5CB6A00E559DE /* CityDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDTO.swift; sourceTree = "<group>"; };
+		3EDD61F72EC7DA6200B51A58 /* Cities_SwiffData.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cities_SwiffData.sqlite; sourceTree = "<group>"; };
+		3EDD61F82EC7DA6200B51A58 /* Cities_SwiffData.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cities_SwiffData.sqlite-shm"; sourceTree = "<group>"; };
+		3EDD61F92EC7DA6200B51A58 /* Cities_SwiffData.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Cities_SwiffData.sqlite-wal"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -117,10 +117,10 @@
 		3E37402F2EB7EB73001EA64F /* SeededData */ = {
 			isa = PBXGroup;
 			children = (
+				3EDD61F72EC7DA6200B51A58 /* Cities_SwiffData.sqlite */,
+				3EDD61F82EC7DA6200B51A58 /* Cities_SwiffData.sqlite-shm */,
+				3EDD61F92EC7DA6200B51A58 /* Cities_SwiffData.sqlite-wal */,
 				3E3740332EB7EC08001EA64F /* CityDataController.swift */,
-				3E516B9A2EC045BB00B08571 /* Cities_SwiffData.sqlite */,
-				3E516B9B2EC045BB00B08571 /* Cities_SwiffData.sqlite-shm */,
-				3E516B9C2EC045BB00B08571 /* Cities_SwiffData.sqlite-wal */,
 				3EAF3F882EB5C0A800E559DE /* city.list.json */,
 			);
 			path = SeededData;
@@ -328,9 +328,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E516B9D2EC045BB00B08571 /* Cities_SwiffData.sqlite-shm in Resources */,
-				3E516B9E2EC045BB00B08571 /* Cities_SwiffData.sqlite in Resources */,
-				3E516B9F2EC045BB00B08571 /* Cities_SwiffData.sqlite-wal in Resources */,
+				3EDD61FA2EC7DA6200B51A58 /* Cities_SwiffData.sqlite-wal in Resources */,
+				3EDD61FB2EC7DA6200B51A58 /* Cities_SwiffData.sqlite in Resources */,
+				3EDD61FC2EC7DA6200B51A58 /* Cities_SwiffData.sqlite-shm in Resources */,
 				3EAF3F7A2EB5A89400E559DE /* Assets.xcassets in Resources */,
 				3EAF3F892EB5C0A800E559DE /* city.list.json in Resources */,
 			);

@@ -31,12 +31,13 @@ struct Weather_SatApp: App {
             let cityDataController = CityDataController()
             do {
                 // Try to load pre seeded DBs from package
-                try cityDataController.seedData()
+                try cityDataController.replaceDBFilesWithSeeded()
                 print("Load Seeded SwiftData: Success")
             } catch {
                 print("Load Seeded SwiftData: SwiftData files failed to load: \(error)")
             }
 
+            // Continue on and set the container
             do {
                 container = try ModelContainer(for: schema, configurations: [config])
             } catch {
@@ -45,7 +46,9 @@ struct Weather_SatApp: App {
 
             // This is really for the dev so that if you remove the sql files in the project you can populate new ones
             // Say if there was an update cities list
-            preloadContextFromJSON(cityDataController: cityDataController)
+            if !UserDefaults.standard.hasLaunchedBefore {
+                preloadContextFromJSON(cityDataController: cityDataController)
+            }
 
         // Load for continuous use
         } else {
@@ -65,7 +68,6 @@ struct Weather_SatApp: App {
     }
 
     func preloadContextFromJSON(cityDataController: CityDataController) {
-        guard !UserDefaults.standard.hasLaunchedBefore else { return }
         do {
             let ctx = container.mainContext
             ctx.autosaveEnabled = false
