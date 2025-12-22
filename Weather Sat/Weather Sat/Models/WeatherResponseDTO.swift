@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeatherResponseDTO: Decodable {
+nonisolated struct WeatherResponseDTO: Decodable {
     // Main data object structure returned by Open Weather API
     let temp: Double
     let windSpeed: Double

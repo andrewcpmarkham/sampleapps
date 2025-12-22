@@ -62,6 +62,12 @@ final class City {
     }
 }
 
+extension City: Comparable {
+    static func < (lhs: City, rhs: City) -> Bool {
+        lhs.name < rhs.name && lhs.country < rhs.country
+    }
+}
+
 @Model
 final class Coord {
     var lon: Double

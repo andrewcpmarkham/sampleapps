@@ -86,4 +86,32 @@ final class Location {
         location.weather = WeatherResponse(from: WeatherResponseDTO.example)
         return location
     }
+
+    // MARK: - Functions
+    func willGetWeatherForLocation() async {
+        do {
+            let weatherResponseDTO = try await OpenWeatherService.shared.weatherRequest(
+                cityLon: self.lon,
+                cityLat: self.lat,
+                optionalRequest: false
+            )
+
+            self.weather = WeatherResponse(from: weatherResponseDTO)
+
+        } catch {
+            print("Weather data not obtained for \(self.city): \(error)")
+        }
+    }
+
+    func cancelGetWeatherForLocation() {
+        // Required for background refresh
+        OpenWeatherService.shared.urlSession.invalidateAndCancel()
+    }
+}
+
+// comparable protocol conformance function
+extension Location: Comparable {
+    static func < (lhs: Location, rhs: Location) -> Bool {
+        return lhs.city < rhs.city
+    }
 }

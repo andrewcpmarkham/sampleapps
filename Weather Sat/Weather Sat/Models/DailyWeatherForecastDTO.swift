@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DailyWeatherForcastDTO: Decodable, Identifiable {
+nonisolated struct DailyWeatherForcastDTO: Decodable, Identifiable {
     let id = UUID()
 
     // Sub data object structure returned by API

@@ -69,6 +69,11 @@ final class DailyWeatherForcast {
         self.windDirection = windDirection
     }
 
+
+}
+
+@MainActor
+extension DailyWeatherForcast {
     // MARK: - Example
     static var example: DailyWeatherForcast {
         return DailyWeatherForcast(
@@ -87,4 +92,3 @@ final class DailyWeatherForcast {
         )
     }
 }
-

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeatherObservationDTO: Codable {
+nonisolated struct WeatherObservationDTO: Codable {
     // Sub data object structure returned by Open Weather API
     let detail: String
     let desc: String
