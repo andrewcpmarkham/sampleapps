@@ -7,56 +7,72 @@
 
 import Foundation
 import SwiftData
+import SwiftUI
 
 extension AddLocationSheet {
 
     @Observable
     final class ViewModel {
 
-        let modelContext: ModelContext
-        var cities: [City] = []
+        private let container: ModelContainer
+        private let modelContext: ModelContext
+
+        enum LoadingStatus {
+            case loading
+            case loaded
+            case error
+        }
+
+        var loadStatus: LoadingStatus = .loading
+
+        private var cities = [City]()
+
+        // Filtered cities in memory for performance
+        var filteredCities: [City] {
+            cities.filter {
+                searchText.isEmpty ||
+                $0.name.localizedStandardContains(searchText)
+            }
+        }
+
         var citiesSelected: [City] = []
 
         var title: String { "Add Location" }
         private var lastSearchText = ""
-        var searchText: String = "" {
-            didSet {
-                if searchText != lastSearchText {
-                    lastSearchText = searchText
-                    loadCities()
-                }
-            }
-        }
+        var searchText: String = ""
 
         init(modelContext: ModelContext) {
+
             self.modelContext = modelContext
-            loadCities()
-        }
+            self.container = modelContext.container
 
-        func fetchMatchingCities(with searchTerm: String?) {
-
-            do {
-                var descriptor: FetchDescriptor<City>
-                if searchText.isEmpty {
-                    descriptor = FetchDescriptor<City>(sortBy: [])
-                } else {
-                    let cityPredicate = #Predicate<City> { city in
-                        city.name.localizedStandardContains(searchText)
-                    }
-                    descriptor = FetchDescriptor<City>(predicate: cityPredicate, sortBy: [])
-                }
-                let storedCities = try modelContext.fetch(descriptor)
-                cities = storedCities.sorted()
-            } catch {
-                print("Fetch failed: \(error)")
+            Task {
+                await loadCities()
             }
         }
 
-        /// Functions to load locations to from CoreData
-        func loadCities() {
-            // Plan is to have the core data preloaded so this is never called
-            let searchText: String? = self.searchText.isEmpty ? nil : self.searchText
-            fetchMatchingCities(with: searchText)
+        func loadCities() async {
+            let ids: [PersistentIdentifier] = await Task.detached(priority: .userInitiated) { [container] in
+                let bgContext = ModelContext(container)
+                do {
+                    let fetched = try bgContext.fetch(FetchDescriptor<City>())
+                    return fetched.map(\.persistentModelID)
+                } catch {
+                    DispatchQueue.main.async {
+                        self.loadStatus = .error
+                    }
+                    return []
+                }
+            }.value
+
+            let fetchedOnMain: [City] = ids.compactMap { id in
+                (modelContext.model(for: id)) as? City
+            }
+
+            loadStatus = .loaded
+            withAnimation(.easeInOut) {
+                self.cities = fetchedOnMain
+            }
         }
 
         func delete(_ city: City) {

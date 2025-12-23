@@ -59,7 +59,7 @@ actor OpenWeatherService {
         }
 
         // 4. Perform request (async/await)
-        let (data, resonse) = try await urlSession.data(from: url)
+        let (data, _) = try await urlSession.data(from: url)
 
         // print data out for debugging
 //        if let prettyJSonData = data?.asPrettyJSON() {

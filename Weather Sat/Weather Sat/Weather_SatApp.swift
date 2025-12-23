@@ -27,7 +27,14 @@ struct Weather_SatApp: App {
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         // Preload data from eithere seaded DBs or JSON
-        if !UserDefaults.standard.hasLaunchedBefore {
+        if UserDefaults.standard.hasLaunchedBefore {
+            do {
+                container = try ModelContainer(for: schema, configurations: [config])
+            } catch {
+                fatalError("Could not create ModelContainer: \(error)")
+            }
+        } else {
+            // Load for continuous use
             let cityDataController = CityDataController()
             do {
                 // Try to load pre seeded DBs from package
@@ -48,14 +55,6 @@ struct Weather_SatApp: App {
             // Say if there was an update cities list
             if !UserDefaults.standard.hasLaunchedBefore {
                 preloadContextFromJSON(cityDataController: cityDataController)
-            }
-
-        // Load for continuous use
-        } else {
-            do {
-                container = try ModelContainer(for: schema, configurations: [config])
-            } catch {
-                fatalError("Could not create ModelContainer: \(error)")
             }
         }
     }

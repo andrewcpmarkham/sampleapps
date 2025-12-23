@@ -64,7 +64,7 @@ struct LocationsView: View {
         }
         .searchable(
             text: $viewModel.searchText,
-            placement: .navigationBarDrawer(displayMode: .always)
+            placement: .navigationBarDrawer(displayMode: .automatic)
         )
         // MARK: - Local use sheets and alerts
         .alert("Delete All Locations", isPresented: .constant(viewModel.modalState == .showDeleteAlert)) {
@@ -84,7 +84,7 @@ struct LocationsView: View {
                 .interactiveDismissDisabled(true)
         }
         .sheet(isPresented: .constant(viewModel.modalState == .showAddLocationSheet)) {
-            AddLocationSheet(modalState: $viewModel.modalState, modelContext: viewModel.modelContext)
+            AddLocationSheet(modalState: $viewModel.modalState, modelContext: viewModel.modelContext, onDismiss: viewModel.loadData)
         }
     }
 

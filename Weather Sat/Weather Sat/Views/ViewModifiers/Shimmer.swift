@@ -10,16 +10,16 @@ import SwiftUI
 struct Shimmer: ViewModifier {
 
     @State private var move: CGFloat = -0.7
-    
+
     func body(content: Content) -> some View {
         content
             .overlay(
                 GeometryReader { geo in
                     LinearGradient(colors: [.clear, .white.opacity(0.5), .clear],
                                    startPoint: .top, endPoint: .bottom)
-                        .rotationEffect(.degrees(30))
-                        .offset(x: geo.size.width * move)
-                        .frame(width: geo.size.width * 1.5, height: geo.size.height)
+                    .rotationEffect(.degrees(30))
+                    .offset(x: geo.size.width * move)
+                    .frame(width: geo.size.width * 1.5, height: geo.size.height)
                 }
             )
             .mask(content)
