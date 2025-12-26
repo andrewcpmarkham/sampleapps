@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated struct WeatherObservationDTO: Codable {
+nonisolated struct WeatherObservationDTO: Hashable, Codable {
     // Sub data object structure returned by Open Weather API
     let detail: String
     let desc: String
@@ -19,13 +19,6 @@ nonisolated struct WeatherObservationDTO: Codable {
         case icon
     }
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.detail = try container.decode(String.self, forKey: CodingKeys.detail)
-        self.desc = try container.decode(String.self, forKey: CodingKeys.description)
-        self.icon = try container.decode(String.self, forKey: CodingKeys.icon)
-    }
-
     init (
         detail: String,
         desc: String,
@@ -34,6 +27,19 @@ nonisolated struct WeatherObservationDTO: Codable {
         self.detail = detail
         self.desc = desc
         self.icon = icon
+    }
+
+    init(from weatherObservation: WeatherObservation) {
+        self.detail = weatherObservation.detail
+        self.desc = weatherObservation.desc
+        self.icon = weatherObservation.icon
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.detail = try container.decode(String.self, forKey: CodingKeys.detail)
+        self.desc = try container.decode(String.self, forKey: CodingKeys.description)
+        self.icon = try container.decode(String.self, forKey: CodingKeys.icon)
     }
 
     func encode(to encoder: any Encoder) throws {

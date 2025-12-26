@@ -60,7 +60,7 @@ final class AppSettingsManager {
         defaults.set(value, forKey: key.rawValue)
     }
 
-    // Codable
+    // MARK: - Codable
     func decode<T: Codable>(_ type: T.Type, for key: Key) -> T? {
         guard let data = data(for: key) else { return nil }
         return try? JSONDecoder().decode(T.self, from: data)
@@ -73,5 +73,10 @@ final class AppSettingsManager {
         }
         let encoded = try? JSONEncoder().encode(value)
         set(encoded, for: key)
+    }
+
+    // MARK: - Clear
+    func clear(_ key: Key) {
+        UserDefaults.standard.removeObject(forKey: key.rawValue)
     }
 }

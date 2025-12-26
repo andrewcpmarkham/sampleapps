@@ -10,7 +10,6 @@ import SwiftUI
 struct ForecastView: View {
 
     @State private var viewModel: ViewModel
-    @State private var path = NavigationPath()
 
     var body: some View {
         List {

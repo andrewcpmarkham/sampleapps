@@ -11,13 +11,7 @@ import SwiftUI
 struct LocationRowView: View {
     @Environment(\.modelContext) private var modelContext
 
-    let location: Location
-
-    enum LoadState {
-        case loading
-        case success(String)     // e.g. "22°"
-        case error(String)       // e.g. "?"
-    }
+    var location: Location
 
     @State private var state: LoadState = .loading
 
@@ -89,4 +83,42 @@ struct LocationRowView: View {
 
 #Preview {
     LocationRowView(location: Location.example)
+}
+
+enum LoadState {
+    case loading
+    case success(String)
+    case error(String)
+}
+
+enum networkRequestResult {
+    case success(WeatherResponseDTO)
+    case failure(Error)
+}
+
+protocol locationWeatherGetter {
+    var viewState: LoadState { get set }
+    var location: Location { get set }
+
+    func getLocationWeather() async
+
+    func updateView(for: networkRequestResult)
+}
+
+extension locationWeatherGetter {
+    private mutating func getLocationWeather() async {
+        viewState = .loading
+
+        do {
+            let weatherDTO = try await OpenWeatherService.shared.weatherRequest(
+                cityLon: location.lon,
+                cityLat: location.lat,
+                optionalRequest: false
+            )
+
+            updateView(for: .success(weatherDTO))
+        } catch {
+            updateView(for: .failure(error))
+        }
+    }
 }

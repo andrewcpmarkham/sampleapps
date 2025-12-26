@@ -13,7 +13,7 @@ struct CurrentWeatherView: View {
 
     var body: some View {
         VStack {
-            TitleRow(city: viewModel.location.city, isFavourite: viewModel.isFavourite)
+            TitleRow(location: viewModel.location, forecast: .current, isFavourite: viewModel.isFavourite)
 
             HStack {
 
@@ -64,6 +64,15 @@ struct CurrentWeatherView: View {
     init(location: Location, currenWeather: WeatherObservation) {
         let viewModel = ViewModel(location: location, currenWeather: currenWeather)
         _viewModel = State(initialValue: viewModel)
+    }
+
+    init?(locationDTO: LocationDTO, currenWeatherDTO: WeatherObservationDTO) {
+        guard
+            let location = Location(from: locationDTO)
+        else {
+            return nil
+        }
+        self.init(location: location, currenWeather: WeatherObservation(from: currenWeatherDTO))
     }
 }
 

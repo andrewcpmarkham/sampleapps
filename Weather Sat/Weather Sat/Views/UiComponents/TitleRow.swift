@@ -9,8 +9,14 @@ import SwiftUI
 
 struct TitleRow: View {
 
-    let city: String
+    let location: Location
+    let forecast: ForecastType
     @State private var isFavourite: Bool
+
+
+    var city: String {
+        location.city
+    }
 
     var body: some View {
         ZStack {
@@ -20,7 +26,18 @@ struct TitleRow: View {
             HStack {
                 Spacer()
                 Button {
-                    isFavourite.toggle()
+                    // TODO: - Move this into a ViewModel
+                    if
+                        !isFavourite,
+                        let favourite = Favourite.getFavourite(for: location, forecast: forecast)
+                    {
+                        AppSettingsManager.shared.encode(favourite, for: .isFavourite)
+                        isFavourite = true
+                    } else {
+                        AppSettingsManager.shared.clear(.isFavourite)
+                        isFavourite = false
+                    }
+
                 } label: {
                     Image(systemName: isFavourite ?  "star.fill" :"star")
                         .imageScale(.large)
@@ -33,12 +50,13 @@ struct TitleRow: View {
         .background(.tertiary)
     }
 
-    init(city: String, isFavourite: Bool) {
-        self.city = city
-        self._isFavourite = State(initialValue: isFavourite)
+    init(location: Location, forecast: ForecastType, isFavourite: Bool) {
+        self.location = location
+        self.forecast = forecast
+        self.isFavourite = isFavourite
     }
 }
 
 #Preview {
-    TitleRow(city: "Sydney", isFavourite: true)
+    TitleRow(location: Location.example, forecast: .current, isFavourite: true)
 }

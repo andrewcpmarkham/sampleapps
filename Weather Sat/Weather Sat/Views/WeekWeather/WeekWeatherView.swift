@@ -13,7 +13,7 @@ struct WeekWeatherView: View {
     
     var body: some View {
         VStack {
-            TitleRow(city: viewModel.location.city, isFavourite: viewModel.isFavourite)
+            TitleRow(location: viewModel.location, forecast: .week, isFavourite: viewModel.isFavourite)
             ScrollView(.vertical) {
                 VStack {
                     ForEach(viewModel.weeksWeather) { day in
@@ -36,6 +36,13 @@ struct WeekWeatherView: View {
     init(location: Location, weather: WeatherResponse, weeksWeather: [DailyWeatherForcast] ) {
         let viewModel = ViewModel(location: location, weather: weather, weeksWeather: weeksWeather)
         _viewModel = State(initialValue: viewModel)
+    }
+
+    init?(locationDTO: LocationDTO, weatherDTO: WeatherResponseDTO, weeksWeatherDTO: [DailyWeatherForcastDTO]) {
+        guard let location = Location(from: locationDTO)
+        else { return nil }
+
+        self.init(location: location, weather: WeatherResponse(from: weatherDTO), weeksWeather: weeksWeatherDTO.compactMap{ DailyWeatherForcast(from: $0)})
     }
 }
 

@@ -23,14 +23,12 @@ extension CurrentWeatherView {
         init(location: Location, currenWeather: WeatherObservation) {
             self.location = location
             self.currentWeather = currenWeather
+            self.isFavourite = Favourite.isFavourite(location: location, forecast: .current)
 
             updateUI()
         }
 
         func updateUI() {
-
-            isFavourite = AppSettingsManager.shared.bool(for: AppSettingsManager.Key.isFavourite)
-
             url = OpenWeatherService.getIconURL(with: currentWeather.icon)
         }
     }

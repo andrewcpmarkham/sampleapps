@@ -13,7 +13,7 @@ struct DayWeatherView: View {
 
     var body: some View {
 
-        TitleRow(city: viewModel.location.city, isFavourite: viewModel.isFavourite)
+        TitleRow(location: viewModel.location, forecast: .day, isFavourite: viewModel.isFavourite)
         HStack {
             Text (viewModel.dateLabel)
                 .font(.title)
@@ -76,6 +76,16 @@ struct DayWeatherView: View {
     init(location: Location, weather: WeatherResponse, todaysWeather: DailyWeatherForcast) {
         let viewModel = ViewModel(location: location, weather: weather, todaysWeather: todaysWeather)
         _viewModel = State(initialValue: viewModel)
+    }
+
+    init?(locationDTO: LocationDTO, weatherDTO: WeatherResponseDTO, todaysWeatherDTO: DailyWeatherForcastDTO) {
+        guard let location = Location(from: locationDTO) else {
+            return nil
+        }
+        let weather = WeatherResponse(from: weatherDTO)
+        let todaysWeather = DailyWeatherForcast(from: todaysWeatherDTO)
+        
+        self.init (location: location, weather: weather, todaysWeather: todaysWeather)
     }
 }
 

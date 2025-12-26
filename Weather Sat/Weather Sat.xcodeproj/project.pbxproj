@@ -61,6 +61,7 @@
 		3EAF3F892EB5C0A800E559DE /* city.list.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EAF3F882EB5C0A800E559DE /* city.list.json */; };
 		3EAF3F8B2EB5CB3E00E559DE /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAF3F8A2EB5CB3E00E559DE /* City.swift */; };
 		3EAF3F8D2EB5CB6A00E559DE /* CityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAF3F8C2EB5CB6A00E559DE /* CityDTO.swift */; };
+		3EB15A352EFB3CC300943E08 /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB15A342EFB3CC300943E08 /* Favourite.swift */; };
 		3EDD61FA2EC7DA6200B51A58 /* Cities_SwiffData.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 3EDD61F92EC7DA6200B51A58 /* Cities_SwiffData.sqlite-wal */; };
 		3EDD61FB2EC7DA6200B51A58 /* Cities_SwiffData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 3EDD61F72EC7DA6200B51A58 /* Cities_SwiffData.sqlite */; };
 		3EDD61FC2EC7DA6200B51A58 /* Cities_SwiffData.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 3EDD61F82EC7DA6200B51A58 /* Cities_SwiffData.sqlite-shm */; };
@@ -143,6 +144,7 @@
 		3EAF3F882EB5C0A800E559DE /* city.list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = city.list.json; sourceTree = "<group>"; };
 		3EAF3F8A2EB5CB3E00E559DE /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		3EAF3F8C2EB5CB6A00E559DE /* CityDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDTO.swift; sourceTree = "<group>"; };
+		3EB15A342EFB3CC300943E08 /* Favourite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
 		3EDD61F72EC7DA6200B51A58 /* Cities_SwiffData.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cities_SwiffData.sqlite; sourceTree = "<group>"; };
 		3EDD61F82EC7DA6200B51A58 /* Cities_SwiffData.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cities_SwiffData.sqlite-shm"; sourceTree = "<group>"; };
 		3EDD61F92EC7DA6200B51A58 /* Cities_SwiffData.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Cities_SwiffData.sqlite-wal"; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				3EAF3F8C2EB5CB6A00E559DE /* CityDTO.swift */,
 				3EAF3F832EB5B90400E559DE /* DailyWeatherForcast.swift */,
 				3EAF3F702EB5A89400E559DE /* DailyWeatherForecastDTO.swift */,
+				3EB15A342EFB3CC300943E08 /* Favourite.swift */,
 				3EAF3F7B2EB5A8F700E559DE /* Location.swift */,
 				3EAF3F7D2EB5A9A400E559DE /* LocationDTO.swift */,
 				3EAF3F7F2EB5B54400E559DE /* WeatherObervation.swift */,
@@ -551,6 +554,7 @@
 			files = (
 				3EAF3F742EB5A89400E559DE /* WeatherObservationDTO.swift in Sources */,
 				3EAF3F8D2EB5CB6A00E559DE /* CityDTO.swift in Sources */,
+				3EB15A352EFB3CC300943E08 /* Favourite.swift in Sources */,
 				3E956B322EC80541002E10DE /* CurrentWeather+Extension.swift in Sources */,
 				3E956B332EC80541002E10DE /* CurrentWeatherView.swift in Sources */,
 				3E956B1A2EC8049A002E10DE /* AddLocationSheet.swift in Sources */,

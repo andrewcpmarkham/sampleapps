@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated struct DailyWeatherForcastDTO: Decodable, Identifiable {
+nonisolated struct DailyWeatherForcastDTO: Codable, Hashable, Identifiable {
     let id = UUID()
 
     // Sub data object structure returned by API
@@ -42,25 +42,6 @@ nonisolated struct DailyWeatherForcastDTO: Decodable, Identifiable {
         case windDirection = "wind_deg"
     }
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        // Picking the data wanted
-        dt = try container.decode(Int.self, forKey: .dt)
-        sunrise = try container.decode(Int.self, forKey: .sunrise)
-        sunset = try container.decode(Int.self, forKey: .sunset)
-        let tempContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .temp)
-        tempDay = try tempContainer.decode(Double.self, forKey: .tempDay)
-        tempMin = try tempContainer.decode(Double.self, forKey: .tempMin)
-        tempMax = try tempContainer.decode(Double.self, forKey: .tempMax)
-        tempNight = try tempContainer.decode(Double.self, forKey: .tempNight)
-        tempEve = try tempContainer.decode(Double.self, forKey: .tempEve)
-        tempMorn = try tempContainer.decode(Double.self, forKey: .tempMorn)
-        weather = try container.decode([WeatherObservationDTO].self, forKey: .weather)
-        windSpeed = try container.decode(Double.self, forKey: .windSpeed)
-        windDirection = try container.decode(Int.self, forKey: .windDirection)
-    }
-
     init (
     dt: Int,
     sunrise: Int,
@@ -86,6 +67,63 @@ nonisolated struct DailyWeatherForcastDTO: Decodable, Identifiable {
         self.weather = weather
         self.windSpeed = windSpeed
         self.windDirection = windDirection
+    }
+
+    init(from dailyWeatherForcast: DailyWeatherForcast) {
+        self.dt = dailyWeatherForcast.dt
+        self.sunrise = dailyWeatherForcast.sunrise
+        self.sunset = dailyWeatherForcast.sunset
+        self.tempDay = dailyWeatherForcast.tempDay
+        self.tempMin = dailyWeatherForcast.tempMin
+        self.tempMax = dailyWeatherForcast.tempMax
+        self.tempNight = dailyWeatherForcast.tempNight
+        self.tempEve = dailyWeatherForcast.tempEve
+        self.tempMorn = dailyWeatherForcast.tempMorn
+        self.weather = dailyWeatherForcast.weather.compactMap{.init(from: $0)}
+        self.windSpeed = dailyWeatherForcast.windSpeed
+        self.windDirection = dailyWeatherForcast.windDirection
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        // Picking the data wanted
+        dt = try container.decode(Int.self, forKey: .dt)
+        sunrise = try container.decode(Int.self, forKey: .sunrise)
+        sunset = try container.decode(Int.self, forKey: .sunset)
+        let tempContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .temp)
+        tempDay = try tempContainer.decode(Double.self, forKey: .tempDay)
+        tempMin = try tempContainer.decode(Double.self, forKey: .tempMin)
+        tempMax = try tempContainer.decode(Double.self, forKey: .tempMax)
+        tempNight = try tempContainer.decode(Double.self, forKey: .tempNight)
+        tempEve = try tempContainer.decode(Double.self, forKey: .tempEve)
+        tempMorn = try tempContainer.decode(Double.self, forKey: .tempMorn)
+        weather = try container.decode([WeatherObservationDTO].self, forKey: .weather)
+        windSpeed = try container.decode(Double.self, forKey: .windSpeed)
+        windDirection = try container.decode(Int.self, forKey: .windDirection)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        // top-level values
+        try container.encode(dt, forKey: .dt)
+        try container.encode(sunrise, forKey: .sunrise)
+        try container.encode(sunset, forKey: .sunset)
+
+        // nested temp container
+        var tempContainer = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .temp)
+        try tempContainer.encode(tempDay, forKey: .tempDay)
+        try tempContainer.encode(tempMin, forKey: .tempMin)
+        try tempContainer.encode(tempMax, forKey: .tempMax)
+        try tempContainer.encode(tempNight, forKey: .tempNight)
+        try tempContainer.encode(tempEve, forKey: .tempEve)
+        try tempContainer.encode(tempMorn, forKey: .tempMorn)
+
+        // remaining top-level values
+        try container.encode(weather, forKey: .weather)
+        try container.encode(windSpeed, forKey: .windSpeed)
+        try container.encode(windDirection, forKey: .windDirection)
     }
 
     // MARK: - Example

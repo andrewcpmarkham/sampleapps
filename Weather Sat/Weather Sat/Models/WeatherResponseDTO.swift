@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated struct WeatherResponseDTO: Decodable {
+nonisolated struct WeatherResponseDTO: Codable, Hashable {
     // Main data object structure returned by Open Weather API
     let temp: Double
     let windSpeed: Double
@@ -30,21 +30,6 @@ nonisolated struct WeatherResponseDTO: Decodable {
         case timezoneOffset = "timezone_offset"
     }
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        // Now pick the pieces you want
-        let currentContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .current)
-        temp = try currentContainer.decode(Double.self, forKey: .temp)
-        windSpeed = try currentContainer.decode(Double.self, forKey: .windSpeed)
-        windDirection = try currentContainer.decode(Int.self, forKey: .windDirection)
-        weather = try currentContainer.decode([WeatherObservationDTO].self, forKey: .weather)
-        dailyWeather = try container.decode([DailyWeatherForcastDTO].self, forKey: .daily)
-        lon = try container.decode(Double.self, forKey: .lon)
-        lat = try container.decode(Double.self, forKey: .lat)
-        timezoneOffset = try container.decode(Int.self, forKey: .timezoneOffset)
-    }
-
     init(temp: Double,
          windSpeed: Double,
          windDirection: Int,
@@ -62,6 +47,50 @@ nonisolated struct WeatherResponseDTO: Decodable {
         self.lat = lat
         self.timezoneOffset = timezoneOffset
     }
+
+    init(from weatherResponse: WeatherResponse) {
+        self.temp = weatherResponse.temp
+        self.windSpeed = weatherResponse.windSpeed
+        self.windDirection = weatherResponse.windDirection
+        self.weather = weatherResponse.weather.compactMap { WeatherObservationDTO(from: $0) }
+        self.dailyWeather = weatherResponse.dailyWeather.compactMap { .init(from: $0) }
+        self.lon = weatherResponse.lon
+        self.lat = weatherResponse.lat
+        self.timezoneOffset = weatherResponse.timezoneOffset
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        // Now pick the pieces you want
+        let currentContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .current)
+        temp = try currentContainer.decode(Double.self, forKey: .temp)
+        windSpeed = try currentContainer.decode(Double.self, forKey: .windSpeed)
+        windDirection = try currentContainer.decode(Int.self, forKey: .windDirection)
+        weather = try currentContainer.decode([WeatherObservationDTO].self, forKey: .weather)
+        dailyWeather = try container.decode([DailyWeatherForcastDTO].self, forKey: .daily)
+        lon = try container.decode(Double.self, forKey: .lon)
+        lat = try container.decode(Double.self, forKey: .lat)
+        timezoneOffset = try container.decode(Int.self, forKey: .timezoneOffset)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        // current: { temp, windSpeed, windDirection, weather }
+        var currentContainer = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .current)
+        try currentContainer.encode(temp, forKey: .temp)
+        try currentContainer.encode(windSpeed, forKey: .windSpeed)
+        try currentContainer.encode(windDirection, forKey: .windDirection)
+        try currentContainer.encode(weather, forKey: .weather)
+
+        // top-level keys
+        try container.encode(dailyWeather, forKey: .daily)
+        try container.encode(lon, forKey: .lon)
+        try container.encode(lat, forKey: .lat)
+        try container.encode(timezoneOffset, forKey: .timezoneOffset)
+    }
+
 
     // MARK: - Example
     static var example: WeatherResponseDTO {

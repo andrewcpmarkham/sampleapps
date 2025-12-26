@@ -59,13 +59,7 @@ extension DayWeatherView {
             self.location = location
             self.weather = weather
             self.todaysWeather = todaysWeather
-
-            updateUI()
-        }
-
-        func updateUI() {
-            // Check for favourite
-            isFavourite = AppSettingsManager.shared.bool(for: AppSettingsManager.Key.isFavourite)
+            self.isFavourite = Favourite.isFavourite(location: location, forecast: .day)
         }
     }
 }

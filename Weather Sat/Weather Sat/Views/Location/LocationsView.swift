@@ -8,6 +8,24 @@
 import SwiftData
 import SwiftUI
 
+//struct WeatherRouterView: View {
+//    let location: Location
+//    let weather: WeatherResponse
+//    let type: ForecastType
+//
+//
+//    var body: some View {
+//        switch type {
+//        case .current:
+//            CurrentWeatherView(location: location, currenWeather: weather.weather.first)
+//        case .day:
+//            DayWeatherView(location: location, todaysWeather: currentWeather)
+//        case .week:
+//            WeekWeatherView(location: location)
+//        }
+//    }
+//}
+
 struct LocationsView: View {
 
     @State private var viewModel: ViewModel

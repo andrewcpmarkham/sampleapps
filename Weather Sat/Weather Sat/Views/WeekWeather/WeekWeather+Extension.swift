@@ -13,8 +13,7 @@ extension WeekWeatherView {
     final class ViewModel {
 
         let location: Location
-        var isFavourite: Bool = false
-        var performedAutomaticFavouriteSegue = false
+        var isFavourite: Bool
         let weather: WeatherResponse
         let weeksWeather: [DailyWeatherForcast]
 
@@ -33,14 +32,7 @@ extension WeekWeatherView {
             self.location = location
             self.weather = weather
             self.weeksWeather = weeksWeather
-
-            updateUI()
+            self.isFavourite = Favourite.isFavourite(location: location, forecast: .week)
         }
-
-        func updateUI() {
-            // Check for favourite
-            isFavourite = AppSettingsManager.shared.bool(for: AppSettingsManager.Key.isFavourite)
-        }
-
     }
 }
