@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated struct WeatherObservationDTO: Hashable, Codable {
+nonisolated struct WeatherObservationDTO: Hashable, Codable, Equatable {
     // Sub data object structure returned by Open Weather API
     let detail: String
     let desc: String
@@ -56,5 +56,10 @@ nonisolated struct WeatherObservationDTO: Hashable, Codable {
             desc: "overcast clouds",
             icon: "04d",
         )
+    }
+
+    // MARK: - Equatible
+    static func == (lhs: WeatherObservationDTO, rhs: WeatherObservationDTO) -> Bool {
+        return lhs.detail == rhs.detail && lhs.desc == rhs.desc && lhs.icon == rhs.icon
     }
 }

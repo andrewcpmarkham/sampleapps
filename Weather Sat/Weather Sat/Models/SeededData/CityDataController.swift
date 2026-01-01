@@ -24,7 +24,7 @@ actor CityDataController {
         case jsonDataNotLoaded
         case seededDBFileNotFound
 
-        var errorDescription: String? {
+        var errorDescription: String {
             switch self {
             case .defaultDataDriectoryNotFound:
                 return "Default Directory for Swift Data Store was not returned"

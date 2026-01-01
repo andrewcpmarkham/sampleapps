@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LocationDTO: Codable, Hashable {
+nonisolated struct LocationDTO: Codable, Hashable {
     var id: Int?
     var city: String?
     var state: String?

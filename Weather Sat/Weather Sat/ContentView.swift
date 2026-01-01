@@ -21,8 +21,8 @@ struct ContentView: View {
 
                     switch favourite {
 
-                    case let .current(location, weatherObservation):
-                        CurrentWeatherView(locationDTO: location, currenWeatherDTO: weatherObservation)
+                    case let .current(location, weatherResponseDTO, weatherObservation):
+                        CurrentWeatherView(locationDTO: location,weatherResponseDTO: weatherResponseDTO, currenWeatherDTO: weatherObservation)
 
                     case let .day(location, weather, todaysWeather):
                         DayWeatherView(locationDTO: location, weatherDTO: weather, todaysWeatherDTO: todaysWeather)
@@ -34,7 +34,7 @@ struct ContentView: View {
         }
         .task {
             guard let favourite = AppSettingsManager.shared.decode(Favourite.self, for: .isFavourite) else { return }
-
+            print ("Favourite: \(favourite)")
             path = NavigationPath([favourite])
         }
     }

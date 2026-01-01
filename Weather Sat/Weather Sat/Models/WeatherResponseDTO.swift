@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated struct WeatherResponseDTO: Codable, Hashable {
+nonisolated struct WeatherResponseDTO: Codable, Hashable, Equatable {
     // Main data object structure returned by Open Weather API
     let temp: Double
     let windSpeed: Double
@@ -91,7 +91,6 @@ nonisolated struct WeatherResponseDTO: Codable, Hashable {
         try container.encode(timezoneOffset, forKey: .timezoneOffset)
     }
 
-
     // MARK: - Example
     static var example: WeatherResponseDTO {
         return WeatherResponseDTO(
@@ -104,5 +103,17 @@ nonisolated struct WeatherResponseDTO: Codable, Hashable {
             lat: -37.810000000000002,
             timezoneOffset: 36000
         )
+    }
+
+    // MARK: - Equatible
+    static func == (lhs: WeatherResponseDTO, rhs: WeatherResponseDTO) -> Bool {
+        return lhs.temp == rhs.temp
+        && lhs.windSpeed == rhs.windSpeed
+        && lhs.windDirection == rhs.windDirection
+        && lhs.weather == rhs.weather
+        && lhs.dailyWeather == rhs.dailyWeather
+        && lhs.lon == rhs.lon
+        && lhs.lat == rhs.lat
+        && lhs.timezoneOffset == rhs.timezoneOffset
     }
 }

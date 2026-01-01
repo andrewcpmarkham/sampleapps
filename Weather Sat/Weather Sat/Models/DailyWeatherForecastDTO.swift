@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated struct DailyWeatherForcastDTO: Codable, Hashable, Identifiable {
+nonisolated struct DailyWeatherForcastDTO: Codable, Hashable, Identifiable, Equatable {
     let id = UUID()
 
     // Sub data object structure returned by API
@@ -142,5 +142,21 @@ nonisolated struct DailyWeatherForcastDTO: Codable, Hashable, Identifiable {
             windSpeed: 7.3499999999999996,
             windDirection: 258
         )
+    }
+
+    // MARK: - Equatable
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.dt == rhs.dt
+        && lhs.sunrise == rhs.sunrise
+        && lhs.sunset == rhs.sunset
+        && lhs.tempDay == rhs.tempDay
+        && lhs.tempMin == rhs.tempMin
+        && lhs.tempMax == rhs.tempMax
+        && lhs.tempNight == rhs.tempNight
+        && lhs.tempEve == rhs.tempEve
+        && lhs.tempMorn == rhs.tempMorn
+        && lhs.weather == rhs.weather
+        && lhs.windSpeed == rhs.windSpeed
+        && lhs.windDirection == rhs.windDirection
     }
 }

@@ -20,6 +20,41 @@ struct CityTests {
             return try ModelContainer(for: schema, configurations: config)
         }
 
+    @MainActor
+    @Test func initToFromDTORoundTrip() async throws {
+        let city = City(
+            id: Int.random(
+                in: 0...100
+            ),
+            name: TestingUtilities.randomString(
+                length: 10
+            ),
+            state: TestingUtilities.randomString(
+                length: 3
+            ),
+            country: TestingUtilities.randomString(
+                length: 10
+            ),
+            coord: Coord(
+                lat: Double.random(
+                    in: 0...100
+                ),
+                lon:Double.random(
+                    in: 0...100
+                )
+            )
+        )
+        let dto = CityDTO(from: city)
+        let cityFromDTO = try City(from: dto)
+
+        #expect(city.id == cityFromDTO.id)
+        #expect(city.name == cityFromDTO.name)
+        #expect(city.state == cityFromDTO.state)
+        #expect(city.country == cityFromDTO.country)
+        #expect(city.coord.lat == cityFromDTO.coord.lat)
+        #expect(city.coord.lon == cityFromDTO.coord.lon)
+    }
+
     // Test Creation of City from DTO
     @MainActor
     @Test func initFromDTO() async throws {

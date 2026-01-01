@@ -66,11 +66,16 @@ struct CurrentWeatherView: View {
         _viewModel = State(initialValue: viewModel)
     }
 
-    init?(locationDTO: LocationDTO, currenWeatherDTO: WeatherObservationDTO) {
+    init?(locationDTO: LocationDTO, weatherResponseDTO: WeatherResponseDTO? = nil, currenWeatherDTO: WeatherObservationDTO) {
         guard
             let location = Location(from: locationDTO)
         else {
             return nil
+        }
+
+        // Required for Favourite where weather detail need to be resupplied to the location
+        if let weatherResponseDTO = weatherResponseDTO {
+            location.weather = WeatherResponse(from: weatherResponseDTO)
         }
         self.init(location: location, currenWeather: WeatherObservation(from: currenWeatherDTO))
     }

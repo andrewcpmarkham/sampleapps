@@ -41,6 +41,14 @@ struct CityDTO: Codable {
         self.coord = coord
     }
 
+    init(from city: City) {
+        self.id = city.id
+        self.name = city.name
+        self.state = city.state
+        self.country = city.country
+        self.coord = CoordDTO(from: city.coord)
+    }
+
     func encode(to encoder: any Encoder) throws {
         guard let id else {
             throw DecodingError.valueNotFound(
@@ -109,6 +117,11 @@ struct CoordDTO: Codable {
     init (lat: Double, lon: Double) {
         self.lat = lat
         self.lon = lon
+    }
+
+    init(from coord: Coord) {
+        self.lat = coord.lat
+        self.lon = coord.lon
     }
 
     func encode(to encoder: any Encoder) throws {

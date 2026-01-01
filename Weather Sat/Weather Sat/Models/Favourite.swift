@@ -19,9 +19,10 @@ enum ForecastType: String, Codable, Hashable {
 ///   `Favourite` intentionally stores DTO types rather than domain models to
 ///   utilise  encoding, decoding  and long-term persistence.
 enum Favourite: Hashable, Codable, Equatable {
-    case current(location: LocationDTO, weatherObservation: WeatherObservationDTO)
-    case day(location: LocationDTO, weatherResponse: WeatherResponseDTO, dailyWeatherForcast: DailyWeatherForcastDTO)
-    case week(location: LocationDTO, weatherResponse: WeatherResponseDTO, dailyWeatherForcasts: [DailyWeatherForcastDTO])
+
+    case current(locationDTO: LocationDTO, weatherResponseDTO: WeatherResponseDTO,weatherObservationDTO: WeatherObservationDTO)
+    case day(locationDTO: LocationDTO, weatherResponseDTO: WeatherResponseDTO, dailyWeatherForcastDTO: DailyWeatherForcastDTO)
+    case week(locationDTO: LocationDTO, weatherResponseDTO: WeatherResponseDTO, dailyWeatherForcastsDTO: [DailyWeatherForcastDTO])
 
     static func == (lhs: Favourite, rhs: Favourite) -> Bool {
         switch (lhs, rhs) {
@@ -45,12 +46,12 @@ enum Favourite: Hashable, Codable, Equatable {
             return false
         }
         switch favourite {
-        case .current(location: let favLocation, weatherObservation: _):
+        case .current(locationDTO: let favLocation,  weatherResponseDTO: _, weatherObservationDTO: _):
             return location.id == favLocation.id && forecast == .current
-        case .day(location: let favLocation, weatherResponse: _, dailyWeatherForcast: _):
+        case .day(locationDTO: let favLocation, weatherResponseDTO: _, dailyWeatherForcastDTO: _):
             return location.id == favLocation.id && forecast == .day
-        case .week(location: let favLocation, weatherResponse: _, dailyWeatherForcasts: _):
-            return location.id == favLocation.id && forecast == .current
+        case .week(locationDTO: let favLocation, weatherResponseDTO: _, dailyWeatherForcastsDTO: _):
+            return location.id == favLocation.id && forecast == .week
         }
     }
     
@@ -61,34 +62,41 @@ enum Favourite: Hashable, Codable, Equatable {
     /// - Returns: A `Favourite` matching the requested forecast type, or `nil` if
     ///   the required weather data is missing.
     static func getFavourite(for location: Location, forecast: ForecastType) -> Favourite? {
+        guard
+            let weatherResonse = location.weather
+        else {
+            return nil
+        }
+
         let locationDTO = LocationDTO(from: location)
+        let weatherResonseDTO = WeatherResponseDTO(from: weatherResonse)
+
         switch forecast {
-            case .current:
-            guard let currentWeather = location.weather?.weather.first else {
+        case .current:
+            guard
+                let currentWeather = weatherResonse.weather.first else {
                 return nil
             }
+            let weatherResonseDTO = WeatherResponseDTO(from: weatherResonse)
             let currentWeatherDTO = WeatherObservationDTO(from: currentWeather)
-            return Favourite.current(location: locationDTO, weatherObservation: currentWeatherDTO)
+            return Favourite.current(locationDTO: locationDTO, weatherResponseDTO: weatherResonseDTO, weatherObservationDTO: currentWeatherDTO)
         case .day:
             guard
-                let weatherResonse = location.weather,
                 let dayWeather = location.weather?.dailyWeather.first
             else {
                 return nil
             }
-            let weatherResonseDTO = WeatherResponseDTO(from: weatherResonse)
+
             let dayWeatherDTO = DailyWeatherForcastDTO(from: dayWeather)
-            return Favourite.day(location: locationDTO, weatherResponse: weatherResonseDTO, dailyWeatherForcast: dayWeatherDTO)
+            return Favourite.day(locationDTO: locationDTO, weatherResponseDTO: weatherResonseDTO, dailyWeatherForcastDTO: dayWeatherDTO)
         case .week:
             guard
-                let weatherResonse = location.weather,
                 let weeksWeather = location.weather?.dailyWeather
             else {
                 return nil
             }
-            let weatherResonseDTO = WeatherResponseDTO(from: weatherResonse)
             let weeksWeatherDTO = weeksWeather.compactMap{DailyWeatherForcastDTO(from: $0)}
-            return Favourite.week(location: locationDTO, weatherResponse: weatherResonseDTO, dailyWeatherForcasts: weeksWeatherDTO)
+            return Favourite.week(locationDTO: locationDTO, weatherResponseDTO: weatherResonseDTO, dailyWeatherForcastsDTO: weeksWeatherDTO)
         }
     }
 }
