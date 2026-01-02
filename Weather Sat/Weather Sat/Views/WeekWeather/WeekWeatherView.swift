@@ -14,15 +14,36 @@ struct WeekWeatherView: View {
     var body: some View {
         VStack {
             TitleRow(location: viewModel.location, forecast: .week, isFavourite: viewModel.isFavourite)
-            ScrollView(.vertical) {
-                VStack {
-                    ForEach(viewModel.weeksWeather) { day in
-                        WeatherRowView(
-                            weather: viewModel.weather,
-                            dailyWeatherForcast: day
-                        )
-                        Divider()
-                            .background(Color.secondary)
+
+            switch viewModel.loadState {
+            case .loading:
+                Text("Updataing favourite weather for \(viewModel.location.city)...")
+                    .padding(.top, 20)
+                Spacer()
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(1.2)
+                Spacer()
+            default:
+                // Show errro at top if recieved
+                if case let LoadState.error(loadError) = viewModel.loadState {
+                    HStack {
+                        Text(loadError)
+                            .bold()
+                        Image(systemName: "exclamationmark.circle")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                ScrollView(.vertical) {
+                    VStack {
+                        ForEach(viewModel.weeksWeather) { day in
+                            WeatherRowView(
+                                weatherResponse: viewModel.weatherResponse,
+                                dailyWeatherForcast: day
+                            )
+                            Divider()
+                                .background(Color.secondary)
+                        }
                     }
                 }
             }
@@ -33,22 +54,30 @@ struct WeekWeatherView: View {
         .toolbarBackground(Color(.systemBackground), for: .navigationBar)
     }
     // MARK: - Init
-    init(location: Location, weather: WeatherResponse, weeksWeather: [DailyWeatherForcast] ) {
-        let viewModel = ViewModel(location: location, weather: weather, weeksWeather: weeksWeather)
+    init(location: Location, weatherResponse: WeatherResponse, weeksWeather: [DailyWeatherForcast] ) {
+        let viewModel = ViewModel(location: location, weatherResponse: weatherResponse, weeksWeather: weeksWeather)
         _viewModel = State(initialValue: viewModel)
     }
 
-    init?(locationDTO: LocationDTO, weatherDTO: WeatherResponseDTO, weeksWeatherDTO: [DailyWeatherForcastDTO]) {
-        guard let location = Location(from: locationDTO)
-        else { return nil }
+    // Triggered from Favourite
+    init?(locationDTO: LocationDTO, weatherResponseDTO: WeatherResponseDTO, weeksWeatherDTO: [DailyWeatherForcastDTO]) {
+        let weatherResponse = WeatherResponse(from: weatherResponseDTO)
+        guard
+            let location = Location(from: locationDTO)
+        else {
+            return nil
+        }
 
-        self.init(location: location, weather: WeatherResponse(from: weatherDTO), weeksWeather: weeksWeatherDTO.compactMap{ DailyWeatherForcast(from: $0)})
+        let viewModel = ViewModel(location: location, weatherResponse: weatherResponse, weeksWeather: weatherResponse.dailyWeather, loadState: .loading)
+        _viewModel = State(initialValue: viewModel)
+
+        viewModel.loadState = .loading
     }
 }
 
 #Preview {
     NavigationStack {
-        WeekWeatherView(location: Location.example, weather: WeatherResponse.example, weeksWeather: [DailyWeatherForcast.example, DailyWeatherForcast.example, DailyWeatherForcast.example])
+        WeekWeatherView(location: Location.example, weatherResponse: WeatherResponse.example, weeksWeather: [DailyWeatherForcast.example, DailyWeatherForcast.example, DailyWeatherForcast.example])
     }
 }
 

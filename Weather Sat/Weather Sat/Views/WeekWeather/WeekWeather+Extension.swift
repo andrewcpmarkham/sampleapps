@@ -12,10 +12,13 @@ extension WeekWeatherView {
     @Observable
     final class ViewModel {
 
-        let location: Location
+        var location: Location
         var isFavourite: Bool
-        let weather: WeatherResponse
-        let weeksWeather: [DailyWeatherForcast]
+
+        var weatherResponse: WeatherResponse
+        var weeksWeather: [DailyWeatherForcast]
+
+        var loadState: LoadState
 
         var dateLabel: String {
             guard let todaysWeather = weeksWeather.first else {
@@ -23,18 +26,49 @@ extension WeekWeatherView {
             }
 
             return Date.dateOnlyFormatter.string(
-                from: Date.dateFromUTCInt(UTCTimeStamp: todaysWeather.dt + weather.timezoneOffset)
+                from: Date.dateFromUTCInt(UTCTimeStamp: todaysWeather.dt + weatherResponse.timezoneOffset)
             )
         }
 
         // MARK: - Inits
-        init(location: Location, weather: WeatherResponse, weeksWeather: [DailyWeatherForcast]) {
+        init(location: Location, weatherResponse: WeatherResponse, weeksWeather: [DailyWeatherForcast], loadState: LoadState = .success("Pre loaded")) {
             self.location = location
-            self.weather = weather
+            self.weatherResponse = weatherResponse
             self.weeksWeather = weeksWeather
             self.isFavourite = Favourite.isFavourite(location: location, forecast: .week)
+            self.loadState = loadState
+
+            if loadState == .loading {
+                Task {
+                    await getLocationWeather()
+                }
+            }
+        }
+
+        private func getLocationWeather() async {
+            loadState = .loading
+
+            do {
+                let weatherDTO = try await OpenWeatherService.shared.weatherRequest(
+                    cityLon: location.lon,
+                    cityLat: location.lat,
+                    optionalRequest: false
+                )
+                let latestWeatherResponse = WeatherResponse(from: weatherDTO)
+                let latestWeeklyWeather = latestWeatherResponse.dailyWeather
+
+                await MainActor.run {
+                    let updatedLocation = self.location
+                    updatedLocation.weather = latestWeatherResponse
+                    weatherResponse = latestWeatherResponse
+                    weeksWeather = latestWeeklyWeather
+                    loadState = .success("Weather Updated")
+                }
+            } catch {
+                await MainActor.run {
+                    loadState = .error("Failed to fetch weather: \(error)")
+                }
+            }
         }
     }
 }
-//2147714
-//week

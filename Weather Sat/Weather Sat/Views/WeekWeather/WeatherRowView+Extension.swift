@@ -12,7 +12,7 @@ extension WeatherRowView {
     @Observable
     final class ViewModel {
 
-        var weather: WeatherResponse
+        var weatherResponse: WeatherResponse
         var dailyWeatherForcast: DailyWeatherForcast
         var url: URL? {
             guard let icon = dailyWeatherForcast.weather.first?.icon else {
@@ -23,7 +23,7 @@ extension WeatherRowView {
 
         var dateLabel: String {
             Date.dateOnlyFormatter.string(
-                from: Date.dateFromUTCInt(UTCTimeStamp: dailyWeatherForcast.dt + weather.timezoneOffset)
+                from: Date.dateFromUTCInt(UTCTimeStamp: dailyWeatherForcast.dt + weatherResponse.timezoneOffset)
             )
         }
 
@@ -43,16 +43,16 @@ extension WeatherRowView {
         }
 
         var windDirectionLabel: String {
-            "\(weather.windDirection)º"
+            "\(weatherResponse.windDirection)º"
         }
 
         var windSpeedLabel: String {
-            String(format: "%.1f", weather.windSpeed) + "km/h"
+            String(format: "%.1f", weatherResponse.windSpeed) + "km/h"
         }
 
         // MARK: - Inits
-        init(weather: WeatherResponse, dailyWeatherForcast: DailyWeatherForcast) {
-            self.weather = weather
+        init(weatherResponse: WeatherResponse, dailyWeatherForcast: DailyWeatherForcast) {
+            self.weatherResponse = weatherResponse
             self.dailyWeatherForcast = dailyWeatherForcast
         }
     }

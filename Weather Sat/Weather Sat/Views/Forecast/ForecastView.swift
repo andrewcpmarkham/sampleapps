@@ -13,7 +13,7 @@ struct ForecastView: View {
 
     var body: some View {
         List {
-            if viewModel.weather == nil,
+            if viewModel.weatherResponse == nil,
                viewModel.currentWeather == nil,
                viewModel.dayWeather == nil,
                viewModel.weekWeather == nil {
@@ -29,17 +29,17 @@ struct ForecastView: View {
                         ForecastRowView(label: ViewModel.ForecastKey.currentWeather.label)
                     }
                 }
-                if let weather = viewModel.weather, let today = viewModel.dayWeather {
+                if let weatherResponse = viewModel.weatherResponse, let today = viewModel.dayWeather {
                     NavigationLink {
-                        DayWeatherView(location: viewModel.location, weather: weather, todaysWeather: today)
+                        DayWeatherView(location: viewModel.location, weatherResponse: weatherResponse, todaysWeather: today)
                     } label: {
                         ForecastRowView(label: ViewModel.ForecastKey.dayWeather.label)
                             .padding([.top, .bottom])
                     }
                 }
-                if let weather = viewModel.weather, let week = viewModel.weekWeather {
+                if let weatherResponse = viewModel.weatherResponse, let week = viewModel.weekWeather {
                     NavigationLink {
-                        WeekWeatherView(location: viewModel.location, weather: weather, weeksWeather: week)
+                        WeekWeatherView(location: viewModel.location, weatherResponse: weatherResponse, weeksWeather: week)
                     } label: {
                         ForecastRowView(label: ViewModel.ForecastKey.weekWeather.label)
                     }

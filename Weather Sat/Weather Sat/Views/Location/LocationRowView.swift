@@ -46,11 +46,6 @@ struct LocationRowView: View {
         state = .success(formatted)
     }
 
-    @MainActor
-    private func setError() {
-        state = .error("?")
-    }
-
     private func getLocationWeather() async {
         state = .loading
 
@@ -66,18 +61,10 @@ struct LocationRowView: View {
                 setSuccess(weatherDTO.temp)
             }
         } catch {
-            print("Failed to fetch weather: \(error)")
             await MainActor.run {
-                networkErrorNotification(error: error)
-                setError()
+                state = .error("Failed to fetch weather: \(error)")
             }
         }
-    }
-
-    @MainActor
-    func networkErrorNotification(error: Error?) {
-        // Update any UI-facing error indicators here if needed
-        // (state is already set to .error("?"))
     }
 }
 
@@ -85,10 +72,23 @@ struct LocationRowView: View {
     LocationRowView(location: Location.example)
 }
 
-enum LoadState {
+enum LoadState: Equatable {
     case loading
     case success(String)
     case error(String)
+
+    static func == (lhs: LoadState, rhs: LoadState) -> Bool {
+        switch (lhs, rhs) {
+        case (.loading, .loading):
+            return true
+        case (.success(_), .success(_)):
+            return true
+        case (.error(_), .error(_)):
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 enum networkRequestResult {

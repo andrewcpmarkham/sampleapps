@@ -14,12 +14,14 @@ extension DayWeatherView {
 
         var location: Location
         var isFavourite: Bool = false
-        var performedAutomaticFavouriteSegue = false
 
-        var weather: WeatherResponse
-        var todaysWeather: DailyWeatherForcast
+        var weatherResponse: WeatherResponse
+        var dayWeather: DailyWeatherForcast
+
+        var loadState: LoadState
+
         var url: URL? {
-            guard let icon = todaysWeather.weather.first?.icon else {
+            guard let icon = dayWeather.weather.first?.icon else {
                 return nil
             }
              return OpenWeatherService.getIconURL(with: icon)
@@ -27,39 +29,75 @@ extension DayWeatherView {
 
         var dateLabel: String {
             Date.dateOnlyFormatter.string(
-                from: Date.dateFromUTCInt(UTCTimeStamp: todaysWeather.dt + weather.timezoneOffset)
+                from: Date.dateFromUTCInt(UTCTimeStamp: dayWeather.dt + weatherResponse.timezoneOffset)
             )
         }
 
         var highTempLabel: String {
-            String(format: "%.0f", todaysWeather.tempMax) + "C"
+            String(format: "%.0f", dayWeather.tempMax) + "C"
         }
 
         var lowTempLabel: String {
-            String(format: "%.0f", todaysWeather.tempMin) + "C"
+            String(format: "%.0f", dayWeather.tempMin) + "C"
         }
 
         var detailLabel: String {
-            guard let detail = todaysWeather.weather.first?.detail else {
+            guard let detail = dayWeather.weather.first?.detail else {
                 return ""
             }
             return detail
         }
 
         var windDirectionLabel: String {
-            "\(weather.windDirection)º"
+            "\(weatherResponse.windDirection)º"
         }
 
         var windSpeedLabel: String {
-            String(format: "%.1f", weather.windSpeed) + "km/h"
+            String(format: "%.1f", weatherResponse.windSpeed) + "km/h"
         }
 
         // MARK: - Inits
-        init(location: Location, weather: WeatherResponse, todaysWeather: DailyWeatherForcast) {
+        init(location: Location, weatherResponse: WeatherResponse, dayWeather: DailyWeatherForcast, loadState: LoadState = .success("Pre loaded")) {
             self.location = location
-            self.weather = weather
-            self.todaysWeather = todaysWeather
+            self.weatherResponse = weatherResponse
+            self.dayWeather = dayWeather
             self.isFavourite = Favourite.isFavourite(location: location, forecast: .day)
+            self.loadState = loadState
+
+            if loadState == .loading {
+                Task {
+                    await getLocationWeather()
+                }
+            }
+        }
+
+        private func getLocationWeather() async {
+            loadState = .loading
+
+            do {
+                let weatherDTO = try await OpenWeatherService.shared.weatherRequest(
+                    cityLon: location.lon,
+                    cityLat: location.lat,
+                    optionalRequest: false
+                )
+                let latestWeather = WeatherResponse(from: weatherDTO)
+                guard let latestDailyWeather = latestWeather.dailyWeather.first else {
+                    loadState = .error("Failed to fetch latest days weather")
+                    return
+                }
+
+                await MainActor.run {
+                    let updatedLocation = self.location
+                    updatedLocation.weather = latestWeather
+                    weatherResponse = latestWeather
+                    dayWeather = latestDailyWeather
+                    loadState = .success("Weather Updated")
+                }
+            } catch {
+                await MainActor.run {
+                    loadState = .error("Failed to fetch weather: \(error)")
+                }
+            }
         }
     }
 }

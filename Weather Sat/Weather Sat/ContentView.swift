@@ -25,10 +25,10 @@ struct ContentView: View {
                         CurrentWeatherView(locationDTO: location,weatherResponseDTO: weatherResponseDTO, currenWeatherDTO: weatherObservation)
 
                     case let .day(location, weather, todaysWeather):
-                        DayWeatherView(locationDTO: location, weatherDTO: weather, todaysWeatherDTO: todaysWeather)
+                        DayWeatherView(locationDTO: location, weatherResponseDTO: weather, dayWeatherDTO: todaysWeather)
 
                     case let .week(location, weather, weeksWeather):
-                        WeekWeatherView(locationDTO: location, weatherDTO: weather, weeksWeatherDTO: weeksWeather)
+                        WeekWeatherView(locationDTO: location, weatherResponseDTO: weather, weeksWeatherDTO: weeksWeather)
                     }
                 }
         }

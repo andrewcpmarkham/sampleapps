@@ -12,7 +12,7 @@ extension ForecastView {
     @Observable
     final class ViewModel {
         var location: Location
-        var weather: WeatherResponse?
+        var weatherResponse: WeatherResponse?
 
         var currentWeather: WeatherObservation?
         var dayWeather: DailyWeatherForcast?
@@ -40,11 +40,11 @@ extension ForecastView {
         // MARK: - Inits
         init(location: Location) {
             self.location = location
-            self.weather = location.weather
-            if let weather = self.weather {
-                self.currentWeather = weather.weather.first
-                self.dayWeather = weather.dailyWeather.first
-                self.weekWeather = weather.dailyWeather
+            self.weatherResponse = location.weather
+            if let weatherResponse = self.weatherResponse {
+                self.currentWeather = weatherResponse.weather.first
+                self.dayWeather = weatherResponse.dailyWeather.first
+                self.weekWeather = weatherResponse.dailyWeather
             }
 
             updateUI()

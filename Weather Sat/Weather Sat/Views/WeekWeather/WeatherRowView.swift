@@ -58,12 +58,12 @@ struct WeatherRowView: View {
     }
 
     // MARK: - Init
-    init(weather: WeatherResponse, dailyWeatherForcast: DailyWeatherForcast) {
-        let viewModel = ViewModel(weather: weather, dailyWeatherForcast: dailyWeatherForcast)
+    init(weatherResponse: WeatherResponse, dailyWeatherForcast: DailyWeatherForcast) {
+        let viewModel = ViewModel(weatherResponse: weatherResponse, dailyWeatherForcast: dailyWeatherForcast)
         _viewModel = State(initialValue: viewModel)
     }
 }
 
 #Preview {
-    WeatherRowView(weather: WeatherResponse.example, dailyWeatherForcast: DailyWeatherForcast.example)
+    WeatherRowView(weatherResponse: WeatherResponse.example, dailyWeatherForcast: DailyWeatherForcast.example)
 }
