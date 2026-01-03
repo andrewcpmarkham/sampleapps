@@ -31,4 +31,8 @@ extension Date {
     static func dateFromUTCInt(UTCTimeStamp: Int) -> Date {
         return Date(timeIntervalSince1970: Double(UTCTimeStamp))
     }
+
+    static func utcIntFromDate(_ date: Date) -> Int {
+        Int(date.timeIntervalSince1970)
+    }
 }

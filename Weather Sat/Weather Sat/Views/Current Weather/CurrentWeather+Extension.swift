@@ -13,7 +13,6 @@ extension CurrentWeatherView {
     final class ViewModel {
 
         var location: Location
-        var isFavourite: Bool
         var currentWeather: WeatherObservation
         var iconURL: URL? = nil
 
@@ -23,10 +22,13 @@ extension CurrentWeatherView {
         init(location: Location, currenWeather: WeatherObservation, loadState: LoadState = .success("Pre loaded")) {
             self.location = location
             self.currentWeather = currenWeather
-            self.isFavourite = Favourite.isFavourite(location: location, forecast: .current)
             self.loadState = loadState
 
-            if loadState == .loading {
+            // When Favouite load state is set to Favourite
+            // Also needs to cover when app is left on Forecasst view with stale data.
+            if
+                loadState == .loading || location.getDataDate() < Calendar.current.startOfDay(for: Date())
+            {
                 Task {
                     await getLocationWeather()
                     updateUI()
@@ -36,9 +38,7 @@ extension CurrentWeatherView {
             }
         }
 
-        func updateUI() {
-            iconURL = OpenWeatherService.getIconURL(with: currentWeather.icon)
-        }
+        // MARK: - Private Functions
 
         private func getLocationWeather() async {
             loadState = .loading
@@ -67,6 +67,12 @@ extension CurrentWeatherView {
                     loadState = .error("Failed to fetch weather: \(error)")
                 }
             }
+        }
+
+        // MARK: - Functions
+
+        func updateUI() {
+            iconURL = OpenWeatherService.getIconURL(with: currentWeather.icon)
         }
     }
 }

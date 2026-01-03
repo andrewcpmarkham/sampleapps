@@ -14,16 +14,15 @@ extension TitleRow {
         
         let location: Location
         let forecast: ForecastType
-        var isFavourite: Bool
+        var isFavourite: Bool = false
 
         var city: String {
             location.city
         }
         
-        init (location: Location, forecast: ForecastType, isFavourite: Bool) {
+        init (location: Location, forecast: ForecastType) {
             self.location = location
             self.forecast = forecast
-            self.isFavourite = isFavourite
         }
         
         func updateFavourite() {

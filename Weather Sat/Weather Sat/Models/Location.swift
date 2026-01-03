@@ -107,6 +107,17 @@ final class Location {
         // Required for background refresh
         OpenWeatherService.shared.urlSession.invalidateAndCancel()
     }
+
+    func getDataDate() -> Date {
+        guard
+            let dateInt = self.weather?.dailyWeather.first?.dt,
+            let timeZoneOffset = self.weather?.timezoneOffset
+        else {
+            let calendar = Calendar.current
+            return calendar.date(byAdding: .day, value: -1, to: Date.now)!
+        }
+        return Date.dateFromUTCInt(UTCTimeStamp: dateInt + timeZoneOffset)
+    }
 }
 
 // comparable protocol conformance function

@@ -13,7 +13,6 @@ extension DayWeatherView {
     final class ViewModel {
 
         var location: Location
-        var isFavourite: Bool = false
 
         var weatherResponse: WeatherResponse
         var dayWeather: DailyWeatherForcast
@@ -61,10 +60,9 @@ extension DayWeatherView {
             self.location = location
             self.weatherResponse = weatherResponse
             self.dayWeather = dayWeather
-            self.isFavourite = Favourite.isFavourite(location: location, forecast: .day)
             self.loadState = loadState
 
-            if loadState == .loading {
+            if loadState == .loading || location.getDataDate() < Calendar.current.startOfDay(for: Date()) {
                 Task {
                     await getLocationWeather()
                 }

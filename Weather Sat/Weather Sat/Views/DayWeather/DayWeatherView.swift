@@ -13,7 +13,7 @@ struct DayWeatherView: View {
 
     var body: some View {
 
-        TitleRow(location: viewModel.location, forecast: .day, isFavourite: viewModel.isFavourite)
+        TitleRow(location: viewModel.location, forecast: .day)
 
         VStack {
             switch viewModel.loadState {

@@ -30,13 +30,16 @@ struct TitleRow: View {
         }
         .padding()
         .background(.tertiary)
+        .onAppear {
+            viewModel.isFavourite = Favourite.isFavourite(location: viewModel.location, forecast: viewModel.forecast)
+        }
     }
 
-    init(location: Location, forecast: ForecastType, isFavourite: Bool) {
-        self.viewModel = .init(location: location, forecast: forecast, isFavourite: isFavourite)
+    init(location: Location, forecast: ForecastType) {
+        self.viewModel = .init(location: location, forecast: forecast)
     }
 }
 
 #Preview {
-    TitleRow(location: Location.example, forecast: .current, isFavourite: false)
+    TitleRow(location: Location.example, forecast: .current)
 }

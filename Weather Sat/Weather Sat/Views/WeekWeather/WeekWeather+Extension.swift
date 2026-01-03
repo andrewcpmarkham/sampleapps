@@ -13,7 +13,6 @@ extension WeekWeatherView {
     final class ViewModel {
 
         var location: Location
-        var isFavourite: Bool
 
         var weatherResponse: WeatherResponse
         var weeksWeather: [DailyWeatherForcast]
@@ -35,10 +34,9 @@ extension WeekWeatherView {
             self.location = location
             self.weatherResponse = weatherResponse
             self.weeksWeather = weeksWeather
-            self.isFavourite = Favourite.isFavourite(location: location, forecast: .week)
             self.loadState = loadState
 
-            if loadState == .loading {
+            if loadState == .loading || location.getDataDate() < Calendar.current.startOfDay(for: Date()) {
                 Task {
                     await getLocationWeather()
                 }
