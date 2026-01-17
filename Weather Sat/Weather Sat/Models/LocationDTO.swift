@@ -7,6 +7,7 @@
 
 import Foundation
 
+// WARNING: - implemented soft decoding here for example purpose only
 nonisolated struct LocationDTO: Codable, Hashable {
     var id: Int?
     var city: String?

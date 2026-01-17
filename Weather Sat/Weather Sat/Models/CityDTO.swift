@@ -7,6 +7,7 @@
 
 import Foundation
 
+// WARNING: - implemented soft decoding here for example purpose only
 struct CityDTO: Codable {
     let id: Int?
     let name: String?
@@ -50,34 +51,6 @@ struct CityDTO: Codable {
     }
 
     func encode(to encoder: any Encoder) throws {
-        guard let id else {
-            throw DecodingError.valueNotFound(
-                Int.self,
-                DecodingError.Context(
-                    codingPath: [],
-                    debugDescription: "Missing  required field: id"
-                )
-            )
-        }
-        guard let name, let state, let country else {
-            throw DecodingError.valueNotFound(
-                String.self,
-                DecodingError.Context(
-                    codingPath: [],
-                    debugDescription: "Missing one or more required fields: name, state, country"
-                )
-            )
-        }
-        guard let coord else {
-            throw DecodingError.valueNotFound(
-                CoordDTO.self,
-                DecodingError.Context(
-                    codingPath: [],
-                    debugDescription: "Missing required field: coord"
-                )
-            )
-        }
-
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
