@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WeekWeatherView: View {
 
+    @Environment(\.scenePhase) private var scenePhase
     @State private var viewModel: ViewModel
     
     var body: some View {
@@ -38,6 +39,7 @@ struct WeekWeatherView: View {
                     VStack {
                         ForEach(viewModel.weeksWeather) { day in
                             WeatherRowView(
+                                location: viewModel.location,
                                 weatherResponse: viewModel.weatherResponse,
                                 dailyWeatherForcast: day
                             )
@@ -46,6 +48,11 @@ struct WeekWeatherView: View {
                         }
                     }
                 }
+            }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            Task{
+                await viewModel.handleScenePhaseChange(phase)
             }
         }
         .navigationTitle("7-Day Forecast")

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DayWeatherView: View {
 
+    @Environment(\.scenePhase) private var scenePhase
     @State private var viewModel: ViewModel
 
     var body: some View {
@@ -48,7 +49,7 @@ struct DayWeatherView: View {
                         Text(viewModel.detailLabel)
                         Spacer()
                         Spacer()
-                        if let url = viewModel.url {
+                        if let url = viewModel.iconURL {
                             WeatherImageView(url: url)
                                 .frame(width: 120, height: 120)
                         } else {
@@ -90,6 +91,12 @@ struct DayWeatherView: View {
             }
         }
         .padding(.leading)
+        .onChange(of: scenePhase) { _, phase in
+            Task {
+                await viewModel.handleScenePhaseChange(phase)
+                viewModel.UpdateIcon()
+            }
+        }
         .navigationTitle("24-Hour Forecast")
         .navigationBarTitleDisplayMode(.large)
         .toolbarBackground(.visible, for: .navigationBar)
@@ -98,7 +105,7 @@ struct DayWeatherView: View {
 
     // MARK: - Init
     init(location: Location, weatherResponse: WeatherResponse, todaysWeather: DailyWeatherForcast) {
-        let viewModel = ViewModel(location: location, weatherResponse: weatherResponse, dayWeather: todaysWeather)
+        let viewModel = ViewModel(location: location, weatherResponse: weatherResponse, dailyWeatherForcast: todaysWeather)
         _viewModel = State(initialValue: viewModel)
     }
 
@@ -110,7 +117,7 @@ struct DayWeatherView: View {
         }
         let weatherResponse = WeatherResponse(from: weatherResponseDTO)
 
-        let viewModel = ViewModel(location: location, weatherResponse: weatherResponse, dayWeather: DailyWeatherForcast(from: dayWeatherDTO), loadState: .loading)
+        let viewModel = ViewModel(location: location, weatherResponse: weatherResponse, dailyWeatherForcast: DailyWeatherForcast(from: dayWeatherDTO), loadState: .loading)
         _viewModel = State(initialValue: viewModel)
 
         viewModel.loadState = .loading

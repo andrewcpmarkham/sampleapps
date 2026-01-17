@@ -10,7 +10,7 @@ import SwiftUI
 extension CurrentWeatherView {
 
     @Observable
-    final class ViewModel {
+    final class ViewModel: WeatherUpdater, WeatherIconUpdater {
 
         var location: Location
         var currentWeather: WeatherObservation
@@ -27,20 +27,21 @@ extension CurrentWeatherView {
             // When Favouite load state is set to Favourite
             // Also needs to cover when app is left on Forecasst view with stale data.
             if
-                loadState == .loading || location.getDataDate() < Calendar.current.startOfDay(for: Date())
+                loadState == .loading
             {
                 Task {
                     await getLocationWeather()
-                    updateUI()
+                    UpdateIcon()
                 }
             } else {
-                updateUI()
+                UpdateIcon()
             }
         }
 
-        // MARK: - Private Functions
+        // MARK: - Functions
 
-        private func getLocationWeather() async {
+        ///  Perfroms API call to get wehater data for loaction
+        func getLocationWeather() async {
             loadState = .loading
 
             do {
@@ -61,17 +62,16 @@ extension CurrentWeatherView {
                     currentWeather = latestCurrentWeather
                     loadState = .success("Weather Updated")
                 }
-                updateUI()
+                UpdateIcon()
             } catch {
                 await MainActor.run {
                     loadState = .error("Failed to fetch weather: \(error)")
                 }
             }
         }
-
-        // MARK: - Functions
-
-        func updateUI() {
+        
+        /// Fucntion to update the icon of the weather
+        func UpdateIcon() {
             iconURL = OpenWeatherService.getIconURL(with: currentWeather.icon)
         }
     }

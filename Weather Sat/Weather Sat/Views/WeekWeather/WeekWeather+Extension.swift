@@ -10,7 +10,7 @@ import SwiftUI
 extension WeekWeatherView {
 
     @Observable
-    final class ViewModel {
+    final class ViewModel: WeatherUpdater {
 
         var location: Location
 
@@ -43,7 +43,7 @@ extension WeekWeatherView {
             }
         }
 
-        private func getLocationWeather() async {
+        func getLocationWeather() async {
             loadState = .loading
 
             do {

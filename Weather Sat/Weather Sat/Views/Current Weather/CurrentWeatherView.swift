@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CurrentWeatherView: View {
 
+    @Environment(\.scenePhase) private var scenePhase
     @State private var viewModel: ViewModel
 
     var body: some View {
@@ -73,6 +74,12 @@ struct CurrentWeatherView: View {
                 .padding()
                 Spacer()
 
+            }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            Task {
+                await viewModel.handleScenePhaseChange(phase)
+                viewModel.UpdateIcon()
             }
         }
         .navigationTitle("Current Weather")

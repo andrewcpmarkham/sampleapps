@@ -10,38 +10,33 @@ import SwiftUI
 extension DayWeatherView {
 
     @Observable
-    final class ViewModel {
+    final class ViewModel: WeatherUpdater, WeatherIconUpdater {
 
         var location: Location
 
         var weatherResponse: WeatherResponse
-        var dayWeather: DailyWeatherForcast
+        var dailyWeatherForcast: DailyWeatherForcast
 
         var loadState: LoadState
 
-        var url: URL? {
-            guard let icon = dayWeather.weather.first?.icon else {
-                return nil
-            }
-             return OpenWeatherService.getIconURL(with: icon)
-        }
+        var iconURL: URL? = nil
 
         var dateLabel: String {
             Date.dateOnlyFormatter.string(
-                from: Date.dateFromUTCInt(UTCTimeStamp: dayWeather.dt + weatherResponse.timezoneOffset)
+                from: Date.dateFromUTCInt(UTCTimeStamp: dailyWeatherForcast.dt + weatherResponse.timezoneOffset)
             )
         }
 
         var highTempLabel: String {
-            String(format: "%.0f", dayWeather.tempMax) + "C"
+            String(format: "%.0f", dailyWeatherForcast.tempMax) + "C"
         }
 
         var lowTempLabel: String {
-            String(format: "%.0f", dayWeather.tempMin) + "C"
+            String(format: "%.0f", dailyWeatherForcast.tempMin) + "C"
         }
 
         var detailLabel: String {
-            guard let detail = dayWeather.weather.first?.detail else {
+            guard let detail = dailyWeatherForcast.weather.first?.detail else {
                 return ""
             }
             return detail
@@ -56,20 +51,25 @@ extension DayWeatherView {
         }
 
         // MARK: - Inits
-        init(location: Location, weatherResponse: WeatherResponse, dayWeather: DailyWeatherForcast, loadState: LoadState = .success("Pre loaded")) {
+        init(location: Location, weatherResponse: WeatherResponse, dailyWeatherForcast: DailyWeatherForcast, loadState: LoadState = .success("Pre loaded")) {
             self.location = location
             self.weatherResponse = weatherResponse
-            self.dayWeather = dayWeather
+            self.dailyWeatherForcast = dailyWeatherForcast
             self.loadState = loadState
 
-            if loadState == .loading || location.getDataDate() < Calendar.current.startOfDay(for: Date()) {
+            if loadState == .loading {
                 Task {
                     await getLocationWeather()
+                    UpdateIcon()
                 }
+            } else {
+                UpdateIcon()
             }
         }
 
-        private func getLocationWeather() async {
+        // MARK: - Functions
+
+        func getLocationWeather() async {
             loadState = .loading
 
             do {
@@ -88,7 +88,7 @@ extension DayWeatherView {
                     let updatedLocation = self.location
                     updatedLocation.weather = latestWeather
                     weatherResponse = latestWeather
-                    dayWeather = latestDailyWeather
+                    dailyWeatherForcast = latestDailyWeather
                     loadState = .success("Weather Updated")
                 }
             } catch {
@@ -96,6 +96,14 @@ extension DayWeatherView {
                     loadState = .error("Failed to fetch weather: \(error)")
                 }
             }
+        }
+        
+        /// Function to update the icon of the weather
+        func UpdateIcon() {
+            guard let weatherIconURL = dailyWeatherForcast.weather.first?.icon else {
+                return
+            }
+            self.iconURL = OpenWeatherService.getIconURL(with: weatherIconURL)
         }
     }
 }
